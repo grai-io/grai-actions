@@ -1,7 +1,18 @@
-FROM python:3.10-alpine
+FROM python:3.10-slim
 
-COPY src/ src/
-RUN pip3 install -r src/requirements.txt
+RUN apt-get update && \
+    apt-get install -y libpq-dev gcc
 
-ENTRYPOINT ["python3"]
-CMD ["src/main.py"]
+COPY src /src
+
+RUN pip3 install --no-cache-dir --upgrade pip \
+ && pip3 install --no-cache-dir -r /src/requirements.txt
+
+
+# ENV PYTHONDONTWRITEBYTECODE=1 \
+#     PYTHONBUFFERED=1 \
+#     PATH="/opt/venv/bin:$PATH"
+
+ENTRYPOINT ["/src/entrypoint.sh"]
+
+

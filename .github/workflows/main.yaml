@@ -1,0 +1,17 @@
+on: [push]
+
+jobs:
+  test:
+    name: Evaluate local actions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Test action
+        id: test-gh-action
+        uses: ./
+        with:
+          file: 'tests/temp.csv'
+
+        

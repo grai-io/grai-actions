@@ -5,6 +5,14 @@ author: Grai <ian@grai.io>
 inputs:
   repo-token:
     description: 'The GITHUB_TOKEN secret'
+    required: false
+    default: ${{ secrets.GITHUB_TOKEN }}
+  file:
+    description: 'The version filed'
+    required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  args:
+    - ${{ inputs.repo-token }}
+    - ${{ inputs.file }}

@@ -1,1 +1,3 @@
-GhApi
+ghapi
+grai-client
+grai-source-postgres
