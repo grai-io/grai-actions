@@ -6,4 +6,4 @@ export GRAI_NAMESPACE=$3
 export GRAI_HOST=$4
 export GRAI_PORT=$5
 
-python3 src/main.py
+python3 /src/main.py
