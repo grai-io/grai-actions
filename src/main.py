@@ -79,6 +79,7 @@ def on_pull_request(client):
         found_issues = found_issues or any(affected_nodes)
     message = build_message(message)
     
+    print(message)
     if found_issues:
         post_comment(message)
         raise
