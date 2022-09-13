@@ -1,4 +1,4 @@
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   test:
@@ -16,5 +16,6 @@ jobs:
           namespace: 'ghactions_demo'
           client-host: 'grai.tinglacier.com'
           client-port: '80'
+
 
         

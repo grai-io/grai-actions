@@ -5,5 +5,6 @@ export TRACKED_FILE=$2
 export GRAI_NAMESPACE=$3
 export GRAI_HOST=$4
 export GRAI_PORT=$5
+export GRAI_AUTH_TOKEN=$6
 
 python3 /src/main.py

@@ -16,6 +16,7 @@ class config:
     host = os.environ['GRAI_HOST']
     port = os.environ['GRAI_PORT']
     git_event = os.environ['GITHUB_EVENT_NAME']
+    token = os.environ['GRAI_AUTH_TOKEN']
 
 
 def build_type_change_message(node, affected_nodes, new_type, message="## Type Changes\n"):
@@ -89,7 +90,10 @@ def main():
     if not os.path.exists(config.file):
         raise f"{config.file} does not exist"
     client = ClientV1(config.host, config.port)
-    client.set_authentication_headers(username='null@grai.io', password='super_secret')
+    if config.token != '':
+        client.set_authentication_headers(token=config.token)
+    else: 
+        client.set_authentication_headers(username='null@grai.io', password='super_secret')
 
     if config.git_event == 'merge':
         return on_merge(client)
