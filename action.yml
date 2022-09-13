@@ -8,11 +8,24 @@ inputs:
     required: false
     default: ${{ secrets.GITHUB_TOKEN }}
   file:
-    description: 'The version filed'
+    description: 'flat file location in version control'
     required: true
+  namespace:
+    description: 'The namespace for this file'
+    required: true
+  client-host:
+    description: 'The host for the Grai server'
+    required: true
+  client-port:
+    description: 'The port for the Grai server'
+    required: false
+    default: "8000"
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
     - ${{ inputs.repo-token }}
     - ${{ inputs.file }}
+    - ${{ inputs.namespace }}
+    - ${{ inputs.client-host }}
+    - ${{ inputs.client-port }}

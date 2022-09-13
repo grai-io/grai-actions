@@ -13,5 +13,7 @@ jobs:
         uses: ./
         with:
           file: 'tests/temp.csv'
+          namespace: 'ghactions_demo'
+          client-host: 'localhost'
 
         
