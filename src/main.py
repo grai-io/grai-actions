@@ -88,7 +88,6 @@ def main():
     if not os.path.exists(config.file):
         raise f"{config.file} does not exist"
     client = ClientV1(config.host, config.port)
-    print(client.url)
     client.set_authentication_headers(username='null@grai.io', password='super_secret')
 
     if config.git_event == 'merge':
