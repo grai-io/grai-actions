@@ -19,7 +19,7 @@ class config:
 
     @property
     def issue_number(self):
-        return os.environ['GITHUB_REF'].split('/')[2]
+        return '4'#os.environ['GITHUB_REF'].split('/')[2]
 
 
 def build_type_change_message(node, affected_nodes, new_type, message="## Type Changes\n"):
