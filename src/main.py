@@ -10,13 +10,16 @@ class config:
     token = os.environ['GITHUB_TOKEN']
     owner = os.environ['GITHUB_REPOSITORY_OWNER']
     repo = os.environ['GITHUB_REPOSITORY'].split('/')[-1]
-    issue_number = os.environ['GITHUB_REF_NAME'].split('/')[2]
     file = os.environ['TRACKED_FILE']
     namespace = os.environ['GRAI_NAMESPACE']
     host = os.environ['GRAI_HOST']
     port = os.environ['GRAI_PORT']
     git_event = os.environ['GITHUB_EVENT_NAME']
     token = os.environ['GRAI_AUTH_TOKEN']
+
+    @staticmethod
+    def issue_number():
+        return os.environ['GITHUB_REF'].split('/')[2]
 
 
 def build_type_change_message(node, affected_nodes, new_type, message="## Type Changes\n"):
