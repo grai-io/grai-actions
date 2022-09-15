@@ -15,7 +15,7 @@ class config:
     host = os.environ['GRAI_HOST']
     port = os.environ['GRAI_PORT']
     git_event = os.environ['GITHUB_EVENT_NAME']
-    token = os.environ['GRAI_AUTH_TOKEN']
+    grai_auth_token = os.environ['GRAI_AUTH_TOKEN']
 
     @property
     def issue_number(self):
