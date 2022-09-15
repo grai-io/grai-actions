@@ -49,8 +49,9 @@ def build_message(type_results):
 
 
 def post_comment(message):
-    api = GhApi(owner=config.owner, repo=config.repo, token=config.token)
-    api.issues.create_comment(issue_number=config.issue_number, body=message)
+    #api = GhApi(owner=config.owner, repo=config.repo, token=config.token)
+    api = GhApi(owner='grai-io', repo='core-demo', token=config.token)
+    api.issues.create_comment(issue_number=4, body=message)
 
 
 def file_deleted():
@@ -92,7 +93,6 @@ def on_pull_request(client):
 
 
 def main():
-    print(config.issue_number)
     if not os.path.exists(config.file):
         raise f"{config.file} does not exist"
     client = ClientV1(config.host, config.port)
