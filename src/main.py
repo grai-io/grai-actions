@@ -92,6 +92,7 @@ def on_pull_request(client):
 
 
 def main():
+    print(config.issue_number)
     if not os.path.exists(config.file):
         raise f"{config.file} does not exist"
     client = ClientV1(config.host, config.port)
