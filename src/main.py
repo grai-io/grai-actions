@@ -51,7 +51,7 @@ def build_message(type_results):
 def post_comment(message):
     api = GhApi(owner=config.owner, repo=config.repo, token=config.token)
     #api = GhApi(owner='grai-io', repo='core-demo', token=config.token)
-    api.issues.create_comment(issue_number=4, body=message)
+    api.issues.create_comment(issue_number=config.issue_number, body=message)
 
 
 def file_deleted():
