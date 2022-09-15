@@ -10,7 +10,7 @@ class config:
     token = os.environ['GITHUB_TOKEN']
     owner = os.environ['GITHUB_REPOSITORY_OWNER']
     repo = os.environ['GITHUB_REPOSITORY'].split('/')[-1]
-    issue_number = os.environ['GITHUB_REF_NAME'].split('/')[0]
+    issue_number = os.environ['GITHUB_REF_NAME'].split('/')[2]
     file = os.environ['TRACKED_FILE']
     namespace = os.environ['GRAI_NAMESPACE']
     host = os.environ['GRAI_HOST']
@@ -47,8 +47,7 @@ def build_message(type_results):
 
 def post_comment(message):
     api = GhApi(owner=config.owner, repo=config.repo, token=config.token)
-    api.issues.create_comment(issue_number=config.issue_number, 
-                            body=message)
+    api.issues.create_comment(issue_number=config.issue_number, body=message)
 
 def file_deleted():
     pass
