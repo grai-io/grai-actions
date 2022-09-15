@@ -17,8 +17,8 @@ class config:
     git_event = os.environ['GITHUB_EVENT_NAME']
     token = os.environ['GRAI_AUTH_TOKEN']
 
-    @staticmethod
-    def issue_number():
+    @property
+    def issue_number(self):
         return os.environ['GITHUB_REF'].split('/')[2]
 
 
