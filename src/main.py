@@ -52,6 +52,7 @@ def post_comment(message):
     api = GhApi(owner=config.owner, repo=config.repo, token=config.token)
     api.issues.create_comment(issue_number=config.issue_number, body=message)
 
+
 def file_deleted():
     pass
     #  TODO
