@@ -16,10 +16,8 @@ class config:
     port = os.environ['GRAI_PORT']
     git_event = os.environ['GITHUB_EVENT_NAME']
     grai_auth_token = os.environ['GRAI_AUTH_TOKEN']
+    issue_number = os.environ['GITHUB_REF'].split('/')[2]
 
-    @property
-    def issue_number(self):
-        return '4'#os.environ['GITHUB_REF'].split('/')[2]
 
 
 def build_type_change_message(node, affected_nodes, new_type, message="## Type Changes\n"):
@@ -51,7 +49,7 @@ def build_message(type_results):
 def post_comment(message):
     api = GhApi(owner=config.owner, repo=config.repo, token=config.token)
     #api = GhApi(owner='grai-io', repo='core-demo', token=config.token)
-    api.issues.create_comment(os.environ['GITHUB_REF'].split('/')[2], body=message)
+    api.issues.create_comment(config.issue_number, body=message)
 
 
 def file_deleted():
