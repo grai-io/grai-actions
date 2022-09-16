@@ -19,36 +19,68 @@ class config:
     issue_number = os.environ['GITHUB_REF'].split('/')[2]
 
 
+def collapsable(content, label):
+    result = f"""<details><summary>{label}</summary>
+<p>
 
-def build_type_change_message(node, affected_nodes, new_type, message="## Type Changes\n"):
-    if not affected_nodes:
-        return message
+{content}
+
+</p>
+</details>"""
+    return result
+
+
+def heading(string, level):
+    return f'<h{level}> {string} </h{level}>'
+
+
+def mermaid_graph(node_tuples):
+    def new_edge(a, b, status):
+        return f'{a}-->|"{"✅" if status else "❌"}"| {b};'
     
-    name = node.spec.name
-    namespace = node.spec.namespace
-    original_type = node.spec.metadata['data_type']
-    message += f"### {namespace}/{name}: ({original_type} -> {new_type})\n"
-    for a_n in affected_nodes:
-        a_name = a_n.spec.name
-        a_namespace = a_n.spec.namespace
-        message += f"\t❌ {a_namespace}/{a_name} expected type **{a_n.spec.metadata['data_type']}**\n"
-    
-    return message
-
-
-def build_message(type_results):
-    message = f"""
-    <details>
-        <summary>Test Results</summary>
-        {type_results}
-    </details>
+    message = f"""```mermaid
+graph TD;
+    {''.join((new_edge(*tup) for tup in node_tuples))}
+```
     """
     return message
 
 
+def build_table(affected_nodes):
+    def make_row(name, dtype):
+        row = f"""| {name} | data type | expected {dtype} |
+"""
+        return row
+    
+    rows = "".join([make_row(name, dtype) for name, dtype in affected_nodes])
+    message = f"""| Dependency | Test | Message |
+| --- | --- | --- |
+{rows}
+    """
+    return message
+
+
+def build_node_test_summary(name, affected_nodes):    
+    label = heading(name, 2)
+    section = f"""
+{heading('Failing Tests', 4)}
+
+{build_table(affected_nodes)}
+    """
+    return collapsable(section, label)
+
+
+def build_message(node_name, node_tuple, affected_nodes):
+    return f"""
+{mermaid_graph(node_tuple)}
+
+{build_node_test_summary(node_name, affected_nodes)}
+    
+    """
+
+
 def post_comment(message):
     api = GhApi(owner=config.owner, repo=config.repo, token=config.token)
-    #api = GhApi(owner='grai-io', repo='core-demo', token=config.token)
     api.issues.create_comment(config.issue_number, body=message)
 
 
@@ -66,28 +98,37 @@ def on_pull_request(client):
     from grai_source_flat_file.loader import get_nodes_and_edges
     from grai_source_flat_file.adapters import adapt_to_client
     
-    # G = client.build_graph()
-    # analysis = analysis.GraphAnalyzer(G)
+    G = client.build_graph()
+    analysis = analysis.GraphAnalyzer(G)
     
-    # nodes, edges = get_nodes_and_edges(config.file, config.namespace)
-    # nodes = adapt_to_client(nodes)
+    nodes, edges = get_nodes_and_edges(config.file, config.namespace)
+    nodes = adapt_to_client(nodes)
 
-    # found_issues = False
-    # message = "## Type Changes\n"
-    # for node in nodes:
-    #     new_type = node.spec.metadata['data_type']
-    #     original_node = G.get_node(name=node.spec.name, namespace=node.spec.namespace)
-    #     affected_nodes = analysis.test_type_change(namespace=node.spec.namespace, name=node.spec.name, new_type=new_type)
-    #     message = build_type_change_message(original_node, affected_nodes, new_type, message)
-    #     found_issues = found_issues or any(affected_nodes)
-    # message = build_message(message)
+    for node in nodes:
+        new_type = node.spec.metadata['data_type']
+        original_node = G.get_node(name=node.spec.name, namespace=node.spec.namespace)
+        affected_nodes = analysis.test_type_change(namespace=node.spec.namespace, name=node.spec.name, new_type=new_type)
+        
+        node_name = node.spec.display_name
+        # TODO: this is technically wrong
+        node_tuple = [(node_name, n.spec.display_name, n.spec.metadata['data_type'] == new_type) for n in affected_nodes]
+        affected_nodes = [(n.spec.display_name, n.spec.metadata['data_type']) for n in affected_nodes]
+        message = build_type_change_message(node_name, node_tuple, affected_nodes)
+        post_comment(message)
     
-    # print(message)
-    # if found_issues:
-        # post_comment(message)
-        # raise
-    message = '## Type Changes\\n### demo/data/prod.age: (integer -> float)\\n\\t❌ demo/data/warehouse.age expected type **integer**\\n'
-    post_comment(message)
+
+
+def build_graph():
+    from grai_graph import graph
+    from grai_source_flat_file.loader import get_nodes_and_edges
+    from grai_source_flat_file.adapters import adapt_to_client
+    
+    G = graph.Graph()
+    nodes, edges = get_nodes_and_edges(config.file, config.namespace)
+    nodes = adapt_to_client(nodes)
+    G.add_nodes(nodes)
+    #G.add_edges(edges)
+    return G
 
 
 def main():
