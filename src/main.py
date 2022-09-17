@@ -82,7 +82,7 @@ def build_message(node_name, node_tuple, affected_nodes):
 def post_comment(message):
     api = GhApi(owner=config.owner, repo=config.repo, token=config.token)
     #api.issues.create_comment(config.issue_number, body=message)
-    api.issues.create_comment(5, body=message)
+    api.issues.create_comment(int(config.issue_number), body=message)
 
 
 def file_deleted():
@@ -114,8 +114,9 @@ def on_pull_request(client):
         # TODO: this is technically wrong
         node_tuple = [(node_name, n.spec.display_name, n.spec.metadata['data_type'] == new_type) for n in affected_nodes]
         affected_nodes = [(n.spec.display_name, n.spec.metadata['data_type']) for n in affected_nodes]
-        message = build_message(node_name, node_tuple, affected_nodes)
-        post_comment(message)
+        if affected_nodes:
+            message = build_message(node_name, node_tuple, affected_nodes)
+            post_comment(message)
     
 
 
