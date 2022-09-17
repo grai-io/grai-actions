@@ -5,7 +5,8 @@ author: Grai <ian@grai.io>
 inputs:
   repo-token:
     description: 'The GITHUB_TOKEN secret'
-    required: true
+    required: false
+    default: ${{ secrets.GITHUB_TOKEN }}
   file:
     description: 'flat file location in version control'
     required: true
