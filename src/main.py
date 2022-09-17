@@ -136,7 +136,7 @@ def main():
         raise f"{config.file} does not exist"
     client = ClientV1(config.host, config.port)
     
-    client.set_authentication_headers(token=config.token)
+    client.set_authentication_headers(token=config.grai_auth_token)
 
     # client.set_authentication_headers(username='null@grai.io', password='super_secret')
     if config.git_event == 'merge':
