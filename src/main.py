@@ -110,10 +110,11 @@ def on_pull_request(client):
         original_node = G.get_node(name=node.spec.name, namespace=node.spec.namespace)
         affected_nodes = analysis.test_type_change(namespace=node.spec.namespace, name=node.spec.name, new_type=new_type)
         
-        node_name = node.spec.display_name
+        node_name = node.spec.name
         # TODO: this is technically wrong
-        node_tuple = [(node_name, n.spec.display_name, n.spec.metadata['data_type'] == new_type) for n in affected_nodes]
-        affected_nodes = [(n.spec.display_name, n.spec.metadata['data_type']) for n in affected_nodes]
+        node_tuple = [(node_name, n.spec.name, n.spec.metadata['data_type'] == new_type) for n in affected_nodes]
+        affected_nodes = [(n.spec.name, n.spec.metadata['data_type']) for n in affected_nodes]
+        print(affected_nodes)
         if affected_nodes:
             message = build_message(node_name, node_tuple, affected_nodes)
             post_comment(message)
