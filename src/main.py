@@ -81,8 +81,8 @@ def build_message(node_name, node_tuple, affected_nodes):
 
 def post_comment(message):
     api = GhApi(owner=config.owner, repo=config.repo, token=config.token)
-    #api.issues.create_comment(config.issue_number, body=message)
-    api.issues.create_comment(int(config.issue_number), body=message)
+    api.issues.create_comment(config.issue_number, body=message)
+    #api.issues.create_comment(int(config.issue_number), body=message)
 
 
 def file_deleted():
