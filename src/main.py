@@ -113,7 +113,7 @@ def on_pull_request(client):
         # TODO: this is technically wrong
         node_tuple = [(node_name, n.spec.display_name, n.spec.metadata['data_type'] == new_type) for n in affected_nodes]
         affected_nodes = [(n.spec.display_name, n.spec.metadata['data_type']) for n in affected_nodes]
-        message = build_type_change_message(node_name, node_tuple, affected_nodes)
+        message = build_message(node_name, node_tuple, affected_nodes)(node_name, node_tuple, affected_nodes)
         post_comment(message)
     
 
