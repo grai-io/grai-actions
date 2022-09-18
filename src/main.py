@@ -151,18 +151,16 @@ def main():
     client = ClientV1(config.host, config.port)
     
     client.set_authentication_headers(token=config.grai_auth_token)
-
+    authentication_status = client.check_authentication()
+    if authentication_status.status_code != 200:
+        raise Exception(f"Authentication to {config.host} failed")
+        
     # client.set_authentication_headers(username='null@grai.io', password='super_secret')
     if config.git_event == 'merge':
         return on_merge(client)
     elif config.git_event == 'pull_request':
-        authentication_status = client.check_authentication()
-        if authentication_status.status_code == 200:
-            post_comment("authenticated")
-        else:
-            post_comment(f"ERROR: {authentication_status.content}")
-            raise
-        #return on_pull_request(client)
+
+        return on_pull_request(client)
 
 if __name__ == "__main__":
     main()
