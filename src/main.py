@@ -160,7 +160,7 @@ def main():
         if authentication_status.status_code == 200:
             post_comment("authenticated")
         else:
-            post_comment("not authenticated")
+            post_comment(f"ERROR: {authentication_status.content}")
             raise
         #return on_pull_request(client)
 
