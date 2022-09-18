@@ -161,6 +161,7 @@ def main():
             post_comment("authenticated")
         else:
             post_comment("not authenticated")
+            raise
         #return on_pull_request(client)
 
 if __name__ == "__main__":
