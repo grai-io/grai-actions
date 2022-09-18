@@ -21,9 +21,8 @@ inputs:
     required: false
     default: "8000"
   auth-token:
-    description: 'The port for the Grai server'
-    required: false
-    default: ''
+    description: 'The auth token for the Grai server'
+    required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
