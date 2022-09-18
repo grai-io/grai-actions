@@ -145,7 +145,12 @@ def main():
     if config.git_event == 'merge':
         return on_merge(client)
     elif config.git_event == 'pull_request':
-        return on_pull_request(client)
+        authentication_status = client.check_authentication()
+        if authentication_status.status_code == 200:
+            post_comment("authenticated")
+        else:
+            post_comment("not authenticated")
+        #return on_pull_request(client)
 
 if __name__ == "__main__":
     main()
