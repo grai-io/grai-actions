@@ -7,7 +7,7 @@ from grai_client.endpoints.v1.client import ClientV1
 
 @dataclass
 class config:
-    token = os.environ['GITHUB_TOKEN']
+    github_token = os.environ['GITHUB_TOKEN']
     owner = os.environ['GITHUB_REPOSITORY_OWNER']
     repo = os.environ['GITHUB_REPOSITORY'].split('/')[-1]
     file = os.environ['TRACKED_FILE']
@@ -16,7 +16,7 @@ class config:
     port = os.environ['GRAI_PORT']
     git_event = os.environ['GITHUB_EVENT_NAME']
     grai_auth_token = os.environ['GRAI_AUTH_TOKEN']
-    issue_number = os.environ['PR_NUMBER']#os.environ['GITHUB_REF'].split('/')[2]
+    issue_number = 7#os.environ['PR_NUMBER']#os.environ['GITHUB_REF'].split('/')[2]
 
 
 def collapsable(content, label):
@@ -80,7 +80,7 @@ def build_message(node_name, node_tuple, affected_nodes):
 
 
 def post_comment(message):
-    api = GhApi(owner=config.owner, repo=config.repo, token=config.token)
+    api = GhApi(owner=config.owner, repo=config.repo, token=config.github_token)
     api.issues.create_comment(config.issue_number, body=message)
     #api.issues.create_comment(int(config.issue_number), body=message)
 
@@ -94,8 +94,20 @@ def on_merge(client):
     update_server(client, config.file, config.namespace)
 
 
+def build_graph():
+    from grai_graph import graph
+    from grai_source_flat_file.loader import get_nodes_and_edges
+    from grai_source_flat_file.adapters import adapt_to_client
+    
+    G = graph.Graph()
+    nodes, edges = get_nodes_and_edges(config.file, config.namespace)
+    nodes = adapt_to_client(nodes)
+    G.add_nodes(nodes)
+    #G.add_edges(edges)
+    return G
+
 def on_pull_request(client):
-    from grai_graph import graph, analysis
+    from grai_graph import analysis
     from grai_source_flat_file.loader import get_nodes_and_edges
     from grai_source_flat_file.adapters import adapt_to_client
     
@@ -114,7 +126,6 @@ def on_pull_request(client):
         # TODO: this is technically wrong
         node_tuple = [(node_name, n.spec.name, n.spec.metadata['data_type'] == new_type) for n in affected_nodes]
         affected_nodes = [(n.spec.name, n.spec.metadata['data_type']) for n in affected_nodes]
-        print(affected_nodes)
         if affected_nodes:
             message = build_message(node_name, node_tuple, affected_nodes)
             post_comment(message)
