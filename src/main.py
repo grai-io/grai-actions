@@ -82,7 +82,6 @@ def build_message(node_name, node_tuple, affected_nodes):
 def post_comment(message):
     api = GhApi(owner=config.owner, repo=config.repo, token=config.github_token)
     api.issues.create_comment(config.issue_number, body=message)
-    #api.issues.create_comment(int(config.issue_number), body=message)
 
 
 def file_deleted():
@@ -116,7 +115,6 @@ def on_pull_request(client):
     
     nodes, edges = get_nodes_and_edges(config.file, config.namespace)
     nodes = adapt_to_client(nodes)
-    post_comment("evaluating nodes")
     for node in nodes:
         new_type = node.spec.metadata['data_type']
         original_node = G.get_node(name=node.spec.name, namespace=node.spec.namespace)
@@ -128,20 +126,9 @@ def on_pull_request(client):
         if affected_nodes:
             message = build_message(node_name, node_tuple, affected_nodes)
             post_comment(message)
+        else:
+            post_comment(f"no affected nodes for {node_name} ")
     
-
-
-def build_graph():
-    from grai_graph import graph
-    from grai_source_flat_file.loader import get_nodes_and_edges
-    from grai_source_flat_file.adapters import adapt_to_client
-    
-    G = graph.Graph()
-    nodes, edges = get_nodes_and_edges(config.file, config.namespace)
-    nodes = adapt_to_client(nodes)
-    G.add_nodes(nodes)
-    #G.add_edges(edges)
-    return G
 
 
 def main():
@@ -154,7 +141,6 @@ def main():
     if authentication_status.status_code != 200:
         raise Exception(f"Authentication to {config.host} failed")
     
-    post_comment(config.git_event)
     # client.set_authentication_headers(username='null@grai.io', password='super_secret')
     if config.git_event == 'merge':
         return on_merge(client)
