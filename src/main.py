@@ -153,7 +153,8 @@ def main():
     authentication_status = client.check_authentication()
     if authentication_status.status_code != 200:
         raise Exception(f"Authentication to {config.host} failed")
-        
+    
+    post_comment(config.git_event)
     # client.set_authentication_headers(username='null@grai.io', password='super_secret')
     if config.git_event == 'merge':
         return on_merge(client)
