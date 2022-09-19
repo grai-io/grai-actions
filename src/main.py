@@ -129,8 +129,6 @@ def on_pull_request(client):
             message = build_message(node_name, node_tuple, affected_nodes)
             post_comment(message)
             errors = True
-        else:
-            post_comment(f"no affected nodes for {node_name} ")
     
     if errors:
         raise Exception("Type changes failed")
@@ -140,9 +138,10 @@ def on_pull_request(client):
 def main():
     if not os.path.exists(config.file):
         raise f"{config.file} does not exist"
+
     client = ClientV1(config.host, config.port)
-    
     client.set_authentication_headers(token=config.grai_auth_token)
+
     authentication_status = client.check_authentication()
     if authentication_status.status_code != 200:
         raise Exception(f"Authentication to {config.host} failed")
