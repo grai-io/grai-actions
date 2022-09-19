@@ -115,6 +115,8 @@ def on_pull_request(client):
     
     nodes, edges = get_nodes_and_edges(config.file, config.namespace)
     nodes = adapt_to_client(nodes)
+
+    errors = False
     for node in nodes:
         new_type = node.spec.metadata['data_type']
         original_node = G.get_node(name=node.spec.name, namespace=node.spec.namespace)
@@ -126,8 +128,12 @@ def on_pull_request(client):
         if affected_nodes:
             message = build_message(node_name, node_tuple, affected_nodes)
             post_comment(message)
+            errors = True
         else:
             post_comment(f"no affected nodes for {node_name} ")
+    
+    if errors:
+        raise Exception("Type changes failed")
     
 
 
