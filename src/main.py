@@ -16,7 +16,7 @@ class config:
     port = os.environ['GRAI_PORT']
     git_event = os.environ['GITHUB_EVENT_NAME']
     grai_auth_token = os.environ['GRAI_AUTH_TOKEN']
-    issue_number = 7#os.environ['PR_NUMBER']#os.environ['GITHUB_REF'].split('/')[2]
+    issue_number = os.environ['PR_NUMBER']#os.environ['GITHUB_REF'].split('/')[2]
 
 
 def collapsable(content, label):
