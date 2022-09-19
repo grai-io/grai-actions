@@ -116,12 +116,11 @@ def on_pull_request(client):
     
     nodes, edges = get_nodes_and_edges(config.file, config.namespace)
     nodes = adapt_to_client(nodes)
-
+    post_comment("evaluating nodes")
     for node in nodes:
         new_type = node.spec.metadata['data_type']
         original_node = G.get_node(name=node.spec.name, namespace=node.spec.namespace)
         affected_nodes = analysis.test_type_change(namespace=node.spec.namespace, name=node.spec.name, new_type=new_type)
-        
         node_name = node.spec.name
         # TODO: this is technically wrong
         node_tuple = [(node_name, n.spec.name, n.spec.metadata['data_type'] == new_type) for n in affected_nodes]
@@ -159,7 +158,6 @@ def main():
     if config.git_event == 'merge':
         return on_merge(client)
     elif config.git_event == 'pull_request':
-
         return on_pull_request(client)
 
 if __name__ == "__main__":
