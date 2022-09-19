@@ -54,3 +54,23 @@ graph TD;
 
 </p>
 </details>
+
+
+
+```mermaid
+graph TD;
+    prod.age --> warehouse.age;
+
+```
+
+<details><summary><h4>data/prod.age</h4></summary>
+
+## Failing Tests
+
+| node | test | message |
+| --- | --- | --- |
+|data/warehouse.age | data type | expected float |
+
+</p>
+</details>
+
