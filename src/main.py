@@ -91,7 +91,7 @@ def build_message(node_name, node_tuple, affected_nodes):
 
 {build_node_test_summary(node_name, affected_nodes)}
 
-{build_link(node_name, affected_nodes)}
+{config.grai_frontend_host and build_link(node_name, affected_nodes)}
     """
 
 
