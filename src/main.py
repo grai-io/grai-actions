@@ -3,6 +3,8 @@ from ghapi.all import GhApi
 from dataclasses import dataclass
 from grai_source_flat_file.base import update_server
 from grai_client.endpoints.v1.client import ClientV1
+import urllib.parse
+import json
 
 
 @dataclass
@@ -69,6 +71,18 @@ def build_node_test_summary(name, affected_nodes):
     """
     return collapsable(section, label)
 
+def build_link(node_name, affected_nodes):
+    def node_to_error(name, dtype):
+        return {'source': node_name, 'destination': name, 'type': 'data type', 'message': f"""expected {dtype}"""}
+
+    errorList = []
+
+    for name, dtype in affected_nodes:
+        errorList.append(node_to_error(name, dtype))
+
+    errors = urllib.parse.quote_plus(json.dumps(errorList))
+
+    return f"""<a href="http://localhost:3000?limitGraph=true&errors={errors}">Show Plot</a>"""
 
 def build_message(node_name, node_tuple, affected_nodes):
     return f"""
@@ -76,7 +90,7 @@ def build_message(node_name, node_tuple, affected_nodes):
 
 {build_node_test_summary(node_name, affected_nodes)}
 
-<a href="http://localhost:3000">Show Plot</a>
+{build_link(node_name, affected_nodes)}
     """
 
 
