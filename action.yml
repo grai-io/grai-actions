@@ -1,31 +1,34 @@
 # action.yml
-name: 'Grai Dependency Check'
-description: 'Determines the impact of changing data on downstream users'
+name: "Grai Dependency Check"
+description: "Determines the impact of changing data on downstream users"
 author: Grai <ian@grai.io>
 inputs:
   repo-token:
-    description: 'The GITHUB_TOKEN secret'
+    description: "The GITHUB_TOKEN secret"
     required: true
     #default: ${{ secrets.GITHUB_TOKEN }}
   file:
-    description: 'flat file location in version control'
+    description: "flat file location in version control"
     required: true
   namespace:
-    description: 'The namespace for this file'
+    description: "The namespace for this file"
     required: true
   client-host:
-    description: 'The host for the Grai server'
+    description: "The host for the Grai server"
     required: true
   client-port:
-    description: 'The port for the Grai server'
+    description: "The port for the Grai server"
     required: false
     default: "8000"
   auth-token:
-    description: 'The auth token for the Grai server'
+    description: "The auth token for the Grai server"
     required: true
+  grai-frontend-host:
+    description: "The url for your frontend, e.g. http://localhost:3000"
+    required: false
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"
   args:
     - ${{ inputs.repo-token }}
     - ${{ inputs.file }}
@@ -33,3 +36,4 @@ runs:
     - ${{ inputs.client-host }}
     - ${{ inputs.client-port }}
     - ${{ inputs.auth-token }}
+    - ${{ inputs.grai-frontend-host }}
