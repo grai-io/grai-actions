@@ -75,7 +75,8 @@ def build_message(node_name, node_tuple, affected_nodes):
 {mermaid_graph(node_tuple)}
 
 {build_node_test_summary(node_name, affected_nodes)}
-    
+
+<a href="http://localhost:3000">Show Plot</a>
     """
 
 
