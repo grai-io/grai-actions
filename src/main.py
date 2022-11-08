@@ -19,6 +19,7 @@ class config:
     git_event = os.environ['GITHUB_EVENT_NAME']
     grai_auth_token = os.environ['GRAI_AUTH_TOKEN']
     issue_number = os.environ['PR_NUMBER']#os.environ['GITHUB_REF'].split('/')[2]
+    grai_frontend_host = os.environ['GRAI_FRONTEND_HOST']
 
 
 def collapsable(content, label):
@@ -82,7 +83,7 @@ def build_link(node_name, affected_nodes):
 
     errors = urllib.parse.quote_plus(json.dumps(errorList))
 
-    return f"""<a href="http://localhost:3000?limitGraph=true&errors={errors}">Show Plot</a>"""
+    return f"""<a href="{config.grai_frontend_host}?limitGraph=true&errors={errors}" target="_blank">Show Plot</a>"""
 
 def build_message(node_name, node_tuple, affected_nodes):
     return f"""
