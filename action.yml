@@ -32,7 +32,7 @@ runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.repo-token }}
+    - ${{ inputs.github-token }}
     - ${{ inputs.file }}
     - ${{ inputs.namespace }}
     - ${{ inputs.client-host }}
