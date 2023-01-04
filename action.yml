@@ -20,9 +20,14 @@ inputs:
     description: 'The port for the Grai server'
     required: false
     default: "8000"
-  auth-token:
-    description: 'The auth token for the Grai server'
-    required: true
+  workspace:
+    description: "Workspace ID"
+    required: false
+    default: ""
+  api-key:
+    description: 'A user api key for server access'
+    required: false
+    default: ''
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -32,4 +37,5 @@ runs:
     - ${{ inputs.namespace }}
     - ${{ inputs.client-host }}
     - ${{ inputs.client-port }}
-    - ${{ inputs.auth-token }}
+    - ${{ inputs.api-key }}
+    - ${{ inputs.workspace }}

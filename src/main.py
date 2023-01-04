@@ -15,8 +15,9 @@ class config:
     host = os.environ['GRAI_HOST']
     port = os.environ['GRAI_PORT']
     git_event = os.environ['GITHUB_EVENT_NAME']
-    grai_auth_token = os.environ['GRAI_AUTH_TOKEN']
-    issue_number = os.environ['PR_NUMBER']#os.environ['GITHUB_REF'].split('/')[2]
+    api_key = os.environ['GRAI_API_KEY']
+    issue_number = os.environ['PR_NUMBER']
+    workspace = os.environ['GRAI_WORKSPACE']
 
 
 def collapsable(content, label):
@@ -139,8 +140,8 @@ def main():
     if not os.path.exists(config.file):
         raise f"{config.file} does not exist"
 
-    client = ClientV1(config.host, config.port)
-    client.set_authentication_headers(token=config.grai_auth_token)
+    client = ClientV1(config.host, config.port, workspace=config.workspace)
+    client.set_authentication_headers(api_key=config.api_key)
 
     authentication_status = client.check_authentication()
     if authentication_status.status_code != 200:

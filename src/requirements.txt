@@ -1,4 +1,4 @@
 ghapi
-grai-client>=0.1.6
+grai-client>=0.1.15
 grai-source-flat-file>=0.0.3
 grai_graph
