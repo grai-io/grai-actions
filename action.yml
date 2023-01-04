@@ -27,7 +27,7 @@ inputs:
   api-key:
     description: 'A user api key for server access'
     required: true
-    default: ${{ secrets.GRAI_API_KEY }}
+    #default: ${{ secrets.GRAI_API_KEY }}
 runs:
   using: 'docker'
   image: 'Dockerfile'

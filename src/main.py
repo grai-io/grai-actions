@@ -21,7 +21,7 @@ class Config:
 
     def __post_init__(self):
         self.workspace = None if self.workspace == "" else self.workspace
-
+        assert self.api_key is not None and self.api_key != '', "No api key provided, please provide an `api-key` value in your workflow or create a `GRAI_API_KEY` secret"
 
 config = Config()
 
