@@ -16,6 +16,7 @@ jobs:
           namespace: 'ghactions_demo'
           client-host: 'api.grai.io'
           client-port: '443'
+          api_key:
 
 
         
