@@ -20,7 +20,7 @@ class Config:
     workspace = os.environ["GRAI_WORKSPACE"]
 
     def __post_init__(self):
-        self.workspace = None if self.workspace is "" else self.workspace
+        self.workspace = None if self.workspace == "" else self.workspace
 
 
 config = Config()
