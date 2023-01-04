@@ -127,7 +127,13 @@ def on_pull_request(client):
     errors = False
     for node in nodes:
         new_type = node.spec.metadata["data_type"]
-        original_node = G.get_node(name=node.spec.name, namespace=node.spec.namespace)
+        try:
+            original_node = G.get_node(name=node.spec.name, namespace=node.spec.namespace)
+        except:
+            # Node doesn't exist
+            continue
+
+
         affected_nodes = analysis.test_type_change(
             namespace=node.spec.namespace, name=node.spec.name, new_type=new_type
         )
