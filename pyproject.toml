@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "grai-actions"
+version = "0.1.0"
+description = ""
+authors = ["Grai <ian@grai.io>"]
+license = "LICENSE"
+readme = "README.md"
+packages = [{include = "grai_actions"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^2.21.0"
+black = "^22.12.0"
+isort = "^5.11.4"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
