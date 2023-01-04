@@ -13,6 +13,7 @@ jobs:
         uses: ./
         with:
           file: 'tests/temp.csv'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           namespace: 'ghactions_demo'
           client-host: 'api.grai.io'
           client-port: '443'

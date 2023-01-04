@@ -3,7 +3,7 @@ name: 'Grai Dependency Check'
 description: 'Determines the impact of changing data on downstream users'
 author: Grai <ian@grai.io>
 inputs:
-  repo-token:
+  github-token:
     description: 'The GITHUB_TOKEN secret'
     required: true
     #default: ${{ secrets.GITHUB_TOKEN }}
@@ -19,7 +19,7 @@ inputs:
   client-port:
     description: 'The port for the Grai server'
     required: false
-    default: "8000"
+    default: ""
   workspace:
     description: "Workspace ID"
     required: false
