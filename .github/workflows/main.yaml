@@ -14,8 +14,8 @@ jobs:
         with:
           file: 'tests/temp.csv'
           namespace: 'ghactions_demo'
-          client-host: 'grai.tinglacier.com'
-          client-port: '80'
+          client-host: 'api.grai.io'
+          client-port: '443'
 
 
         
