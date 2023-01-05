@@ -6,7 +6,6 @@ inputs:
   github-token:
     description: 'The GITHUB_TOKEN secret'
     required: true
-    #default: ${{ secrets.GITHUB_TOKEN }}
   file:
     description: 'flat file location in version control'
     required: true
@@ -15,11 +14,12 @@ inputs:
     required: true
   client-host:
     description: 'The host for the Grai server'
-    required: true
+    required: false
+    default: api.grai.io
   client-port:
     description: 'The port for the Grai server'
     required: false
-    default: ""
+    default: "443"
   workspace:
     description: "Workspace ID"
     required: false
@@ -27,7 +27,10 @@ inputs:
   api-key:
     description: 'A user api key for server access'
     required: true
-    #default: ${{ secrets.GRAI_API_KEY }}
+  grai-frontend-host:
+    description: "The url for your frontend, e.g. http://localhost:3000"
+    required: false
+    default: app.grai.io
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -39,3 +42,4 @@ runs:
     - ${{ inputs.client-port }}
     - ${{ inputs.api-key }}
     - ${{ inputs.workspace }}
+    - ${{ inputs.grai-frontend-host }}
