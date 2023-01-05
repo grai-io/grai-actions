@@ -172,7 +172,10 @@ def main():
     if not os.path.exists(config.file):
         raise f"{config.file} does not exist"
 
-    client = ClientV1(config.host, config.port, workspace=config.workspace)
+    conn_kwargs = {}
+    if config.workspace is not None:
+        conn_kwargs['workspace'] = config.workspace
+    client = ClientV1(config.host, config.port, **conn_kwargs)
     client.set_authentication_headers(api_key=config.api_key)
 
     authentication_status = client.check_authentication()
