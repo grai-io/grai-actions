@@ -3,7 +3,8 @@ from ghapi.all import GhApi
 from dataclasses import dataclass
 from grai_source_flat_file.base import update_server
 from grai_client.endpoints.v1.client import ClientV1
-
+import urllib.parse
+import json
 
 def validate_item(item, item_name, item_label = None, env_var_label = None):
     if item_label is None:
@@ -27,6 +28,7 @@ class Config:
     api_key = os.environ["GRAI_API_KEY"]
     issue_number = os.environ["PR_NUMBER"]
     workspace = os.environ["GRAI_WORKSPACE"]
+    grai_frontend_host = os.environ['GRAI_FRONTEND_HOST']
 
     def __post_init__(self):
         self.workspace = None if self.workspace == "" else self.workspace
@@ -89,13 +91,27 @@ def build_node_test_summary(name, affected_nodes):
     """
     return collapsable(section, label)
 
+def build_link(node_name, affected_nodes):
+    def node_to_error(name, dtype):
+        return {'source': node_name, 'destination': name, 'type': 'data type', 'message': f"""expected {dtype}"""}
+
+    errorList = []
+
+    for name, dtype in affected_nodes:
+        errorList.append(node_to_error(name, dtype))
+
+    errors = urllib.parse.quote_plus(json.dumps(errorList))
+
+    return f"""<a href="{config.grai_frontend_host}?limitGraph=true&errors={errors}" target="_blank">Show Plot</a>"""
+
 
 def build_message(node_name, node_tuple, affected_nodes):
     return f"""
 {mermaid_graph(node_tuple)}
 
 {build_node_test_summary(node_name, affected_nodes)}
-    
+
+{config.grai_frontend_host and build_link(node_name, affected_nodes)}
     """
 
 
@@ -175,6 +191,7 @@ def main():
     conn_kwargs = {}
     if config.workspace is not None:
         conn_kwargs['workspace'] = config.workspace
+
     client = ClientV1(config.host, config.port, **conn_kwargs)
     client.set_authentication_headers(api_key=config.api_key)
 
