@@ -3,7 +3,7 @@ name: 'Grai Dependency Check'
 description: 'Determines the impact of changing data on downstream users'
 author: Grai <ian@grai.io>
 inputs:
-  repo-token:
+  github-token:
     description: 'The GITHUB_TOKEN secret'
     required: true
     #default: ${{ secrets.GITHUB_TOKEN }}
@@ -19,17 +19,23 @@ inputs:
   client-port:
     description: 'The port for the Grai server'
     required: false
-    default: "8000"
-  auth-token:
-    description: 'The auth token for the Grai server'
+    default: ""
+  workspace:
+    description: "Workspace ID"
+    required: false
+    default: ""
+  api-key:
+    description: 'A user api key for server access'
     required: true
+    #default: ${{ secrets.GRAI_API_KEY }}
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.repo-token }}
+    - ${{ inputs.github-token }}
     - ${{ inputs.file }}
     - ${{ inputs.namespace }}
     - ${{ inputs.client-host }}
     - ${{ inputs.client-port }}
-    - ${{ inputs.auth-token }}
+    - ${{ inputs.api-key }}
+    - ${{ inputs.workspace }}

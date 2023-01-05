@@ -5,18 +5,38 @@ from grai_source_flat_file.base import update_server
 from grai_client.endpoints.v1.client import ClientV1
 
 
+def validate_item(item, item_name, item_label = None, env_var_label = None):
+    if item_label is None:
+        item_label = item_name
+    if env_var_label is None:
+        env_var_label = f"GRAI_{item_name.upper()}"
+    message = f"No {item_name} provided, please provide an `{item_label}` value in your workflow or create a `{env_var_label}` secret."
+    assert item is not None and item != '', message
+
+
 @dataclass
-class config:
-    github_token = os.environ['GITHUB_TOKEN']
-    owner = os.environ['GITHUB_REPOSITORY_OWNER']
-    repo = os.environ['GITHUB_REPOSITORY'].split('/')[-1]
-    file = os.environ['TRACKED_FILE']
-    namespace = os.environ['GRAI_NAMESPACE']
-    host = os.environ['GRAI_HOST']
-    port = os.environ['GRAI_PORT']
-    git_event = os.environ['GITHUB_EVENT_NAME']
-    grai_auth_token = os.environ['GRAI_AUTH_TOKEN']
-    issue_number = os.environ['PR_NUMBER']#os.environ['GITHUB_REF'].split('/')[2]
+class Config:
+    github_token = os.environ["GITHUB_TOKEN"]
+    owner = os.environ["GITHUB_REPOSITORY_OWNER"]
+    repo = os.environ["GITHUB_REPOSITORY"].split("/")[-1]
+    file = os.environ["TRACKED_FILE"]
+    namespace = os.environ["GRAI_NAMESPACE"]
+    host = os.environ["GRAI_HOST"]
+    port = os.environ["GRAI_PORT"]
+    git_event = os.environ["GITHUB_EVENT_NAME"]
+    api_key = os.environ["GRAI_API_KEY"]
+    issue_number = os.environ["PR_NUMBER"]
+    workspace = os.environ["GRAI_WORKSPACE"]
+
+    def __post_init__(self):
+        self.workspace = None if self.workspace == "" else self.workspace
+        self.port = '443' if self.port == "" else self.port
+
+        validate_item(self.api_key, 'api-key')
+        validate_item(self.github_token, 'github-token')
+        assert self.api_key is not None and self.api_key != '', "No api key provided, please provide an `api-key` value in your workflow or create a `GRAI_API_KEY` secret"
+
+config = Config()
 
 
 def collapsable(content, label):
@@ -31,13 +51,13 @@ def collapsable(content, label):
 
 
 def heading(string, level):
-    return f'<h{level}> {string} </h{level}>'
+    return f"<h{level}> {string} </h{level}>"
 
 
 def mermaid_graph(node_tuples):
     def new_edge(a, b, status):
         return f'{a}-->|"{"✅" if status else "❌"}"| {b};'
-    
+
     message = f"""```mermaid
 graph TD;
     {''.join((new_edge(*tup) for tup in node_tuples))}
@@ -51,7 +71,7 @@ def build_table(affected_nodes):
         row = f"""| {name} | data type | expected {dtype} |
 """
         return row
-    
+
     rows = "".join([make_row(name, dtype) for name, dtype in affected_nodes])
     message = f"""| Dependency | Test | Message |
 | --- | --- | --- |
@@ -60,7 +80,7 @@ def build_table(affected_nodes):
     return message
 
 
-def build_node_test_summary(name, affected_nodes):    
+def build_node_test_summary(name, affected_nodes):
     label = heading(name, 2)
     section = f"""
 {heading('Failing Tests', 4)}
@@ -97,60 +117,74 @@ def build_graph():
     from grai_graph import graph
     from grai_source_flat_file.loader import get_nodes_and_edges
     from grai_source_flat_file.adapters import adapt_to_client
-    
+
     G = graph.Graph()
     nodes, edges = get_nodes_and_edges(config.file, config.namespace)
     nodes = adapt_to_client(nodes)
     G.add_nodes(nodes)
-    #G.add_edges(edges)
+    # G.add_edges(edges)
     return G
+
 
 def on_pull_request(client):
     from grai_graph import analysis
     from grai_source_flat_file.loader import get_nodes_and_edges
     from grai_source_flat_file.adapters import adapt_to_client
-    
+
     G = client.build_graph()
     analysis = analysis.GraphAnalyzer(G)
-    
+
     nodes, edges = get_nodes_and_edges(config.file, config.namespace)
     nodes = adapt_to_client(nodes)
 
     errors = False
     for node in nodes:
-        new_type = node.spec.metadata['data_type']
-        original_node = G.get_node(name=node.spec.name, namespace=node.spec.namespace)
-        affected_nodes = analysis.test_type_change(namespace=node.spec.namespace, name=node.spec.name, new_type=new_type)
+        new_type = node.spec.metadata["data_type"]
+        try:
+            original_node = G.get_node(name=node.spec.name, namespace=node.spec.namespace)
+        except:
+            # Node doesn't exist
+            continue
+
+
+        affected_nodes = analysis.test_type_change(
+            namespace=node.spec.namespace, name=node.spec.name, new_type=new_type
+        )
         node_name = node.spec.name
         # TODO: this is technically wrong
-        node_tuple = [(node_name, n.spec.name, n.spec.metadata['data_type'] == new_type) for n in affected_nodes]
-        affected_nodes = [(n.spec.name, n.spec.metadata['data_type']) for n in affected_nodes]
+        node_tuple = [
+            (node_name, n.spec.name, n.spec.metadata["data_type"] == new_type)
+            for n in affected_nodes
+        ]
+        affected_nodes = [
+            (n.spec.name, n.spec.metadata["data_type"]) for n in affected_nodes
+        ]
         if affected_nodes:
             message = build_message(node_name, node_tuple, affected_nodes)
             post_comment(message)
             errors = True
-    
+
     if errors:
         raise Exception("Type changes failed")
-    
 
 
 def main():
     if not os.path.exists(config.file):
         raise f"{config.file} does not exist"
 
-    client = ClientV1(config.host, config.port)
-    client.set_authentication_headers(token=config.grai_auth_token)
+    client = ClientV1(config.host, config.port, workspace=config.workspace)
+    client.set_authentication_headers(api_key=config.api_key)
 
     authentication_status = client.check_authentication()
     if authentication_status.status_code != 200:
         raise Exception(f"Authentication to {config.host} failed")
-    
+
     # client.set_authentication_headers(username='null@grai.io', password='super_secret')
-    if config.git_event == 'merge':
+    if config.git_event == "merge":
         return on_merge(client)
-    elif config.git_event == 'pull_request':
+    elif config.git_event == "pull_request":
         return on_pull_request(client)
+
 
 if __name__ == "__main__":
     main()
