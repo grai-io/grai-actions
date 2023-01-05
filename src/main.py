@@ -102,7 +102,7 @@ def build_link(node_name, affected_nodes):
 
     errors = urllib.parse.quote_plus(json.dumps(errorList))
 
-    return f"""<a href="{config.grai_frontend_host}?limitGraph=true&errors={errors}" target="_blank">Show Plot</a>"""
+    return f"""<a href="{config.grai_frontend_host}/workspaces/{config.workspace}/graph?limitGraph=true&errors={errors}" target="_blank">Show Plot</a>"""
 
 
 def build_message(node_name, node_tuple, affected_nodes):
