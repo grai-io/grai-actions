@@ -28,7 +28,7 @@ inputs:
     description: "The url for your frontend, e.g. http://localhost:3000"
     required: false
     default: app.grai.io
-  dbt-manifest-file:
+  manifest-file:
     description: "File location where your dbt manifest file will be generated"
     required: true
 runs:
@@ -45,4 +45,4 @@ runs:
     GRAI_API_KEY: ${{ inputs.api-key }}
     PR_NUMBER: $(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
     GRAI_ACCESS_MODE: 'dbt'
-    GRAI_DBT_MANIFEST_FILE: ${{ inputs.dbt-manifest-file }}
+    GRAI_DBT_MANIFEST_FILE: ${{ inputs.manifest-file }}
