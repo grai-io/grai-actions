@@ -9,7 +9,7 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Test File action
-              id: test-gh-action
+              id: test-flat-file-action
               uses: ./flat-file
               with:
                   file: 'data/test.csv'
@@ -19,7 +19,7 @@ jobs:
                   workspace:  'c50774aa-396a-47a0-84dd-95d04a2d755a'
 
             - name: Test DBT action
-              id: test-gh-action
+              id: test-dbt-action
               uses: ./dbt
               with:
                 manifest-file: 'data/manifest.json'
