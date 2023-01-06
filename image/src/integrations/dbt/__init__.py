@@ -19,6 +19,7 @@ def get_nodes_and_edges(client):
     nodes, edges = base.get_nodes_and_edges(
         args.manifest_file, args.namespace, client.id
     )
+    print('the nodes', nodes)
     nodes = adapt_to_client(nodes)
     edges = adapt_to_client(edges)
     return nodes, edges
