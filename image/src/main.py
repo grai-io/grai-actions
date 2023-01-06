@@ -6,7 +6,7 @@ from grai_client.endpoints.v1.client import ClientV1
 import urllib.parse
 import json
 from grai_graph import graph, analysis
-from integrations import integration, get_nodes_and_edges
+from integrations import get_nodes_and_edges
 
 
 def validate_item(item, item_name, item_label=None, env_var_label=None):
