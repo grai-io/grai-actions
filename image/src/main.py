@@ -5,7 +5,8 @@ from grai_source_flat_file.base import update_server
 from grai_client.endpoints.v1.client import ClientV1
 import urllib.parse
 import json
-from grai_graph import graph, analysis
+from grai_graph import graph
+from grai_graph.analysis import GraphAnalyzer
 from integrations import get_nodes_and_edges
 
 
@@ -153,7 +154,7 @@ def build_graph(client):
 
 def on_pull_request(client):
     G = client.build_graph()
-    analysis = analysis.GraphAnalyzer(G)
+    analysis = GraphAnalyzer(G)
 
     nodes, edges = get_nodes_and_edges(client)
 
