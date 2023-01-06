@@ -1,32 +1,32 @@
 on: [pull_request]
 
 jobs:
-  test:
-    name: Evaluate local actions
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+    test:
+        name: Evaluate local actions
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
 
-      - name: Test File action
-        id: test-gh-action
-        uses: ./flat-file
-        with:
-          file: 'data/test.csv'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          api-key: ${{ secrets.GRAI_API_KEY }}
-          namespace: 'ghactions_test'
-          workspace:  'c50774aa-396a-47a0-84dd-95d04a2d755a'
+            - name: Test File action
+              id: test-gh-action
+              uses: ./flat-file
+              with:
+                  file: 'data/test.csv'
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  api-key: ${{ secrets.GRAI_API_KEY }}
+                  namespace: 'ghactions_test'
+                  workspace:  'c50774aa-396a-47a0-84dd-95d04a2d755a'
 
-    - name: Test DBT action
-        id: test-gh-action
-        uses: ./dbt
-        with:
-          manifest-file: 'data/manifest.json'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          api-key: ${{ secrets.GRAI_API_KEY }}
-          namespace: 'ghactions_test'
-          workspace:  'c50774aa-396a-47a0-84dd-95d04a2d755a'
+            - name: Test DBT action
+              id: test-gh-action
+              uses: ./dbt
+              with:
+                manifest-file: 'data/manifest.json'
+                github-token: ${{ secrets.GITHUB_TOKEN }}
+                api-key: ${{ secrets.GRAI_API_KEY }}
+                namespace: 'ghactions_test'
+                workspace:  'c50774aa-396a-47a0-84dd-95d04a2d755a'
 
 
         
