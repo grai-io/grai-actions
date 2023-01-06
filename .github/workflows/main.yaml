@@ -16,6 +16,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           api-key: ${{ secrets.GRAI_API_KEY }}
           namespace: 'ghactions_test'
+          workspace:  'c50774aa-396a-47a0-84dd-95d04a2d755a'
 
 
 
