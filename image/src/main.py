@@ -7,7 +7,6 @@ from ghapi.all import GhApi
 from grai_client.endpoints.v1.client import ClientV1
 from grai_graph import graph
 from grai_graph.analysis import GraphAnalyzer
-from grai_source_flat_file.base import update_server
 from integrations import get_nodes_and_edges
 
 
