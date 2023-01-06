@@ -24,7 +24,6 @@ class Config:
     github_token = os.environ["GITHUB_TOKEN"]
     owner = os.environ["GITHUB_REPOSITORY_OWNER"]
     repo = os.environ["GITHUB_REPOSITORY"].split("/")[-1]
-    file = os.environ["GRAI_TRACKED_FILE"]
     namespace = os.environ["GRAI_NAMESPACE"]
     host = os.environ["GRAI_HOST"]
     port = os.environ["GRAI_PORT"]
