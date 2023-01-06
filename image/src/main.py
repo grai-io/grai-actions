@@ -159,7 +159,7 @@ def on_pull_request(client):
 
     errors = False
     for node in nodes:
-        new_type = node.spec.metadata["data_type"]
+        new_type = node.spec.metadata.get("data_type", None)
         try:
             original_node = G.get_node(
                 name=node.spec.name, namespace=node.spec.namespace
