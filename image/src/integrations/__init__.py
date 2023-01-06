@@ -1,10 +1,14 @@
 import os
 
+access_mode = os.environ['GRAI_ACCESS_MODE'].strip()
 
-match os.environ['GRAI_ACCESS_MODE']:
-    case ['dbt']:
-        from dbt import get_nodes_and_edges
+match access_mode:
+    case 'dbt':
+        from .dbt import get_nodes_and_edges
         import dbt as integration
-    case ['flat_file']:
-        from flat_file import get_nodes_and_edges
+    case 'flat-file':
+        from .flat_file import get_nodes_and_edges
         import flat_file as integration
+    case _:
+        # try importing access_mode?
+        pass
