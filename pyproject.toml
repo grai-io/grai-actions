@@ -18,6 +18,8 @@ isort = "^5.11.4"
 grai-source-dbt = "^0.0.6"
 grai-source-flat-file = "^0.0.4"
 grai-graph = "^0.1.4"
+ghapi = "^1.0.3"
+grai-client = "^0.1.15"
 
 [build-system]
 requires = ["poetry-core"]
