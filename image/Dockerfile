@@ -11,5 +11,3 @@ RUN pip3 install --no-cache-dir --upgrade pip \
 
 
 ENTRYPOINT ["/entrypoints/entrypoint.sh"]
-
-

@@ -38,7 +38,7 @@ Tests rely upon [act](https://github.com/nektos/act) for local validation
 graph TD;
     prod.age-->warehouse.age;
 ```
-    
+
 
 <details><summary><h4> data/prod.age </h4</summary>
 <p>
@@ -49,8 +49,8 @@ graph TD;
 | Dependency | Test | Message |
 | --- | --- | --- |
 | data/warehouse.age | data type | expected float |
-    
-    
+
+
 
 </p>
 </details>
@@ -73,4 +73,3 @@ graph TD;
 
 </p>
 </details>
-

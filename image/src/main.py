@@ -1,12 +1,13 @@
-import os
-from ghapi.all import GhApi
-from dataclasses import dataclass
-from grai_source_flat_file.base import update_server
-from grai_client.endpoints.v1.client import ClientV1
-import urllib.parse
 import json
+import os
+import urllib.parse
+from dataclasses import dataclass
+
+from ghapi.all import GhApi
+from grai_client.endpoints.v1.client import ClientV1
 from grai_graph import graph
 from grai_graph.analysis import GraphAnalyzer
+from grai_source_flat_file.base import update_server
 from integrations import get_nodes_and_edges
 
 
