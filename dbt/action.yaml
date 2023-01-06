@@ -43,6 +43,5 @@ runs:
     GRAI_PORT: ${{ inputs.client-port }}
     GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
     GRAI_API_KEY: ${{ inputs.api-key }}
-    PR_NUMBER: $(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
     GRAI_ACCESS_MODE: 'dbt'
     GRAI_DBT_MANIFEST_FILE: ${{ inputs.manifest-file }}
