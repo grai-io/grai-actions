@@ -9,4 +9,5 @@ match access_mode:
         from .flat_file import get_nodes_and_edges
     case _:
         # try importing access_mode?
-        pass
+        message = f"Unrecognized access mode {access_mode}. This is a defensive error indicating the `GRAI_ACCESS_MODE` environment variable has been incorrectly set by an action or overridden by the user."
+        raise NotImplementedError(message)
