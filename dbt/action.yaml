@@ -1,11 +1,12 @@
 # action.yml
-name: 'Grai Dependency Check'
+name: 'Grai'
 description: 'Determines the impact of changing data on downstream users'
 author: Grai <ian@grai.io>
 inputs:
   github-token:
     description: 'The GITHUB_TOKEN secret'
-    required: true
+    #required: true
+    default: ${{ github.token }}
   namespace:
     description: 'The namespace for this file'
     required: true
