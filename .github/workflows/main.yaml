@@ -1,23 +1,33 @@
 on: [pull_request]
 
 jobs:
-  test:
-    name: Evaluate local actions
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+    test_flat_file:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
 
-      - name: Test action
-        id: test-gh-action
-        uses: ./
-        with:
-          file: 'tests/temp.csv'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          namespace: 'ghactions_demo'
-          client-host: 'api.grai.io'
-          client-port: '443'
-          api-key: ${{ secrets.GRAI_API_KEY }}
+            - name: Test File action
+              id: test-flat-file-action
+              uses: ./flat-file
+              with:
+                  file: 'data/test.csv'
+                 # github-token: ${{ secrets.GITHUB_TOKEN }}
+                  api-key: ${{ secrets.GRAI_API_KEY }}
+                  namespace: 'ghactions_test'
+                  workspace:  'c50774aa-396a-47a0-84dd-95d04a2d755a'
 
-
-        
+    test_dbt:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+            - name: Test DBT action
+              id: test-dbt-action
+              uses: ./dbt
+              with:
+                manifest-file: 'data/manifest.json'
+                github-token: ${{ secrets.GITHUB_TOKEN }}
+                api-key: ${{ secrets.GRAI_API_KEY }}
+                namespace: 'ghactions_test'
+                workspace:  'c50774aa-396a-47a0-84dd-95d04a2d755a'
