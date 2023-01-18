@@ -1,0 +1,45 @@
+[tool.poetry]
+name = "grai_actions"
+version = "0.1.0"
+description = ""
+authors = ["Grai <ian@grai.io>"]
+license = "Elastic-2.0"
+readme = "Readme.md"
+packages = [{include = "grai_actions", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+grai-graph = "^0.1.4"
+ghapi = "^1.0.3"
+grai-client = "^0.1.16"
+
+[tool.poetry.scripts]
+grai_actions = "grai_actions.main:main"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^2.21.0"
+black = "^22.12.0"
+isort = "^5.11.4"
+grai-source-dbt = "^0.0.6"
+grai-source-flat-file = "^0.0.4"
+pytest-env = "^0.8.1"
+
+[tool.pytest.ini_options]
+env = [
+    "GRAI_ACCESS_MODE = TEST_MODE",
+    "GITHUB_TOKEN = abc",
+    "GITHUB_REPOSITORY_OWNER = Grai",
+    "GITHUB_REPOSITORY = grai-actions",
+    "GRAI_NAMESPACE = default",
+    "GRAI_HOST = localhost",
+    "GRAI_PORT = 8000",
+    "GITHUB_EVENT_NAME = pull_request",
+    "GRAI_API_KEY = abc",
+    "PR_NUMBER = 1",
+    "GRAI_WORKSPACE = default",
+    "GRAI_FRONTEND_HOST = http://localhost:3000"
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

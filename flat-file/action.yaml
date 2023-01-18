@@ -1,0 +1,48 @@
+# action.yml
+name: 'Grai flat file tests'
+description: 'Determines the impact of changing data on downstream users'
+author: Grai <ian@grai.io>
+inputs:
+  github-token:
+    description: 'The GITHUB_TOKEN secret'
+   # required: true
+    default: ${{ github.token }}
+  namespace:
+    description: 'The namespace for this file'
+    required: true
+  workspace:
+    description: "Workspace ID"
+    required: false
+    default: "default"
+  client-host:
+    description: 'The host for the Grai server'
+    required: false
+    default: api.grai.io
+  client-port:
+    description: 'The port for the Grai server'
+    required: false
+    default: "443"
+  api-key:
+    description: 'A user api key for server access'
+    required: true
+  grai-frontend-host:
+    description: "The url for your frontend, e.g. http://localhost:3000"
+    required: false
+    default: "https://app.grai.io"
+  file:
+    description: "Local file to track with Grai"
+    required: true
+runs:
+  using: 'docker'
+  image: '../image/Dockerfile'
+  entrypoint: /entrypoints/flat-file.sh
+  env:
+    GITHUB_TOKEN: ${{ inputs.github-token }}
+    GRAI_NAMESPACE: ${{ inputs.namespace }}
+    GRAI_WORKSPACE: ${{ inputs.workspace }}
+    GRAI_HOST: ${{ inputs.client-host }}
+    GRAI_PORT: ${{ inputs.client-port }}
+    GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
+    GRAI_API_KEY: ${{ inputs.api-key }}
+    GRAI_ACCESS_MODE: 'flat-file'
+    GRAI_TRACKED_FILE: ${{ inputs.file }}
