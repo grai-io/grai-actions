@@ -27,6 +27,7 @@ validators = "^0.20.0"
 
 [tool.isort]
 profile = "black"
+known_first_party = "grai_actions"
 
 [tool.pytest.ini_options]
 env = [
