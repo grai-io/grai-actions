@@ -25,6 +25,13 @@ def get_nodes_and_edges(*args, **kwargs):
     return nodes, edges
 
 
+SEPARATOR_CHAR = "/"
+
+
+def build_node_name(node: NodeV1):
+    return f"{node.spec.namespace}{SEPARATOR_CHAR}{node.spec.name}"
+
+
 class TestResult(ABC):
     """Assumed to be a failing test result"""
 
@@ -34,16 +41,18 @@ class TestResult(ABC):
         self.node: NodeV1 = node
         self.failing_node: NodeV1 = test_path[-1]
         self.test_path = test_path
+        self.node_name = build_node_name(self.node)
+        self.failing_node_name = build_node_name(self.failing_node)
 
     @abstractmethod
-    def message(self):
-        pass
+    def message(self) -> str:
+        return ""
 
-    def make_row(self):
-        row = f"| {self.node.spec.name} | {self.type} | {self.message()} |"
+    def make_row(self) -> str:
+        row = f"| {self.node_name} | {self.type} | {self.message()} |"
         return row
 
-    def error_metadata(self):
+    def error_metadata(self) -> Dict:
         return {
             "source": self.node.spec.name,
             "destination": self.failing_node.spec.name,
@@ -62,8 +71,8 @@ class TypeTestResult(TestResult):
         )
         self.provided_value = self.node.spec.metadata.grai.node_attributes.data_type
 
-    def message(self):
-        return f"Node `{self.failing_node.spec.name}` expected to be {self.expected_value} not {self.provided_value}"
+    def message(self) -> str:
+        return f"Node `{self.failing_node_name}` expected to be {self.expected_value} not {self.provided_value}"
 
 
 class UniqueTestResult(TestResult):
@@ -76,9 +85,11 @@ class UniqueTestResult(TestResult):
         )
         self.provided_value = self.node.spec.metadata.grai.node_attributes.is_unique
 
-    def message(self):
+    def message(self) -> str:
         to_be_or_not_to_be = "not " if self.expected_value else ""
-        return f"Node `{self.failing_node.spec.name}` expected {to_be_or_not_to_be}to be unique"
+        return (
+            f"Node `{self.failing_node_name}` expected {to_be_or_not_to_be}to be unique"
+        )
 
 
 class NullableTestResult(TestResult):
@@ -91,9 +102,9 @@ class NullableTestResult(TestResult):
         )
         self.provided_value = self.node.spec.metadata.grai.node_attributes.is_nullable
 
-    def message(self):
+    def message(self) -> str:
         to_be_or_not_to_be = "not " if self.expected_value else ""
-        return f"Node `{self.failing_node.spec.name}` expected {to_be_or_not_to_be}to be nullable"
+        return f"Node `{self.failing_node_name}` expected {to_be_or_not_to_be}to be nullable"
 
 
 class TestSummary:
@@ -117,9 +128,9 @@ class TestSummary:
 
         return edge_status
 
-    def mermaid_graph(self):
+    def mermaid_graph(self) -> str:
         def new_edge(a, b, status):
-            a, b = [f"{namespace}.{name}" for namespace, name in [a, b]]
+            a, b = [f"{namespace}{SEPARATOR_CHAR}{name}" for namespace, name in [a, b]]
             return f'\t{a}-->|"{"✅" if status else "❌"}"| {b};'
 
         graph_status = self.graph_status_path()
@@ -131,13 +142,13 @@ class TestSummary:
         message = f"```mermaid\ngraph TD;\n{edges}\n```"
         return message
 
-    def build_table(self):
+    def build_table(self) -> str:
         rows = "\n".join([test.make_row() for test in self.test_results])
         message = f"| Dependency | Test | Message |\n| --- | --- | --- |\n{rows}"
         return message
 
-    def test_summary(self):
-        label = heading(self.source_node.spec.name, 2)
+    def test_summary(self) -> str:
+        label = heading(build_node_name(self.source_node), 2)
         section = f"{heading('Failing Tests', 4)}\n\n{self.build_table()}\n"
         return collapsable(section, label)
 
@@ -147,7 +158,7 @@ class TestSummary:
         link = f"{config.grai_frontend_host}/workspaces/{config.workspace}/graph?limitGraph=true&errors={errors}"
         return link, f"""<a href="{link}" target="_blank">Show Plot</a>"""
 
-    def message(self):
+    def message(self) -> str:
         message = f"\n{self.mermaid_graph()}\n\n{self.test_summary()}\n"
         if config.grai_frontend_host:
             message = f"{message}\n{self.build_link()[1]}"
