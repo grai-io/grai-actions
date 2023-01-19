@@ -8,6 +8,9 @@ prep_testing:  ## Install testing dependencies
 on_pull:  ## Run tests for pull requests
 	act -j on_pull
 
+test_build:  ## Build and run docker file
+	docker run -it $(docker build -q .)
+
 #---------------------------------------------
 
 help:

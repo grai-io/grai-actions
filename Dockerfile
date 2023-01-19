@@ -1,16 +1,35 @@
-FROM python:3.10-slim
+FROM python:3.11-slim-buster AS build
 
-RUN apt-get update && \
-    apt-get install -y libpq-dev gcc
-
-COPY src /src
-
-RUN pip3 install --no-cache-dir --upgrade pip \
- && pip3 install --no-cache-dir -r /src/requirements.txt
+LABEL org.opencontainers.image.source="https://github.com/grai-io/grai-actions"
 
 
-# ENV PYTHONDONTWRITEBYTECODE=1 \
-#     PYTHONBUFFERED=1 \
-#     PATH="/opt/venv/bin:$PATH"
+ARG PYTHONDONTWRITEBYTECODE="1" \
+    PYTHONUNBUFFERED="1" \
+    PYTHONFAULTHANDLER="1" \
+    PYTHONHASHSEED="random" \
+    PIP_NO_CACHE_DIR="off" \
+    PIP_DISABLE_PIP_VERSION_CHECK="on" \
+    PIP_DEFAULT_TIMEOUT="100" \
+    POETRY_VERSION="1.3.1"
 
-ENTRYPOINT ["/src/entrypoint.sh"]
+# libpq-dev, and gcc are reuired for psycopg2.
+RUN apt update \
+    && apt install -y \
+    apt-utils \
+    libpq-dev \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY ./grai-actions /grai-actions
+WORKDIR /grai-actions
+
+# I'm a little unclear why the second install is required. It
+RUN pip install "poetry==$POETRY_VERSION"
+RUN poetry config virtualenvs.create false  \
+    && poetry lock --no-update \
+    && poetry install --no-interaction --no-ansi --only main \
+    && rm -rf ~/.cache/pypoetry/cache \
+    && rm -rf ~/.cache/pypoetry/artifacts
+
+
+ENTRYPOINT ["entrypoints/entrypoint.sh"]

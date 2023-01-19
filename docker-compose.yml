@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  the_guide:
+    build: ./
+    environment:
+      GRAI_ACCESS_MODE: TEST_MODE
+      GITHUB_TOKEN : abc
+      GITHUB_REPOSITORY_OWNER: Grai
+      GITHUB_REPOSITORY: grai-actions
+      GRAI_NAMESPACE: default
+      GRAI_HOST: localhost
+      GRAI_PORT: 8000
+      GITHUB_EVENT_NAME: pull_request
+      GRAI_API_KEY: a-super-fake-key
+      PR_NUMBER:  1
+      GRAI_WORKSPACE: default
+      GRAI_FRONTEND_HOST: http://localhost:3000
