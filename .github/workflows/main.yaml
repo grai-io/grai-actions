@@ -1,21 +1,50 @@
 on: [pull_request]
 
+env:
+  py_ver: "3.10"
+  poetry_ver: "1.2.2"
+
+
 jobs:
-  test:
-    name: Evaluate local actions
+  lint-action:
+    name: Linting
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: grai-actions
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Test action
-        id: test-gh-action
-        uses: ./
+      - name: Install Python
+        id: setup-python
+        uses: actions/setup-python@v4
         with:
-          file: 'tests/temp.csv'
-          namespace: 'ghactions_demo'
-          client-host: 'grai.tinglacier.com'
-          client-port: '80'
+          python-version: "${{ env.py_ver }}"
 
+      - run: pip install black isort
 
-        
+      - run: |
+          black . --check
+          isort . --profile black --check
+
+  test-action:
+    needs: lint-action
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: grai-actions
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "${{ env.py_ver }}"
+
+      - run: |
+          pip install pytest
+          pip install .
+
+      - run: pytest
+
+      - run: python tests/gh_action_demo_script.py
