@@ -4,11 +4,12 @@ from abc import ABC, abstractmethod
 from itertools import chain, pairwise
 from typing import Dict, List, Tuple
 
-from grai_actions import integrations
 from grai_client.endpoints.v1.client import ClientV1
 from grai_client.schemas.node import NodeV1
 from grai_graph.analysis import GraphAnalyzer
 from grai_schemas.models import GraiEdgeMetadata, GraiNodeMetadata
+
+from grai_actions import integrations
 
 from .config import config
 from .git_messages import collapsable, heading
