@@ -2,21 +2,21 @@ import json
 import urllib.parse
 from abc import ABC, abstractmethod
 from itertools import chain, pairwise
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 from grai_client.endpoints.v1.client import ClientV1
 from grai_client.schemas.node import NodeV1
 from grai_graph.analysis import GraphAnalyzer
 from grai_schemas.models import GraiEdgeMetadata, GraiNodeMetadata
 
-from grai_actions import get_nodes_and_edges as integration_nodes_and_edges
+from grai_actions import integrations
 
 from .config import config
 from .git_messages import collapsable, heading
 
 
 def get_nodes_and_edges(*args, **kwargs):
-    nodes, edges = integration_nodes_and_edges(*args, **kwargs)
+    nodes, edges = integrations.get_nodes_and_edges(*args, **kwargs)
     for node in nodes:
         node.spec.metadata = GraiNodeMetadata(**node.spec.metadata.dict())
 
@@ -26,6 +26,7 @@ def get_nodes_and_edges(*args, **kwargs):
 
 
 class TestResult(ABC):
+    """Assumed to be a failing test result"""
     type: str
 
     def __init__(self, node, test_path):
@@ -61,7 +62,7 @@ class TypeTestResult(TestResult):
         self.provided_value = self.node.spec.metadata.grai.node_attributes.data_type
 
     def message(self):
-        return f"Node {self.failing_node} expected to be {self.expected_value}"
+        return f"Node `{self.failing_node.spec.name}` expected to be {self.expected_value} not {self.provided_value}"
 
 
 class UniqueTestResult(TestResult):
@@ -76,7 +77,7 @@ class UniqueTestResult(TestResult):
 
     def message(self):
         to_be_or_not_to_be = "not " if self.expected_value else ""
-        return f"Node {self.failing_node} was expected {to_be_or_not_to_be}to be unique"
+        return f"Node `{self.failing_node.spec.name}` expected {to_be_or_not_to_be}to be unique"
 
 
 class NullableTestResult(TestResult):
@@ -92,7 +93,7 @@ class NullableTestResult(TestResult):
     def message(self):
         to_be_or_not_to_be = "not " if self.expected_value else ""
         return (
-            f"Node {self.failing_node} was expected {to_be_or_not_to_be}to be nullable"
+            f"Node `{self.failing_node.spec.name}` expected {to_be_or_not_to_be}to be nullable"
         )
 
 
@@ -101,13 +102,18 @@ class TestSummary:
         self.source_node: NodeV1 = source_node
         self.test_results: List[TestResult] = test_results
 
-    def graph_status_path(self):
+    def graph_status_path(self) -> Dict[Tuple[str, str], Dict[Tuple[str, str], bool]]:
         edge_status = {}
         for test in self.test_results:
-            for a, b in pairwise(test.test_path):
+            path_edges = list(pairwise(test.test_path))
+            if len(path_edges) < 1:
+                raise Exception("Test paths must have more than two nodes")
+
+            for a, b in path_edges:
                 a_id = (a.spec.namespace, a.spec.name)
                 b_id = (b.spec.namespace, b.spec.name)
-                edge_status.setdefault(a_id, {b_id: True})
+                edge_status.setdefault(a_id, {})
+                edge_status[a_id].setdefault(b_id, True)
             edge_status[a_id][b_id] = False
 
         return edge_status
@@ -123,9 +129,10 @@ class TestSummary:
             for b, status in values.items()
         )
         message = f"```mermaid\ngraph TD;\n{edges}\n```"
+        return message
 
     def build_table(self):
-        rows = [test.make_row() for test in self.test_results]
+        rows = ''.join([test.make_row() for test in self.test_results])
         message = f"| Dependency | Test | Message |\n| --- | --- | --- |\n{rows}"
         return message
 
@@ -135,14 +142,15 @@ class TestSummary:
         return collapsable(section, label)
 
     def build_link(self):
-        errors = (error.error_metadata() for error in self.test_results)
+        errors = [error.error_metadata() for error in self.test_results]
         errors = urllib.parse.quote_plus(json.dumps(errors))
-        return f"""<a href="{config.grai_frontend_host}/workspaces/{config.workspace}/graph?limitGraph=true&errors={errors}" target="_blank">Show Plot</a>"""
+        link = f"{config.grai_frontend_host}/workspaces/{config.workspace}/graph?limitGraph=true&errors={errors}"
+        return link, f"""<a href="{link}" target="_blank">Show Plot</a>"""
 
     def message(self):
         message = f"\n{self.mermaid_graph()}\n\n{self.test_summary()}\n"
         if config.grai_frontend_host:
-            message = f"{message}\n{self.build_link()}"
+            message = f"{message}\n{self.build_link()[1]}"
 
         return message
 

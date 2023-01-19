@@ -1,10 +1,9 @@
 from grai_client.endpoints.v1.client import ClientV1
 
+from grai_actions.config import config
+from grai_actions.git_messages import post_comment
 from grai_actions.integrations import get_nodes_and_edges
-
-from .config import config
-from .git_messages import post_comment
-from .tools import TestResultCache
+from grai_actions.tools import TestResultCache
 
 
 def file_deleted():

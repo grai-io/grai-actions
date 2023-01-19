@@ -23,6 +23,7 @@ isort = "^5.11.4"
 grai-source-dbt = "^0.0.6"
 grai-source-flat-file = "^0.0.4"
 pytest-env = "^0.8.1"
+validators = "^0.20.0"
 
 [tool.pytest.ini_options]
 env = [
