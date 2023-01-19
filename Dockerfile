@@ -14,5 +14,3 @@ RUN pip3 install --no-cache-dir --upgrade pip \
 #     PATH="/opt/venv/bin:$PATH"
 
 ENTRYPOINT ["/src/entrypoint.sh"]
-
-

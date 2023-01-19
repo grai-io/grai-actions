@@ -25,6 +25,9 @@ grai-source-flat-file = "^0.0.4"
 pytest-env = "^0.8.1"
 validators = "^0.20.0"
 
+[tool.isort]
+profile = "black"
+
 [tool.pytest.ini_options]
 env = [
     "GRAI_ACCESS_MODE = TEST_MODE",

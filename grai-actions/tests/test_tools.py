@@ -1,5 +1,7 @@
 import unittest
 
+import validators
+from grai_actions import tools
 from grai_client.schemas.edge import EdgeV1
 from grai_client.schemas.node import NodeV1
 from grai_graph.utils import mock_v1_edge, mock_v1_node
@@ -10,9 +12,6 @@ from grai_schemas.models import (
     GraiEdgeMetadata,
     GraiNodeMetadata,
 )
-
-from grai_actions import tools
-import validators
 
 
 def mock_node(name: str, namespace: str = "default"):
@@ -68,7 +67,7 @@ def build_mock_type_test_result(a, b, *args):
 
 
 class TestTypeTestResult(unittest.TestCase):
-    test_obj = build_mock_type_test_result('a', 'b')
+    test_obj = build_mock_type_test_result("a", "b")
 
     @classmethod
     def test_make_row_is_str(cls):
@@ -123,7 +122,7 @@ def build_mock_nullable_test_result(a, b, *args):
 
 
 class TestNullableTestResult(unittest.TestCase):
-    test_obj = build_mock_nullable_test_result('a', 'b')
+    test_obj = build_mock_nullable_test_result("a", "b")
 
     @classmethod
     def test_make_row_is_str(cls):
@@ -178,7 +177,7 @@ def build_mock_unique_test_result(a, b, *args):
 
 
 class TestUniqueTestResult(unittest.TestCase):
-    test_obj = build_mock_unique_test_result('a', 'b')
+    test_obj = build_mock_unique_test_result("a", "b")
 
     @classmethod
     def test_make_row_is_str(cls):
@@ -224,11 +223,15 @@ class TestUniqueTestResult(unittest.TestCase):
 
 
 def get_test_summary():
-    source_node = mock_node('a')
+    source_node = mock_node("a")
     results = [
-        build_mock_type_test_result('a', 'b', 'c'),
-        build_mock_unique_test_result('a', 'c', 'd', 'e'),
-        build_mock_nullable_test_result('a', 'f',)]
+        build_mock_type_test_result("a", "b", "c"),
+        build_mock_unique_test_result("a", "c", "d", "e"),
+        build_mock_nullable_test_result(
+            "a",
+            "f",
+        ),
+    ]
     return tools.TestSummary(source_node, results)
 
 
@@ -238,41 +241,47 @@ class TestTestSummary(unittest.TestCase):
     @classmethod
     def expected_graph_status_path(cls):
         result = {
-            cls.id('a'): {
-                cls.id('b'): True,
-                cls.id('c'): True,
-                cls.id('f'): False
+            cls.id("a"): {cls.id("b"): True, cls.id("c"): True, cls.id("f"): False},
+            cls.id("b"): {
+                cls.id("c"): False,
             },
-            cls.id('b'): {
-                cls.id('c'): False,
-            },
-            cls.id('c'): {
-                cls.id('d'): True
-            },
-            cls.id('d'): {
-                cls.id('e'): False
-            },
+            cls.id("c"): {cls.id("d"): True},
+            cls.id("d"): {cls.id("e"): False},
         }
         return result
 
     @classmethod
     def id(cls, val):
-        return ('default', val)
+        return ("default", val)
 
     @classmethod
     def test_graph_status_data_type(cls):
         summary_result = cls.summary.graph_status_path()
-        assert isinstance(summary_result, dict), f"Root object not dict, got {type(summary_result)}"
-        assert all(isinstance(value, dict) for value in summary_result.values()), f"Child object not dict, got {set(type(val) for val in summary_result.values())}"
-        assert all(isinstance(key, tuple) for key in summary_result.keys()), f"Child key not tuple, got {set(type(val) for val in summary_result.keys())}"
-        assert all(all(isinstance(key, tuple) for key in values.keys()) for values in summary_result.values()), f"key in child not tuple, got {set(type(v) for val in summary_result.values() for v in val.keys())}"
-        assert all(all(isinstance(val, bool) for val in values.values()) for values in summary_result.values()), f"value in child not bool, got {set(type(v) for val in summary_result.values() for v in val.values())}"
+        assert isinstance(
+            summary_result, dict
+        ), f"Root object not dict, got {type(summary_result)}"
+        assert all(
+            isinstance(value, dict) for value in summary_result.values()
+        ), f"Child object not dict, got {set(type(val) for val in summary_result.values())}"
+        assert all(
+            isinstance(key, tuple) for key in summary_result.keys()
+        ), f"Child key not tuple, got {set(type(val) for val in summary_result.keys())}"
+        assert all(
+            all(isinstance(key, tuple) for key in values.keys())
+            for values in summary_result.values()
+        ), f"key in child not tuple, got {set(type(v) for val in summary_result.values() for v in val.keys())}"
+        assert all(
+            all(isinstance(val, bool) for val in values.values())
+            for values in summary_result.values()
+        ), f"value in child not bool, got {set(type(v) for val in summary_result.values() for v in val.values())}"
 
     @classmethod
     def test_graph_status_root_keys(cls):
         result = cls.expected_graph_status_path()
         summary_result = cls.summary.graph_status_path()
-        assert result.keys() == summary_result.keys(), f"Unexpected parent keys. Expected: {list(result.keys())}. Got {list(summary_result.keys())}"
+        assert (
+            result.keys() == summary_result.keys()
+        ), f"Unexpected parent keys. Expected: {list(result.keys())}. Got {list(summary_result.keys())}"
 
     @classmethod
     def test_graph_status_child_keys(cls):
@@ -280,7 +289,9 @@ class TestTestSummary(unittest.TestCase):
         summary_result = cls.summary.graph_status_path()
 
         for key in result.keys():
-            assert result[key].keys() == summary_result[key].keys(), f"Unexpected child keys in {key}. Expected: {list(result[key].keys())}. Got {list(summary_result[key].keys())}"
+            assert (
+                result[key].keys() == summary_result[key].keys()
+            ), f"Unexpected child keys in {key}. Expected: {list(result[key].keys())}. Got {list(summary_result[key].keys())}"
 
     @classmethod
     def test_graph_status_child_values(cls):
@@ -289,7 +300,9 @@ class TestTestSummary(unittest.TestCase):
 
         for key, values in result.items():
             for sub_key, value in values.items():
-                assert value == summary_result[key][sub_key], f"Incorrect value for graph_status[{key}][{sub_key}], expected {value} got {summary_result[key][sub_key]}"
+                assert (
+                    value == summary_result[key][sub_key]
+                ), f"Incorrect value for graph_status[{key}][{sub_key}], expected {value} got {summary_result[key][sub_key]}"
 
     @classmethod
     def test_build_mermaid(cls):

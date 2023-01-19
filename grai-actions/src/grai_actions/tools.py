@@ -4,12 +4,11 @@ from abc import ABC, abstractmethod
 from itertools import chain, pairwise
 from typing import Dict, List, Tuple
 
+from grai_actions import integrations
 from grai_client.endpoints.v1.client import ClientV1
 from grai_client.schemas.node import NodeV1
 from grai_graph.analysis import GraphAnalyzer
 from grai_schemas.models import GraiEdgeMetadata, GraiNodeMetadata
-
-from grai_actions import integrations
 
 from .config import config
 from .git_messages import collapsable, heading
@@ -27,6 +26,7 @@ def get_nodes_and_edges(*args, **kwargs):
 
 class TestResult(ABC):
     """Assumed to be a failing test result"""
+
     type: str
 
     def __init__(self, node, test_path):
@@ -92,9 +92,7 @@ class NullableTestResult(TestResult):
 
     def message(self):
         to_be_or_not_to_be = "not " if self.expected_value else ""
-        return (
-            f"Node `{self.failing_node.spec.name}` expected {to_be_or_not_to_be}to be nullable"
-        )
+        return f"Node `{self.failing_node.spec.name}` expected {to_be_or_not_to_be}to be nullable"
 
 
 class TestSummary:
@@ -132,7 +130,7 @@ class TestSummary:
         return message
 
     def build_table(self):
-        rows = ''.join([test.make_row() for test in self.test_results])
+        rows = "".join([test.make_row() for test in self.test_results])
         message = f"| Dependency | Test | Message |\n| --- | --- | --- |\n{rows}"
         return message
 
