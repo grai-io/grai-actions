@@ -333,5 +333,4 @@ class TestTestSummary(unittest.TestCase):
     @classmethod
     def test_message(cls):
         message = cls.summary.message()
-        print(message)
-        raise
+        assert isinstance(message, str)
