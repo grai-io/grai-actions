@@ -119,6 +119,7 @@ class TestSummary:
 
     def mermaid_graph(self):
         def new_edge(a, b, status):
+            a, b = [f"{namespace}.{name}" for namespace, name in [a, b]]
             return f'\t{a}-->|"{"✅" if status else "❌"}"| {b};'
 
         graph_status = self.graph_status_path()
