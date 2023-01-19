@@ -81,11 +81,6 @@ class TestTypeTestResult(unittest.TestCase):
         assert row_str.count("|") == 4
 
     @classmethod
-    def test_make_row_ends_with_newline(cls):
-        row_str = cls.test_obj.make_row()
-        assert row_str.endswith("\n")
-
-    @classmethod
     def test_make_message_is_str(cls):
         message = cls.test_obj.message()
         assert isinstance(message, str)
@@ -136,11 +131,6 @@ class TestNullableTestResult(unittest.TestCase):
         assert row_str.count("|") == 4
 
     @classmethod
-    def test_make_row_ends_with_newline(cls):
-        row_str = cls.test_obj.make_row()
-        assert row_str.endswith("\n")
-
-    @classmethod
     def test_make_message_is_str(cls):
         message = cls.test_obj.message()
         assert isinstance(message, str)
@@ -189,11 +179,6 @@ class TestUniqueTestResult(unittest.TestCase):
     def test_make_row_has_correct_number_of_columns(cls):
         row_str = cls.test_obj.make_row()
         assert row_str.count("|") == 4
-
-    @classmethod
-    def test_make_row_ends_with_newline(cls):
-        row_str = cls.test_obj.make_row()
-        assert row_str.endswith("\n")
 
     @classmethod
     def test_make_message_is_str(cls):

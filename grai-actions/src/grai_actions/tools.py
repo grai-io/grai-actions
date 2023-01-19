@@ -40,7 +40,7 @@ class TestResult(ABC):
         pass
 
     def make_row(self):
-        row = f"| {self.node.spec.name} | {self.type} | {self.message()} |\n"
+        row = f"| {self.node.spec.name} | {self.type} | {self.message()} |"
         return row
 
     def error_metadata(self):
@@ -119,10 +119,10 @@ class TestSummary:
 
     def mermaid_graph(self):
         def new_edge(a, b, status):
-            return f'{a}-->|"{"✅" if status else "❌"}"| {b};'
+            return f'\t{a}-->|"{"✅" if status else "❌"}"| {b};'
 
         graph_status = self.graph_status_path()
-        edges = "".join(
+        edges = "\n".join(
             new_edge(a, b, status)
             for a, values in graph_status.items()
             for b, status in values.items()
@@ -131,7 +131,7 @@ class TestSummary:
         return message
 
     def build_table(self):
-        rows = "".join([test.make_row() for test in self.test_results])
+        rows = "\n".join([test.make_row() for test in self.test_results])
         message = f"| Dependency | Test | Message |\n| --- | --- | --- |\n{rows}"
         return message
 
