@@ -41,10 +41,10 @@ jobs:
         with:
           python-version: "${{ env.py_ver }}"
 
-      - run: |
-          pip install pytest
-          pip install .
+      - uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: "3.10"
 
-      - run: pytest
+      - run: poetry run pytest
 
-      - run: python tests/gh_action_demo_script.py
+      - run: poetry run python tests/gh_action_demo_script.py
