@@ -1,10 +1,9 @@
-from grai_client.endpoints.v1.client import ClientV1
 from grai_client.update import update
 
-from grai_actions.config import SUPPORTED_ACTIONS, config
+from grai_actions.config import SupportedActions, config
 from grai_actions.git_messages import post_comment
-from grai_actions.integrations import get_nodes_and_edges
-from grai_actions.tools import TestResultCache
+from grai_actions.tools import TestResultCache, get_nodes_and_edges
+from grai_actions.utilities import get_client
 
 
 def run_update_server(client):
@@ -26,25 +25,15 @@ def run_tests(client):
 
 
 def main():
-    conn_kwargs = {}
-    if config.workspace is not None:
-        conn_kwargs["workspace"] = config.workspace
-
-    client = ClientV1(config.host, config.port, **conn_kwargs)
-    client.set_authentication_headers(api_key=config.api_key)
-
-    authentication_status = client.check_authentication()
-    if authentication_status.status_code != 200:
-        raise Exception(f"Authentication to {config.host} failed")
+    client = get_client()
 
     match config.grai_action:
-        case "tests":
+        case SupportedActions.TESTS.value:
             run_tests(client)
-        case "update":
+        case SupportedActions.UPDATE.value:
             run_update_server(client)
         case _:
-            # try importing access_mode?
-            message = f"Unrecognized action {config.grai_action}. Supported options include {SUPPORTED_ACTIONS}"
+            message = f"Unrecognized action {config.grai_action}. Supported options include {SupportedActions}"
             raise NotImplementedError(message)
 
 

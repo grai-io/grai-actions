@@ -10,13 +10,13 @@ env_vars = [
     "GITHUB_REPOSITORY_OWNER = Grai",
     "GITHUB_REPOSITORY = grai-actions",
     "GRAI_NAMESPACE = default",
-    "GRAI_HOST = localhost",
-    "GRAI_PORT = 8000",
+    "GRAI_HOST = api.grai.io",
+    "GRAI_PORT = 443",
     "GITHUB_EVENT_NAME = pull_request",
     "GRAI_API_KEY = abc",
     f"PR_NUMBER = {get_pr_number()}",
     "GRAI_WORKSPACE = default",
-    "GRAI_FRONTEND_HOST = http://localhost:3000",
+    "GRAI_FRONTEND_HOST = http://app.grai.io",
 ]
 
 for env_var in env_vars:

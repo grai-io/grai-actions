@@ -1,47 +1,81 @@
-import os
-from dataclasses import dataclass
+from enum import Enum
+from typing import Optional
 
-SUPPORTED_ACTIONS = {"tests", "update"}
-DEFAULT_ACTION = "tests"
-
-
-def validate_item(item, item_name, item_label=None, env_var_label=None):
-    if item_label is None:
-        item_label = item_name
-    if env_var_label is None:
-        env_var_label = f"GRAI_{item_name.upper()}"
-    message = f"No {item_name} provided, please provide an `{item_label}` value in your workflow or create a `{env_var_label}` secret."
-    assert item is not None and item != "", message
+from pydantic import AnyUrl, BaseSettings, SecretStr, validator
 
 
-@dataclass
-class Config:
-    github_token = os.environ["GITHUB_TOKEN"]
-    owner = os.environ["GITHUB_REPOSITORY_OWNER"]
-    repo = os.environ["GITHUB_REPOSITORY"].split("/")[-1]
-    namespace = os.environ["GRAI_NAMESPACE"]
-    host = os.environ["GRAI_HOST"]
-    port = os.environ["GRAI_PORT"]
-    git_event = os.environ["GITHUB_EVENT_NAME"]
-    api_key = os.environ["GRAI_API_KEY"]
-    issue_number = os.environ["PR_NUMBER"]
-    workspace = os.environ["GRAI_WORKSPACE"]
-    grai_frontend_host = os.environ["GRAI_FRONTEND_HOST"]
-    grai_action = os.environ.get("GRAI_ACTION", DEFAULT_ACTION)
-
-    def __post_init__(self):
-        self.workspace = None if self.workspace == "" else self.workspace
-        self.port = "443" if self.port == "" else self.port
-
-        validate_item(self.api_key, "api-key")
-        validate_item(self.github_token, "github-token")
-        assert (
-            self.api_key is not None and self.api_key != ""
-        ), "No api key provided, please provide an `api-key` value in your workflow or create a `GRAI_API_KEY` secret"
-
-        assert (
-            self.grai_action in SUPPORTED_ACTIONS
-        ), f"Unrecognized action {self.grai_action}. Supported options include {SUPPORTED_ACTIONS}."
+class SupportedActions(Enum):
+    TESTS = "tests"
+    UPDATE = "update"
 
 
-config = Config()
+class AccessModes(Enum):
+    DBT = "dbt"
+    FLAT_FILE = "flat_file"
+    TEST_MODE = "test_mode"
+
+
+DEFAULT_ACCESS_MODE = AccessModes.TEST_MODE.value
+
+
+class AccessMode(BaseSettings):
+    grai_access_mode: AccessModes = DEFAULT_ACCESS_MODE
+
+    class Config:
+        use_enum_values = True  # Populates model with the value property of enums
+
+
+class Config(BaseSettings):
+    """Config values are pulled from their corresponding case-insensitive environment variables"""
+
+    # --- Github configs --- #
+    github_token: SecretStr
+    github_repository_owner: str
+    github_repository: str
+    github_event_name: str
+    pr_number: str
+
+    # ---- Grai configs --- #
+    grai_api_key: SecretStr
+    grai_namespace: str = "default"
+    grai_workspace: Optional[str] = None
+    grai_host: str = "api.grai.io"
+    grai_port: str = "443"
+    grai_frontend_url: Optional[AnyUrl] = None
+    grai_action: SupportedActions = SupportedActions.TESTS
+    grai_access_mode: AccessModes = DEFAULT_ACCESS_MODE
+
+    @property
+    def repo_name(self):
+        return self.github_repository.split("/")[-1]
+
+    @validator("grai_frontend_url")
+    def validate_grai_frontend_url(cls, value, values):
+        if value is None:
+            if values["grai_host"] == "api.grai.io":
+                return "https://app.grai.io"
+            return value
+        else:
+            return value.rstrip("/")
+
+    class Config:
+        """Extra configuration options"""
+
+        anystr_strip_whitespace = True  # remove trailing whitespace
+        use_enum_values = True  # Populates model with the value property of enums
+        validate_assignment = True  # Perform validation on assignment to attributes
+
+
+access_mode = AccessMode()
+if access_mode.grai_access_mode == AccessModes.TEST_MODE.value:
+    default_config = {
+        "github_token": "abcde",
+        "github_repository_owner": "Grai",
+        "github_repository": "grai.io/grai-actions",
+        "github_event_name": "pull_request",
+        "pr_number": "8675309",
+        "grai_api_key": "a-really-secret-key",
+    }
+    config = Config(**default_config)
+else:
+    config = Config()

@@ -1,10 +1,6 @@
-import json
-import urllib
-from urllib import parse
-
 from ghapi.all import GhApi
 
-from .config import config
+from grai_actions.config import config
 
 
 def collapsable(content, label):
@@ -23,5 +19,9 @@ def heading(string, level):
 
 
 def post_comment(message):
-    api = GhApi(owner=config.owner, repo=config.repo, token=config.github_token)
-    api.issues.create_comment(config.issue_number, body=message)
+    api = GhApi(
+        owner=config.github_repository_owner,
+        repo=config.repo_name,
+        token=config.github_token,
+    )
+    api.issues.create_comment(config.pr_number, body=message)

@@ -155,12 +155,12 @@ class TestSummary:
     def build_link(self):
         errors = [error.error_metadata() for error in self.test_results]
         errors = urllib.parse.quote_plus(json.dumps(errors))
-        link = f"{config.grai_frontend_host}/workspaces/{config.workspace}/graph?limitGraph=true&errors={errors}"
+        link = f"{config.grai_frontend_url}/workspaces/{config.grai_workspace}/graph?limitGraph=true&errors={errors}"
         return link, f"""<a href="{link}" target="_blank">Show Plot</a>"""
 
     def message(self) -> str:
         message = f"\n{self.mermaid_graph()}\n\n{self.test_summary()}\n"
-        if config.grai_frontend_host:
+        if config.grai_frontend_url:
             message = f"{message}\n{self.build_link()[1]}"
 
         return message
