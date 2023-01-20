@@ -66,16 +66,18 @@ class Config(BaseSettings):
         validate_assignment = True  # Perform validation on assignment to attributes
 
 
+_TEST_CONFIG_DICT = {
+    "github_token": "abcde",
+    "github_repository_owner": "Grai",
+    "github_repository": "grai.io/grai-actions",
+    "github_event_name": "pull_request",
+    "pr_number": "8675309",
+    "grai_api_key": "a-really-secret-key",
+}
+test_config = Config(**_TEST_CONFIG_DICT)
+
 access_mode = AccessMode()
 if access_mode.grai_access_mode == AccessModes.TEST_MODE.value:
-    default_config = {
-        "github_token": "abcde",
-        "github_repository_owner": "Grai",
-        "github_repository": "grai.io/grai-actions",
-        "github_event_name": "pull_request",
-        "pr_number": "8675309",
-        "grai_api_key": "a-really-secret-key",
-    }
-    config = Config(**default_config)
+    config = test_config
 else:
     config = Config()

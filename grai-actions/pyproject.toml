@@ -4,7 +4,7 @@ version = "0.1.1"
 description = ""
 authors = ["Grai <ian@grai.io>"]
 license = "Elastic-2.0"
-readme = "README.md"
+readme = "Readme.md"
 packages = [{include = "grai_actions", from = "src"}]
 
 [tool.poetry.dependencies]
