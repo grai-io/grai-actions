@@ -31,6 +31,9 @@ inputs:
   manifest-file:
     description: "File location where your dbt manifest file will be generated"
     required: true
+  action:
+    description: Which action to take. Examples include `tests` and `update`.
+    default: "tests"
 runs:
   using: 'docker'
   image: '../Dockerfile'
@@ -46,3 +49,4 @@ runs:
     PR_NUMBER: $(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
     GRAI_ACCESS_MODE: 'dbt'
     GRAI_DBT_MANIFEST_FILE: ${{ inputs.manifest-file }}
+    GRAI_ACTION: ${{ inputs.action }}

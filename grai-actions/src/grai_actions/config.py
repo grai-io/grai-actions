@@ -1,6 +1,9 @@
 import os
 from dataclasses import dataclass
 
+SUPPORTED_ACTIONS = {"tests", "update"}
+DEFAULT_ACTION = "tests"
+
 
 def validate_item(item, item_name, item_label=None, env_var_label=None):
     if item_label is None:
@@ -24,6 +27,7 @@ class Config:
     issue_number = os.environ["PR_NUMBER"]
     workspace = os.environ["GRAI_WORKSPACE"]
     grai_frontend_host = os.environ["GRAI_FRONTEND_HOST"]
+    grai_action = os.environ.get("GRAI_ACTION", DEFAULT_ACTION)
 
     def __post_init__(self):
         self.workspace = None if self.workspace == "" else self.workspace
@@ -34,6 +38,10 @@ class Config:
         assert (
             self.api_key is not None and self.api_key != ""
         ), "No api key provided, please provide an `api-key` value in your workflow or create a `GRAI_API_KEY` secret"
+
+        assert (
+            self.grai_action in SUPPORTED_ACTIONS
+        ), f"Unrecognized action {self.grai_action}. Supported options include {SUPPORTED_ACTIONS}."
 
 
 config = Config()

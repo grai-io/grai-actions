@@ -1,21 +1,19 @@
 from grai_client.endpoints.v1.client import ClientV1
+from grai_client.update import update
 
-from grai_actions.config import config
+from grai_actions.config import SUPPORTED_ACTIONS, config
 from grai_actions.git_messages import post_comment
 from grai_actions.integrations import get_nodes_and_edges
 from grai_actions.tools import TestResultCache
 
 
-def file_deleted():
-    pass
-    #  TODO
-
-
-def on_merge(client):
+def run_update_server(client):
     nodes, edges = get_nodes_and_edges(client)
+    update(client, nodes)
+    update(client, edges)
 
 
-def on_pull_request(client):
+def run_tests(client):
     results = TestResultCache(client)
 
     errors = False
@@ -39,10 +37,15 @@ def main():
     if authentication_status.status_code != 200:
         raise Exception(f"Authentication to {config.host} failed")
 
-    if config.git_event == "merge":
-        return on_merge(client)
-    elif config.git_event == "pull_request":
-        return on_pull_request(client)
+    match config.grai_action:
+        case "tests":
+            run_tests(client)
+        case "update":
+            run_update_server(client)
+        case _:
+            # try importing access_mode?
+            message = f"Unrecognized action {config.grai_action}. Supported options include {SUPPORTED_ACTIONS}"
+            raise NotImplementedError(message)
 
 
 if __name__ == "__main__":

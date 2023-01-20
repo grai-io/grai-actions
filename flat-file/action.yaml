@@ -32,6 +32,9 @@ inputs:
   file:
     description: "Local file to track with Grai"
     required: true
+  action:
+    description: Which action to take. Examples include `tests` and `update`.
+    default: "tests"
 runs:
   using: 'docker'
   image: '../Dockerfile'
@@ -46,3 +49,4 @@ runs:
     GRAI_API_KEY: ${{ inputs.api-key }}
     GRAI_ACCESS_MODE: 'flat-file'
     GRAI_TRACKED_FILE: ${{ inputs.file }}
+    GRAI_ACTION: ${{ inputs.action }}
