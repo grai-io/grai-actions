@@ -51,7 +51,7 @@ class Config(ActionBaseSettings):
     pr_number: str
 
     # --- Grai configuration values --- #
-    grai_api_key: str
+    grai_api_key: SecretStr
     grai_namespace: str = "default"
     grai_workspace: Optional[str] = None
     grai_host: str = "api.grai.io"
