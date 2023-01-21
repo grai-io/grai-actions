@@ -10,9 +10,8 @@ from grai_graph.analysis import GraphAnalyzer
 from grai_schemas.models import GraiEdgeMetadata, GraiNodeMetadata
 
 from grai_actions import integrations
-
-from .config import config
-from .git_messages import collapsable, heading
+from grai_actions.config import config
+from grai_actions.git_messages import collapsable, heading
 
 
 def get_nodes_and_edges(*args, **kwargs):

@@ -12,7 +12,7 @@ def run_update_server(client):
     update(client, edges)
 
 
-def run_tests(client):
+def run_tests(client, config):
     results = TestResultCache(client)
 
     errors = False
@@ -29,9 +29,9 @@ def main():
 
     match config.grai_action:
         case SupportedActions.TESTS.value:
-            run_tests(client)
+            run_tests(client, config)
         case SupportedActions.UPDATE.value:
-            run_update_server(client)
+            run_update_server(client, config)
         case _:
             message = f"Unrecognized action {config.grai_action}. Supported options include {SupportedActions}"
             raise NotImplementedError(message)
