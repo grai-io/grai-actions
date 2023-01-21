@@ -4,13 +4,6 @@ from typing import Literal, Optional, Union
 from pydantic import AnyUrl, BaseSettings, SecretStr, validator
 
 
-class ConcatenateableSecretStr(SecretStr):
-    """Required for GHapi to work correctly"""
-
-    def __radd__(self, value):
-        return str(self) + value
-
-
 class ActionBaseSettings(BaseSettings):
     class Config:
         """Extra configuration options"""
@@ -43,7 +36,7 @@ class AccessModes(CaseInsensitiveEnum):
 
 class Config(ActionBaseSettings):
     # --- Github configuration values --- #
-    github_token: str
+    github_token: SecretStr
     github_repository_owner: str
     github_repository: str
     github_event_name: str

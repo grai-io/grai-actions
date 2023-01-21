@@ -22,6 +22,6 @@ def post_comment(message):
     api = GhApi(
         owner=config.github_repository_owner,
         repo=config.repo_name,
-        token=config.github_token,
+        token=config.github_token.get_secret_value(),
     )
     api.issues.create_comment(config.pr_number, body=message)
