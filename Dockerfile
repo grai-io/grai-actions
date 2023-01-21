@@ -21,6 +21,7 @@ RUN apt update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY ./grai-actions /grai-actions
+COPY ./grai-actions/entrypoints /entrypoints
 WORKDIR /grai-actions
 
 # I'm a little unclear why the second install is required. It
@@ -32,4 +33,4 @@ RUN poetry config virtualenvs.create false  \
     && rm -rf ~/.cache/pypoetry/artifacts
 
 
-ENTRYPOINT ["entrypoints/entrypoint.sh"]
+ENTRYPOINT ["/entrypoints/entrypoint.sh"]
