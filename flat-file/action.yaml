@@ -38,7 +38,7 @@ inputs:
 runs:
   using: 'docker'
   image: '../Dockerfile'
-  entrypoint: /entrypoints/flat-file.sh
+  entrypoint: /grai-actions/entrypoints/flat-file.sh
   env:
     GITHUB_TOKEN: ${{ inputs.github-token }}
     GRAI_NAMESPACE: ${{ inputs.namespace }}
