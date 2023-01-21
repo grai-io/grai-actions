@@ -8,7 +8,7 @@ class ConcatenateableSecretStr(SecretStr):
     """Required for GHapi to work correctly"""
 
     def __radd__(self, value):
-        return value + str(self)
+        return str(self) + value
 
 
 class ActionBaseSettings(BaseSettings):
