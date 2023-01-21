@@ -1,14 +1,14 @@
 from enum import Enum
 from typing import Literal, Optional, Union
 
-from pydantic import (
-    AnyUrl,
-    BaseModel,
-    BaseSettings,
-    SecretStr,
-    root_validator,
-    validator,
-)
+from pydantic import AnyUrl, BaseSettings, SecretStr, validator
+
+
+class ConcatenateableSecretStr(SecretStr):
+    """Required for GHapi to work correctly"""
+
+    def __radd__(self, value):
+        return value + str(self)
 
 
 class ActionBaseSettings(BaseSettings):
@@ -43,7 +43,7 @@ class AccessModes(CaseInsensitiveEnum):
 
 class Config(ActionBaseSettings):
     # --- Github configuration values --- #
-    github_token: SecretStr
+    github_token: ConcatenatableSecretStr
     github_repository_owner: str
     github_repository: str
     github_event_name: str
@@ -51,7 +51,7 @@ class Config(ActionBaseSettings):
     pr_number: str
 
     # --- Grai configuration values --- #
-    grai_api_key: SecretStr
+    grai_api_key: ConcatenatableSecretStr
     grai_namespace: str = "default"
     grai_workspace: Optional[str] = None
     grai_host: str = "api.grai.io"
