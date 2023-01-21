@@ -43,7 +43,7 @@ class AccessModes(CaseInsensitiveEnum):
 
 class Config(ActionBaseSettings):
     # --- Github configuration values --- #
-    github_token: ConcatenatableSecretStr
+    github_token: ConcatenateableSecretStr
     github_repository_owner: str
     github_repository: str
     github_event_name: str
@@ -51,7 +51,7 @@ class Config(ActionBaseSettings):
     pr_number: str
 
     # --- Grai configuration values --- #
-    grai_api_key: ConcatenatableSecretStr
+    grai_api_key: ConcatenateableSecretStr
     grai_namespace: str = "default"
     grai_workspace: Optional[str] = None
     grai_host: str = "api.grai.io"
