@@ -9,7 +9,6 @@ jobs:
   lint-action:
     name: Linting
     runs-on: ubuntu-latest
-    if: ${{ !env.ACT }}
     defaults:
       run:
         working-directory: image/grai-actions
@@ -32,7 +31,6 @@ jobs:
   test-action:
     needs: lint-action
     runs-on: ubuntu-latest
-    if: ${{ !env.ACT }}
     defaults:
       run:
         working-directory: grai-actions
