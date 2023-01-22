@@ -13,22 +13,12 @@ class ActionBaseSettings(BaseSettings):
         validate_assignment = True  # Perform validation on assignment to attributes
 
 
-class CaseInsensitiveEnum(Enum):
-    @classmethod
-    def __missing__(cls, value):
-        value = value.lower()
-        for member in cls:
-            if member.value == value:
-                return member
-        return None
-
-
-class SupportedActions(CaseInsensitiveEnum):
+class SupportedActions(Enum):
     TESTS = "tests"
     UPDATE = "update"
 
 
-class AccessModes(CaseInsensitiveEnum):
+class AccessModes(Enum):
     DBT = "dbt"
     FLAT_FILE = "flat_file"
     TEST_MODE = "test_mode"
@@ -41,7 +31,6 @@ class Config(ActionBaseSettings):
     github_repository: str
     github_event_name: str
     github_ref: str
-    pr_number: str
 
     # --- Grai configuration values --- #
     grai_api_key: SecretStr

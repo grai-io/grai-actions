@@ -1,5 +1,5 @@
 # action.yml
-name: 'Grai flat file tests'
+name: 'flat-file'
 description: 'Determines the impact of changing data on downstream users'
 author: Grai <ian@grai.io>
 inputs:

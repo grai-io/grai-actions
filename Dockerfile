@@ -21,16 +21,14 @@ RUN apt update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY ./grai-actions /grai-actions
-COPY ./grai-actions/entrypoints /entrypoints
-#WORKDIR /grai-actions
 
 # I'm a little unclear why the second install is required. It
 RUN pip install "poetry==$POETRY_VERSION"
 RUN poetry config virtualenvs.create false  \
-    && poetry lock --no-update \
+    && poetry lock --no-update --directory /grai-actions\
     && poetry install --no-interaction --no-ansi --only main --directory /grai-actions\
     && rm -rf ~/.cache/pypoetry/cache \
     && rm -rf ~/.cache/pypoetry/artifacts
 
 
-ENTRYPOINT ["/entrypoints/entrypoint.sh"]
+ENTRYPOINT ["/grai-actions/entrypoints/entrypoint.sh"]
