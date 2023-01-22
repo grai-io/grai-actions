@@ -17,10 +17,20 @@ from grai_actions.git_messages import collapsable, heading
 def get_nodes_and_edges(*args, **kwargs):
     nodes, edges = integrations.get_nodes_and_edges(*args, **kwargs)
     for node in nodes:
-        node.spec.metadata = GraiNodeMetadata(**node.spec.metadata.dict())
+        item = (
+            node.spec.metadata
+            if isinstance(node.spec.metadata, dict)
+            else node.spec.metadata.dict()
+        )
+        node.spec.metadata = GraiNodeMetadata(**item)
 
     for edge in edges:
-        edge.spec.metadata = GraiEdgeMetadata(**edge.spec.metadata.dict())
+        item = (
+            edge.spec.metadata
+            if isinstance(edge.spec.metadata, dict)
+            else edge.spec.metadata.dict()
+        )
+        edge.spec.metadata = GraiEdgeMetadata(**item)
     return nodes, edges
 
 
