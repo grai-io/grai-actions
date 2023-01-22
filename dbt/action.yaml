@@ -32,8 +32,8 @@ inputs:
     default: "tests"
 runs:
   using: 'docker'
-  image: '../Dockerfile'
-  entrypoint: /grai-actions/entrypoints/dbt.sh
+  image: '../image/Dockerfile'
+  entrypoint: /entrypoints/dbt.sh
   env:
     GITHUB_TOKEN: ${{ inputs.github-token }}
     GRAI_NAMESPACE: ${{ inputs.namespace }}
