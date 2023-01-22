@@ -12,7 +12,7 @@ jobs:
     if: ${{ !env.ACT }}
     defaults:
       run:
-        working-directory: grai-actions
+        working-directory: image/grai-actions
     steps:
       - name: Checkout
         uses: actions/checkout@v3

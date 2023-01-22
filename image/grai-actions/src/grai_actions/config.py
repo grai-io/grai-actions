@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Literal, Optional, Union
 
-from pydantic import AnyUrl, BaseSettings, SecretStr, validator
+from pydantic import AnyUrl, BaseSettings, SecretStr, root_validator, validator
 
 
 class ActionBaseSettings(BaseSettings):
@@ -24,6 +24,13 @@ class AccessModes(Enum):
     TEST_MODE = "test_mode"
 
 
+class DefaultValues:
+    grai_namespace = "default"
+    grai_workspace = None
+    grai_host = "api.grai.io"
+    grai_port = "443"
+
+
 class Config(ActionBaseSettings):
     # --- Github configuration values --- #
     github_token: SecretStr
@@ -34,10 +41,10 @@ class Config(ActionBaseSettings):
 
     # --- Grai configuration values --- #
     grai_api_key: SecretStr
-    grai_namespace: str = "default"
-    grai_workspace: Optional[str] = None
-    grai_host: str = "api.grai.io"
-    grai_port: str = "443"
+    grai_namespace: str = DefaultValues.grai_namespace
+    grai_workspace: Optional[str] = DefaultValues.grai_workspace
+    grai_host: str = DefaultValues.grai_host
+    grai_port: str = DefaultValues.grai_port
     grai_frontend_url: Optional[AnyUrl] = None
     grai_action: SupportedActions = SupportedActions.TESTS
     grai_access_mode: AccessModes
@@ -58,6 +65,15 @@ class Config(ActionBaseSettings):
             return value
         else:
             return value.rstrip("/")
+
+    @root_validator(pre=True)
+    def parse_empty_values(cls, values):
+        """Empty strings should be treated as missing"""
+        new_values = values.copy()
+        for k, v in values.items():
+            if v == "":
+                new_values.pop(k)
+        return new_values
 
 
 config = Config()

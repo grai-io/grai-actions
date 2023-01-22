@@ -45,3 +45,7 @@ runs:
     GRAI_ACCESS_MODE: 'dbt'
     GRAI_DBT_MANIFEST_FILE: ${{ inputs.manifest-file }}
     GRAI_ACTION: ${{ inputs.action }}
+
+branding:
+    color: 'purple'
+    icon: 'eye'
