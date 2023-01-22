@@ -4,7 +4,7 @@ env:
   py_ver: "3.10"
   poetry_ver: "1.2.2"
   GITHUB_TOKEN: ${{ github.token }}
-  working_dir: "image/gra-actions"
+  working_dir: "image/grai-actions"
 jobs:
   lint-action:
     name: Linting
