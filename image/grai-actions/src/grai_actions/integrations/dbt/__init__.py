@@ -14,6 +14,6 @@ args = Args()
 def get_nodes_and_edges(client):
     # Already adapted to client
     nodes, edges = base.get_nodes_and_edges(
-        args.grai_dbt_manifest_file.name, config.grai_namespace, client.id
+        str(args.grai_dbt_manifest_file), config.grai_namespace, client.id
     )
     return nodes, edges
