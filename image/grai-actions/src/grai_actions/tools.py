@@ -168,9 +168,10 @@ class TestSummary:
 class TestResultCache:
     def __init__(self, client: ClientV1):
         self.client = client
+        self.new_nodes, self.new_edges = get_nodes_and_edges(client)
+
         self.graph = self.client.build_graph()
         self.analysis = GraphAnalyzer(graph=self.graph)
-        self.new_nodes, self.new_edges = get_nodes_and_edges(client)
 
     @property
     def new_columns(self):
