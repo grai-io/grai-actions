@@ -4,14 +4,14 @@ env:
   py_ver: "3.10"
   poetry_ver: "1.2.2"
   GITHUB_TOKEN: ${{ github.token }}
-
+  working_dir: "image/gra-actions"
 jobs:
   lint-action:
     name: Linting
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: image/grai-actions
+        working-directory: ${{ env.working_dir }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: grai-actions
+        working-directory: ${{ env.working_dir }}
     steps:
       - uses: actions/checkout@v3
 
