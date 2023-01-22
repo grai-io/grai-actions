@@ -186,7 +186,7 @@ class TestResultCache:
     @property
     def new_columns(self):
         for node in self.new_nodes:
-            node_type = node.spec.metadata["grai"]["node_type"]
+            node_type = node.spec.metadata.grai.node_type
             if node_type != "Column":
                 continue
             yield node
@@ -204,9 +204,7 @@ class TestResultCache:
                 # This is a new node
                 continue
 
-            result = node.spec.metadata["grai"]["node_attributes"].get(
-                "data_type", None
-            )
+            result = node.spec.metadata.grai.node_attributes.data_type
             affected_nodes = self.analysis.test_type_change(
                 namespace=node.spec.namespace, name=node.spec.name, new_type=result
             )
@@ -225,9 +223,7 @@ class TestResultCache:
                 # This is a new node
                 continue
 
-            result = node.spec.metadata["grai"]["node_attributes"].get(
-                "is_unique", None
-            )
+            result = node.spec.metadata.grai.node_attributes.is_unique
             affected_nodes = self.analysis.test_unique_violations(
                 namespace=node.spec.namespace,
                 name=node.spec.name,
@@ -248,9 +244,7 @@ class TestResultCache:
                 # This is a new node
                 continue
 
-            result = node.spec.metadata["grai"]["node_attributes"].get(
-                "is_unique", None
-            )
+            result = node.spec.metadata.grai.node_attributes.is_nullable
             affected_nodes = self.analysis.test_nullable_violations(
                 namespace=node.spec.namespace, name=node.spec.name, is_nullable=result
             )
