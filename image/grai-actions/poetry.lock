@@ -354,19 +354,19 @@ pydantic = ">=1.10.4,<2.0.0"
 
 [[package]]
 name = "grai-source-dbt"
-version = "0.0.7"
+version = "0.0.8"
 description = ""
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "grai_source_dbt-0.0.7-py3-none-any.whl", hash = "sha256:b900e9d0bf8d0332a37ba503f1a83b72a546cff32ac0b67b694811e1227af269"},
-    {file = "grai_source_dbt-0.0.7.tar.gz", hash = "sha256:45b954d8605aff896b9dc5528120f33c2cf91433e6a346588bb2c5f4d1fcdfaf"},
+    {file = "grai_source_dbt-0.0.8-py3-none-any.whl", hash = "sha256:32ea53ce359481181f2beb1d0b1f9df6e47c0b425f62ed9d2c4704c7c5bd2904"},
+    {file = "grai_source_dbt-0.0.8.tar.gz", hash = "sha256:59ea66f5aa8d18b462d3c6ca8d7864db4ca4dbc96c1007cbf41569eebec47c22"},
 ]
 
 [package.dependencies]
 grai-client = ">=0.1.16,<0.2.0"
-grai-schemas = ">=0.1.0,<0.2.0"
+grai-schemas = ">=0.1.2,<0.2.0"
 networkx = ">=2.8.3,<3.0.0"
 pydantic = ">=1.9.1,<2.0.0"
 
@@ -1037,4 +1037,4 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "91f2209cf083cfff2d1c28f76b05a35ac0414505832e804b06f123259b4f1635"
+content-hash = "6ec13d54ed2eec25f8d0b80b4926fd0bdaa679b54d06f262a995fc6939b2c45b"
