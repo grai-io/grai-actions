@@ -7,8 +7,7 @@ from typing import Dict, List, Tuple
 from grai_client.endpoints.v1.client import ClientV1
 from grai_client.schemas.node import NodeV1
 from grai_graph.analysis import GraphAnalyzer
-from grai_schemas.base import Metadata
-from grai_schemas.models import GraiEdgeMetadata, GraiNodeMetadata
+from grai_schemas.base import EdgeMetadata, NodeMetadata
 
 from grai_actions import integrations
 from grai_actions.config import config
@@ -23,7 +22,7 @@ def get_nodes_and_edges(*args, **kwargs):
             if isinstance(node.spec.metadata, dict)
             else node.spec.metadata.dict()
         )
-        node.spec.metadata = Metadata(**item)
+        node.spec.metadata = NodeMetadata(**item)
 
     for edge in edges:
         item = (
@@ -31,7 +30,7 @@ def get_nodes_and_edges(*args, **kwargs):
             if isinstance(edge.spec.metadata, dict)
             else edge.spec.metadata.dict()
         )
-        edge.spec.metadata = Metadata(**item)
+        edge.spec.metadata = EdgeMetadata(**item)
     return nodes, edges
 
 

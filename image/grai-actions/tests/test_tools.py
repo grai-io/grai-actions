@@ -67,6 +67,27 @@ def build_mock_type_test_result(a, b, *args):
     return tools.TypeTestResult(nodes[0], nodes)
 
 
+def test_mock_node_extra_metadata():
+    node_dict = {
+        "type": "Node",
+        "version": "v1",
+        "spec": {
+            "id": None,
+            "name": "tom",
+            "namespace": "bombadil",
+            "data_source": "test_source",
+            "display_name": "Tommy B",
+            "is_active": True,
+            "metadata": {"grai": ColumnMetadata(), "extra": {}},
+        },
+    }
+    try:
+        node = NodeV1(**node_dict)
+        node.spec.metadata = Metadata(**node.spec.metadata)
+    except Exception as e:
+        assert False, "failed to create node and metadata with non-grai metadata fields"
+
+
 class TestTypeTestResult(unittest.TestCase):
     test_obj = build_mock_type_test_result("a", "b")
 

@@ -299,14 +299,14 @@ dev = ["jsonref", "matplotlib"]
 
 [[package]]
 name = "grai-client"
-version = "0.1.16"
+version = "0.1.17"
 description = ""
 category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "grai_client-0.1.16-py3-none-any.whl", hash = "sha256:2de88ba0df604c9dfa494247f9639f8aa23eb4f3eed96ac0d77833fcfb26f391"},
-    {file = "grai_client-0.1.16.tar.gz", hash = "sha256:db46449cda28bc2e88f95995bc9edb2bf132ba434fbfba3b7f4f8729cac0b0ec"},
+    {file = "grai_client-0.1.17-py3-none-any.whl", hash = "sha256:5b469564c4f2ff795a86b6c85cd337a53fe81beb17b255babe10e3fd32fb497e"},
+    {file = "grai_client-0.1.17.tar.gz", hash = "sha256:0072db66b198e55c964b925add1f9d94d6cb5f8f28608ccf786fd1bf2f8b82e4"},
 ]
 
 [package.dependencies]
@@ -339,14 +339,14 @@ vis = ["matplotlib (>=3.5.2,<4.0.0)", "pydot (>=1.4.2,<2.0.0)"]
 
 [[package]]
 name = "grai-schemas"
-version = "0.1.2"
+version = "0.1.4"
 description = ""
 category = "main"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "grai_schemas-0.1.2-py3-none-any.whl", hash = "sha256:aeb2922bdc98c8a28ee4226dea480824e915d38d6dad3d6af62854596d3eec64"},
-    {file = "grai_schemas-0.1.2.tar.gz", hash = "sha256:0024f31167281c1b2062de557075e97ff18dbde47382bf946485f6a77d489cf9"},
+    {file = "grai_schemas-0.1.4-py3-none-any.whl", hash = "sha256:a1f118e152619320c8c05e9f37b3b675081006e452e9751594caf9f5fe02e80c"},
+    {file = "grai_schemas-0.1.4.tar.gz", hash = "sha256:15e220abdf373381f407bca299a9a24f8ad863774351096d99b733dc824742df"},
 ]
 
 [package.dependencies]
@@ -1037,4 +1037,4 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "46a733bb40bf017b125d89d71a5008e9758b3396173e1b13007c01db8e6a7b99"
+content-hash = "91f2209cf083cfff2d1c28f76b05a35ac0414505832e804b06f123259b4f1635"
