@@ -7,6 +7,7 @@ from typing import Dict, List, Tuple
 from grai_client.endpoints.v1.client import ClientV1
 from grai_client.schemas.node import NodeV1
 from grai_graph.analysis import GraphAnalyzer
+from grai_schemas.base import Metadata
 from grai_schemas.models import GraiEdgeMetadata, GraiNodeMetadata
 
 from grai_actions import integrations
@@ -22,7 +23,7 @@ def get_nodes_and_edges(*args, **kwargs):
             if isinstance(node.spec.metadata, dict)
             else node.spec.metadata.dict()
         )
-        node.spec.metadata = GraiNodeMetadata(**item)
+        node.spec.metadata = Metadata(**item)
 
     for edge in edges:
         item = (
@@ -30,7 +31,7 @@ def get_nodes_and_edges(*args, **kwargs):
             if isinstance(edge.spec.metadata, dict)
             else edge.spec.metadata.dict()
         )
-        edge.spec.metadata = GraiEdgeMetadata(**item)
+        edge.spec.metadata = Metadata(**item)
     return nodes, edges
 
 
@@ -182,6 +183,9 @@ class TestResultCache:
 
         self.graph = self.client.build_graph()
         self.analysis = GraphAnalyzer(graph=self.graph)
+
+        for item in [*self.graph.manifest.nodes, *self.graph.manifest.edges]:
+            item.spec.metadata = Metadata(item.spec.metadata)
 
     @property
     def new_columns(self):

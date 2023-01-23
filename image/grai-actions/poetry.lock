@@ -354,35 +354,37 @@ pydantic = ">=1.10.4,<2.0.0"
 
 [[package]]
 name = "grai-source-dbt"
-version = "0.0.6"
+version = "0.0.7"
 description = ""
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "grai_source_dbt-0.0.6-py3-none-any.whl", hash = "sha256:3c0e41aa4fb6cbfa47c564b5143131a85ec0d140736a2fbf73354fba4b2a26fc"},
-    {file = "grai_source_dbt-0.0.6.tar.gz", hash = "sha256:e980b5f24eb78a2f957cf144e5ab474a6cd0651a2be142320fdeececc15ae082"},
+    {file = "grai_source_dbt-0.0.7-py3-none-any.whl", hash = "sha256:b900e9d0bf8d0332a37ba503f1a83b72a546cff32ac0b67b694811e1227af269"},
+    {file = "grai_source_dbt-0.0.7.tar.gz", hash = "sha256:45b954d8605aff896b9dc5528120f33c2cf91433e6a346588bb2c5f4d1fcdfaf"},
 ]
 
 [package.dependencies]
-grai-client = ">=0.1.8,<0.2.0"
+grai-client = ">=0.1.16,<0.2.0"
+grai-schemas = ">=0.1.0,<0.2.0"
 networkx = ">=2.8.3,<3.0.0"
 pydantic = ">=1.9.1,<2.0.0"
 
 [[package]]
 name = "grai-source-flat-file"
-version = "0.0.4"
+version = "0.0.5"
 description = ""
 category = "dev"
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "grai_source_flat_file-0.0.4-py3-none-any.whl", hash = "sha256:6dd07e5c77a40c9ec41ad38fa613dc50b4ffb24735d6cc747590fea7e9863c24"},
-    {file = "grai_source_flat_file-0.0.4.tar.gz", hash = "sha256:575e5adca682ae96752852de2621f8b735ba7065d613521bc25940a174f316be"},
+    {file = "grai_source_flat_file-0.0.5-py3-none-any.whl", hash = "sha256:8dd0b8d9d59341843463c67bf9702ecaecfed5a743246d7bb87be295e4df89bf"},
+    {file = "grai_source_flat_file-0.0.5.tar.gz", hash = "sha256:56b1270a4b7511dd5eaa75454b2f2d4a87ae186dc8fb35459779945be96a4837"},
 ]
 
 [package.dependencies]
-grai-client = ">=0.1.5,<0.2.0"
+grai-client = ">=0.1.15,<0.2.0"
+grai-schemas = ">=0.1.0,<0.2.0"
 multimethod = ">=1.8,<2.0"
 pandas = ">=1.4.4,<2.0.0"
 pydantic = ">=1.9.1,<2.0.0"
@@ -1035,4 +1037,4 @@ testing = ["coverage (>=6.2)", "coverage-enable-subprocess (>=1)", "flaky (>=3.7
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "ac0542231f06aaa3f2a78123e445f54282923faffd8c63533894582e1e4b201b"
+content-hash = "46a733bb40bf017b125d89d71a5008e9758b3396173e1b13007c01db8e6a7b99"

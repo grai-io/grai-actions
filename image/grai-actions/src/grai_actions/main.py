@@ -2,7 +2,8 @@ from grai_client.update import update
 
 from grai_actions.config import SupportedActions, config
 from grai_actions.git_messages import post_comment
-from grai_actions.tools import TestResultCache, get_nodes_and_edges
+from grai_actions.integrations import get_nodes_and_edges
+from grai_actions.tools import TestResultCache
 from grai_actions.utilities import get_client
 
 
@@ -12,7 +13,7 @@ def run_update_server(client):
     update(client, edges)
 
 
-def run_tests(client, config):
+def run_tests(client):
     results = TestResultCache(client)
 
     errors = False
@@ -29,9 +30,9 @@ def main():
 
     match config.grai_action:
         case SupportedActions.TESTS.value:
-            run_tests(client, config)
+            run_tests(client)
         case SupportedActions.UPDATE.value:
-            run_update_server(client, config)
+            run_update_server(client)
         case _:
             message = f"Unrecognized action {config.grai_action}. Supported options include {SupportedActions}"
             raise NotImplementedError(message)
