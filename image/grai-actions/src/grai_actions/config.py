@@ -21,6 +21,7 @@ class SupportedActions(Enum):
 class AccessModes(Enum):
     DBT = "dbt"
     FLAT_FILE = "flat_file"
+    POSTGRES = "postgres"
     TEST_MODE = "test_mode"
 
 
