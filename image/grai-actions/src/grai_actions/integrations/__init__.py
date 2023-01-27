@@ -5,6 +5,8 @@ match config.grai_access_mode:
         from .dbt import get_nodes_and_edges
     case AccessModes.FLAT_FILE.value:
         from .flat_file import get_nodes_and_edges
+    case AccessModes.POSTGRES.value:
+        from .postgres import get_nodes_and_edges
     case AccessModes.TEST_MODE.value:
 
         def get_nodes_and_edges(*args, **kwargs):
