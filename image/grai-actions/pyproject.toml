@@ -30,6 +30,9 @@ pytest-env = "^0.8.1"
 profile = "black"
 known_first_party = "grai_actions"
 
+[tool.black]
+line-length = 120
+
 [tool.pytest.ini_options]
 env = [
     'GITHUB_TOKEN=an-ultra-secret-github-token',
