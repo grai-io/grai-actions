@@ -5,33 +5,35 @@ from itertools import chain, pairwise
 from typing import Dict, List, Tuple
 
 from grai_client.endpoints.v1.client import ClientV1
-from grai_client.schemas.node import NodeV1
 from grai_graph.analysis import GraphAnalyzer
-from grai_schemas.base import EdgeMetadata, NodeMetadata
+from grai_schemas.v1 import NodeV1
+from grai_schemas.v1.metadata import GraiEdgeMetadataV1 as EdgeMetadata
+from grai_schemas.v1.metadata import GraiNodeMetadataV1 as NodeMetadata
 
 from grai_actions import integrations
 from grai_actions.config import config
 from grai_actions.git_messages import collapsable, heading
+from grai_actions.integrations import get_nodes_and_edges
 
-
-def get_nodes_and_edges(*args, **kwargs):
-    nodes, edges = integrations.get_nodes_and_edges(*args, **kwargs)
-    for node in nodes:
-        item = (
-            node.spec.metadata
-            if isinstance(node.spec.metadata, dict)
-            else node.spec.metadata.dict()
-        )
-        node.spec.metadata = NodeMetadata(**item)
-
-    for edge in edges:
-        item = (
-            edge.spec.metadata
-            if isinstance(edge.spec.metadata, dict)
-            else edge.spec.metadata.dict()
-        )
-        edge.spec.metadata = EdgeMetadata(**item)
-    return nodes, edges
+#
+# def get_nodes_and_edges(*args, **kwargs):
+#     nodes, edges = integrations.get_nodes_and_edges(*args, **kwargs)
+#     for node in nodes:
+#         item = (
+#             node.spec.metadata
+#             if isinstance(node.spec.metadata, dict)
+#             else node.spec.metadata.dict()
+#         )
+#         node.spec.metadata = NodeMetadata(**item)
+#
+#     for edge in edges:
+#         item = (
+#             edge.spec.metadata
+#             if isinstance(edge.spec.metadata, dict)
+#             else edge.spec.metadata.dict()
+#         )
+#         edge.spec.metadata = EdgeMetadata(**item)
+#     return nodes, edges
 
 
 SEPARATOR_CHAR = "/"

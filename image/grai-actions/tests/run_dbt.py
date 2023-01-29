@@ -7,8 +7,8 @@ env_vars = [
     "GITHUB_EVENT_NAME = pull_request",
     "GITHUB_TOKEN = abc",
     "GITHUB_REF = 'abc/123/itseasy",
-    "GRAI_API_KEY = ",
-    "GRAI_DBT_MANIFEST_FILE = ",
+    "GRAI_API_KEY = lwicF69G.Hwy5Jtgadn3iZv8mFrATLCp1tidRt1Kp",
+    "GRAI_DBT_MANIFEST_FILE = /Users/ian/repos/grai/grai-actions/image/grai-actions/tests/manifest.json",
     "GRAI_ACTION = update",
     "GRAI_WORKSPACE = e92d10a1-72b7-45ed-bc88-642465426f04",
 ]

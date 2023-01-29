@@ -1,15 +1,18 @@
 import unittest
 
 import validators
-from grai_client.schemas.edge import EdgeV1
-from grai_client.schemas.node import NodeV1
 from grai_graph.utils import mock_v1_edge, mock_v1_node
-from grai_schemas.base import Metadata
-from grai_schemas.models import (
+from grai_schemas.base import GraiMetadata
+from grai_schemas.v1 import EdgeV1, NodeV1
+from grai_schemas.v1.metadata.edges import (
+    ColumnToColumnMetadata,
+    EdgeTypeLabels,
+    GenericEdgeMetadataV1,
+)
+from grai_schemas.v1.metadata.nodes import (
     ColumnMetadata,
-    ColumnToColumnAttributes,
-    GraiEdgeMetadata,
-    GraiNodeMetadata,
+    GenericNodeMetadataV1,
+    NodeTypeLabels,
 )
 
 from grai_actions import tools
@@ -26,11 +29,10 @@ def mock_node(name: str, namespace: str = "default"):
             "data_source": "test_source",
             "display_name": name,
             "is_active": True,
-            "metadata": {"grai": ColumnMetadata()},
+            "metadata": {"grai": ColumnMetadata(node_type=NodeTypeLabels.column.value)},
         },
     }
     node = NodeV1(**node_dict)
-    node.spec.metadata = Metadata(**node.spec.metadata)
     return node
 
 
@@ -49,12 +51,15 @@ def mock_edge(source_node, destination_node):
                 "namespace": destination_node.namespace,
             },
             "is_active": True,
-            "metadata": {"grai": ColumnToColumnAttributes()},
+            "metadata": {
+                "grai": ColumnToColumnMetadata(
+                    edge_type=EdgeTypeLabels.column_to_column.value
+                )
+            },
         },
     }
 
     edge = EdgeV1(**edge_dict)
-    edge.spec.metadata = Metadata(**edge.spec.metadata)
     return edge
 
 
@@ -78,12 +83,14 @@ def test_mock_node_extra_metadata():
             "data_source": "test_source",
             "display_name": "Tommy B",
             "is_active": True,
-            "metadata": {"grai": ColumnMetadata(), "extra": {}},
+            "metadata": {
+                "grai": ColumnMetadata(node_type=NodeTypeLabels.column.value),
+                "extra": {},
+            },
         },
     }
     try:
         node = NodeV1(**node_dict)
-        node.spec.metadata = Metadata(**node.spec.metadata)
     except Exception as e:
         assert False, "failed to create node and metadata with non-grai metadata fields"
 
