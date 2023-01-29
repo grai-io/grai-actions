@@ -13,9 +13,7 @@ args = Args()
 
 
 def get_nodes_and_edges(client):
-    nodes, edges = base.get_nodes_and_edges(
-        str(args.grai_tracked_file), config.grai_namespace
-    )
+    nodes, edges = base.get_nodes_and_edges(str(args.grai_tracked_file), config.grai_namespace)
     nodes = adapt_to_client(nodes)
     # edges = adapt_to_client(edges)
     return nodes, []
