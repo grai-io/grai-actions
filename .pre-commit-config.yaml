@@ -20,3 +20,5 @@ repos:
       - id: black
         entry: black
         language: python
+        require_serial: true
+        types_or: [python, pyi]
