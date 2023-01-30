@@ -55,7 +55,7 @@ runs:
     GRAI_PORT: ${{ inputs.client-port }}
     GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
     GRAI_API_KEY: ${{ inputs.api-key }}
-    GRAI_ACCESS_MODE: "dbt"
+    GRAI_ACCESS_MODE: "postgres"
     GRAI_DB_HOST: ${{ inputs.db-host }}
     GRAI_DB_PORT: ${{ inputs.db-port }}
     GRAI_DB_DATABASE_NAME: ${{ inputs.db-database-name }}
