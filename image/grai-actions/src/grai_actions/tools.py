@@ -173,9 +173,9 @@ class TestResultCache:
         try:
             self.graph = self.client.build_graph()
         except Exception as e:
-            raise e(
+            raise Exception(
                 f"Failed to load data from the provided client running on host={client.host} and port={client.port}"
-            )
+            ) from e
         self.analysis = GraphAnalyzer(graph=self.graph)
 
     @property
