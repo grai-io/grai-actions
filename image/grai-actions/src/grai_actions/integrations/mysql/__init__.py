@@ -1,5 +1,5 @@
-from grai_source_postgres import base
-from grai_source_postgres.loader import PostgresConnector
+from grai_source_mysql import base
+from grai_source_mysql.loader import MySQLConnector
 from pydantic import BaseSettings
 
 from grai_actions.config import config
@@ -17,13 +17,13 @@ args = Args()
 
 
 def get_nodes_and_edges(client):
-    conn = PostgresConnector(
+    conn = MySQLConnector(
         dbname=args.grai_db_database_name,
         user=args.grai_db_user,
         password=args.grai_db_password,
         host=args.grai_db_host,
         port=args.grai_db_port,
-        namespace=config.grai_namespace,
+        namespace=config.namespace,
     )
 
     # Already adapted to client

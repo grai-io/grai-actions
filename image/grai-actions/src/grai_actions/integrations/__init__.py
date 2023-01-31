@@ -7,6 +7,10 @@ match config.grai_access_mode:
         from .flat_file import get_nodes_and_edges
     case AccessModes.POSTGRES.value:
         from .postgres import get_nodes_and_edges
+    case AccessModes.MYSQL.value:
+        from .mysql import get_nodes_and_edges
+    case AccessModes.SNOWFLAKE.value:
+        from .snowflake import get_nodes_and_edges
     case AccessModes.TEST_MODE.value:
 
         def get_nodes_and_edges(*args, **kwargs):
