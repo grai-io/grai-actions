@@ -170,7 +170,12 @@ class TestResultCache:
         self.client = client
         self.new_nodes, self.new_edges = get_nodes_and_edges(client)
 
-        self.graph = self.client.build_graph()
+        try:
+            self.graph = self.client.build_graph()
+        except Exception as e:
+            raise e(
+                f"Failed to load data from the provided client running on host={client.host} and port={client.port}"
+            )
         self.analysis = GraphAnalyzer(graph=self.graph)
 
     @property

@@ -41,5 +41,5 @@ def run_update():
     run_update_server(client)
 
 
-# run_update()
+run_update()
 run_test()
