@@ -52,7 +52,7 @@ inputs:
 runs:
   using: "docker"
   image: "../image/Dockerfile"
-  entrypoint: /entrypoints/dbt.sh
+  entrypoint: /entrypoints/snowflake.sh
   env:
     GITHUB_TOKEN: ${{ inputs.github-token }}
     GRAI_NAMESPACE: ${{ inputs.namespace }}
