@@ -1,5 +1,5 @@
 # action.yml
-name: "dbt"
+name: "postgres"
 description: "Determines the impact of changing data on downstream users"
 author: Edward Louth <edward@grai.io>
 inputs:
@@ -46,7 +46,7 @@ inputs:
 runs:
   using: "docker"
   image: "../image/Dockerfile"
-  entrypoint: /entrypoints/dbt.sh
+  entrypoint: /entrypoints/postgres.sh
   env:
     GITHUB_TOKEN: ${{ inputs.github-token }}
     GRAI_NAMESPACE: ${{ inputs.namespace }}
