@@ -1,0 +1,54 @@
+[tool.poetry]
+name = "grai_actions"
+version = "0.1.1"
+description = ""
+authors = ["Grai <ian@grai.io>"]
+license = "Elastic-2.0"
+readme = "Readme.md"
+packages = [{include = "grai_actions", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+grai-graph = "^0.1.6"
+ghapi = "^1.0.3"
+grai-client = "^0.2.2"
+pydantic = "^1.10.4"
+grai-schemas = "^0.1.8"
+
+[tool.poetry.scripts]
+grai-actions = "grai_actions.main:main"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "^2.21.0"
+black = "^22.12.0"
+isort = "^5.11.4"
+pytest = "^7.2.1"
+validators = "^0.20.0"
+pytest-env = "^0.8.1"
+grai-source-postgres = "^0.1.9"
+grai-source-dbt = "^0.1.13"
+grai-source-flat-file = "^0.0.6"
+grai-source-mysql = "^0.0.4"
+grai-source-snowflake = "^0.0.9"
+
+[tool.isort]
+profile = "black"
+known_first_party = "grai_actions"
+
+[tool.black]
+line-length = 120
+
+[tool.pytest.ini_options]
+env = [
+    'GITHUB_TOKEN=an-ultra-secret-github-token',
+    'GRAI_API_KEY=a-super-duper-secret-grai-api-key',
+    'GITHUB_REF=grai.io/grai-actions/8675309',
+    'GITHUB_EVENT_NAME=pull_request',
+    'GITHUB_REPOSITORY=grai.io/grai-actions',
+    'GITHUB_REPOSITORY_OWNER=Grai',
+    'GRAI_ACCESS_MODE=test_mode'
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

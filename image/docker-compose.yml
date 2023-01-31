@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  the_guide:
+    build: ./
+    env_file:
+    - .env
+    environment:
+      GRAI_ACCESS_MODE: "test_mode"
+      GITHUB_REPOSITORY_OWNER: "Grai"
+      GITHUB_REPOSITORY: 'grai-io/grai-actions'
+      GRAI_NAMESPACE: "default"
+      GRAI_WORKSPACE: "e92d10a1-72b7-45ed-bc88-642465426f04"
+      GITHUB_EVENT_NAME: "pull_request"
+      GITHUB_REF: "grai-io/core-demo/thing/thing2"
