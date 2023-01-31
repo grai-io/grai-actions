@@ -173,9 +173,6 @@ class TestResultCache:
         self.graph = self.client.build_graph()
         self.analysis = GraphAnalyzer(graph=self.graph)
 
-        for item in [*self.graph.manifest.nodes, *self.graph.manifest.edges]:
-            item.spec.metadata = Metadata(item.spec.metadata)
-
     @property
     def new_columns(self):
         for node in self.new_nodes:

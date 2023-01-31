@@ -7,10 +7,12 @@ env_vars = [
     "GITHUB_EVENT_NAME = pull_request",
     "GITHUB_TOKEN = abc",
     "GITHUB_REF = 'abc/123/itseasy",
-    "GRAI_API_KEY = lwicF69G.Hwy5Jtgadn3iZv8mFrATLCp1tidRt1Kp",
+    "GRAI_API_KEY = vEew4z8d.a8oczWuXBvDgvJRHGZ0pFl9JGZvOZjxj",
     "GRAI_DBT_MANIFEST_FILE = /Users/ian/repos/grai/grai-actions/image/grai-actions/tests/manifest.json",
     "GRAI_ACTION = update",
-    "GRAI_WORKSPACE = e92d10a1-72b7-45ed-bc88-642465426f04",
+    "GRAI_WORKSPACE = default",  # e92d10a1-72b7-45ed-bc88-642465426f04",
+    "GRAI_HOST = localhost",
+    "GRAI_PORT = 8000",
 ]
 
 for env_var in env_vars:
@@ -23,7 +25,6 @@ def run_test():
     from grai_actions.tools import TestResultCache
     from grai_actions.utilities import get_client
 
-    print(config)
     client = get_client()
     results = TestResultCache(client)
 
@@ -40,4 +41,5 @@ def run_update():
     run_update_server(client)
 
 
-run_update()
+# run_update()
+run_test()
