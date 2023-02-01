@@ -2,7 +2,7 @@ import json
 import urllib.parse
 from abc import ABC, abstractmethod
 from itertools import chain, pairwise
-from typing import Dict, List, Tuple, Iterable
+from typing import Dict, Iterable, List, Tuple
 
 from grai_client.endpoints.v1.client import ClientV1
 from grai_graph.analysis import GraphAnalyzer
@@ -14,7 +14,6 @@ from grai_actions import integrations
 from grai_actions.config import config
 from grai_actions.git_messages import collapsable, heading
 from grai_actions.integrations import get_nodes_and_edges
-
 
 SEPARATOR_CHAR = "/"
 
