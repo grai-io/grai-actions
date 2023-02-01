@@ -9,7 +9,7 @@ packages = [{include = "grai_actions", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-grai-graph = "^0.1.7"
+grai-graph = "^0.1.9"
 ghapi = "^1.0.3"
 grai-client = "^0.2.2"
 pydantic = "^1.10.4"
@@ -29,7 +29,6 @@ grai-source-postgres = "^0.1.11"
 grai-source-dbt = "^0.1.14"
 grai-source-flat-file = "^0.0.6"
 grai-source-mysql = "^0.0.4"
-grai-source-snowflake = "^0.0.9"
 mypy = "^0.991"
 
 [tool.isort]
