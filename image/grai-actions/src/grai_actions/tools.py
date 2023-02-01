@@ -2,7 +2,7 @@ import json
 import urllib.parse
 from abc import ABC, abstractmethod
 from itertools import chain, pairwise
-from typing import Dict, List, Tuple
+from typing import Dict, Iterable, List, Tuple
 
 from grai_client.endpoints.v1.client import ClientV1
 from grai_graph.analysis import GraphAnalyzer
@@ -15,31 +15,10 @@ from grai_actions.config import config
 from grai_actions.git_messages import collapsable, heading
 from grai_actions.integrations import get_nodes_and_edges
 
-#
-# def get_nodes_and_edges(*args, **kwargs):
-#     nodes, edges = integrations.get_nodes_and_edges(*args, **kwargs)
-#     for node in nodes:
-#         item = (
-#             node.spec.metadata
-#             if isinstance(node.spec.metadata, dict)
-#             else node.spec.metadata.dict()
-#         )
-#         node.spec.metadata = NodeMetadata(**item)
-#
-#     for edge in edges:
-#         item = (
-#             edge.spec.metadata
-#             if isinstance(edge.spec.metadata, dict)
-#             else edge.spec.metadata.dict()
-#         )
-#         edge.spec.metadata = EdgeMetadata(**item)
-#     return nodes, edges
-
-
 SEPARATOR_CHAR = "/"
 
 
-def build_node_name(node: NodeV1):
+def build_node_name(node: NodeV1) -> str:
     return f"{node.spec.namespace}{SEPARATOR_CHAR}{node.spec.name}"
 
 
@@ -48,9 +27,9 @@ class TestResult(ABC):
 
     type: str
 
-    def __init__(self, node, test_path):
-        self.node: NodeV1 = node
-        self.failing_node: NodeV1 = test_path[-1]
+    def __init__(self, node: NodeV1, test_path: List[NodeV1]):
+        self.node = node
+        self.failing_node = test_path[-1]
         self.test_path = test_path
         self.node_name = build_node_name(self.node)
         self.failing_node_name = build_node_name(self.failing_node)
@@ -116,7 +95,7 @@ class TestSummary:
         self.test_results: List[TestResult] = test_results
 
     def graph_status_path(self) -> Dict[Tuple[str, str], Dict[Tuple[str, str], bool]]:
-        edge_status = {}
+        edge_status: Dict[Tuple[str, str], Dict[Tuple[str, str], bool]] = {}
         for test in self.test_results:
             path_edges = list(pairwise(test.test_path))
             if len(path_edges) < 1:
@@ -186,7 +165,7 @@ class TestResultCache:
                 continue
             yield node
 
-    def type_tests(self):
+    def type_tests(self) -> Dict[str, List[TypeTestResult]]:
         errors = False
 
         result_map = {}
@@ -201,10 +180,10 @@ class TestResultCache:
             affected_nodes = self.analysis.test_type_change(
                 namespace=node.spec.namespace, name=node.spec.name, new_type=result
             )
-            result_map[node] = [TypeTestResult(node, [path]) for path in affected_nodes]
+            result_map[node] = [TypeTestResult(node, path) for path in affected_nodes]
         return result_map
 
-    def unique_tests(self):
+    def unique_tests(self) -> Dict[str, List[UniqueTestResult]]:
         errors = False
         result_map = {}
         for node in self.new_columns:
@@ -223,7 +202,7 @@ class TestResultCache:
             result_map[node] = [UniqueTestResult(node, path) for path in affected_nodes]
         return result_map
 
-    def null_tests(self):
+    def null_tests(self) -> Dict[str, List[NullableTestResult]]:
         errors = False
         result_map = {}
         for node in self.new_columns:
@@ -240,7 +219,7 @@ class TestResultCache:
             result_map[node] = [NullableTestResult(node, path) for path in affected_nodes]
         return result_map
 
-    def test_results(self):
+    def test_results(self) -> Dict[str, List[TestResult]]:
         tests = chain(
             self.unique_tests().items(),
             self.null_tests().items(),
@@ -254,7 +233,7 @@ class TestResultCache:
 
         return results
 
-    def messages(self):
+    def messages(self) -> Iterable[str]:
         test_results = self.test_results()
         for node, tests in test_results.items():
             yield TestSummary(node, tests).message()
