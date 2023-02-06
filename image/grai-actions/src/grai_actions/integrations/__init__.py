@@ -1,6 +1,5 @@
 from grai_actions.config import AccessModes, config
 
-
 match config.grai_access_mode:
     case AccessModes.DBT.value:
         from .dbt import get_nodes_and_edges
@@ -15,6 +14,7 @@ match config.grai_access_mode:
     case AccessModes.MSSQL.value:
         from .mssql import get_nodes_and_edges
     case AccessModes.TEST_MODE.value:
+
         def get_nodes_and_edges(*args, **kwargs):
             return [], []
 
