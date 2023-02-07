@@ -1,8 +1,7 @@
+from grai_actions.config import config
 from grai_source_mysql import base
 from grai_source_mysql.loader import MySQLConnector
 from pydantic import BaseSettings
-
-from grai_actions.config import config
 
 
 class Args(BaseSettings):

@@ -1,8 +1,7 @@
+from grai_actions.config import config
 from grai_source_mssql import base
 from grai_source_mssql.loader import MsSQLConnector
 from pydantic import BaseSettings
-
-from grai_actions.config import config
 
 
 class Args(BaseSettings):
@@ -30,7 +29,9 @@ def get_nodes_and_edges(client):
         port=args.grai_mssql_port,
         encrypt=args.grai_mssql_encrypt,
         namespace=config.namespace,
-        additional_connection_strings=["TrustServerCertificate=yes"] if args.grai_mssql_trusted_connection else None
+        additional_connection_strings=["TrustServerCertificate=yes"]
+        if args.grai_mssql_trusted_connection
+        else None,
     )
 
     # Already adapted to client

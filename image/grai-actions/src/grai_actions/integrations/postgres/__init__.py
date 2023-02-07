@@ -1,8 +1,7 @@
+from grai_actions.config import config
 from grai_source_postgres import base
 from grai_source_postgres.loader import PostgresConnector
 from pydantic import BaseSettings
-
-from grai_actions.config import config
 
 
 class Args(BaseSettings):
