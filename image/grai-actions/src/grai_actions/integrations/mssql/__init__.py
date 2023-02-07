@@ -1,7 +1,8 @@
+from typing import Optional
+
 from grai_source_mssql import base
 from grai_source_mssql.loader import MsSQLConnector
 from pydantic import BaseSettings
-from typing import Optional
 
 from grai_actions.config import config
 
