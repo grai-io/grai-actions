@@ -15,13 +15,14 @@ def run_update_server(client):
 
 def run_tests(client):
     results = TestResultCache(client)
-
-    errors = False
+    summary = results.consolidated_summary()
+    has_errors = len(summary.test_results) > 0
     for message in results.messages():
         post_comment(message)
         errors = True
 
-    if errors:
+    if has_errors:
+        post_comment(summary.message())
         raise Exception("Test failures detected")
 
 

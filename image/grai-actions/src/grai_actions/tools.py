@@ -39,7 +39,7 @@ class TestResult(ABC):
         return ""
 
     def make_row(self) -> str:
-        row = f"| {self.node_name} | {self.type} | {self.message()} |"
+        row = f"| {self.node_name} | {self.failing_node_name} | {self.type} | {self.message()} |"
         return row
 
     def error_metadata(self) -> Dict:
@@ -90,8 +90,7 @@ class NullableTestResult(TestResult):
 
 
 class TestSummary:
-    def __init__(self, source_node, test_results):
-        self.source_node: NodeV1 = source_node
+    def __init__(self, test_results):
         self.test_results: List[TestResult] = test_results
 
     def graph_status_path(self) -> Dict[Tuple[str, str], Dict[Tuple[str, str], bool]]:
@@ -122,12 +121,12 @@ class TestSummary:
 
     def build_table(self) -> str:
         rows = "\n".join([test.make_row() for test in self.test_results])
-        message = f"| Dependency | Test | Message |\n| --- | --- | --- |\n{rows}"
+        message = f"| Changed Node | Failing Dependency | Test | Message |\n| --- | --- | --- |\n{rows}"
         return message
 
     def test_summary(self) -> str:
-        label = heading(build_node_name(self.source_node), 2)
-        section = f"{heading('Failing Tests', 4)}\n\n{self.build_table()}\n"
+        label = heading("Test Results", 2)
+        section = f"\n{self.build_table()}\n"
         return collapsable(section, label)
 
     def build_link(self):
@@ -142,6 +141,17 @@ class TestSummary:
             message = f"{message}\n{self.build_link()[1]}"
 
         return message
+
+
+class SingleSourceTestSummary(TestSummary):
+    def __init__(self, source_node, test_results, *args, **kwargs):
+        self.source_node = source_node
+        super().__init__(test_results, *args, **kwargs)
+
+    def test_summary(self) -> str:
+        label = heading(build_node_name(self.source_node), 2)
+        section = f"{heading('Failing Tests', 4)}\n\n{self.build_table()}\n"
+        return collapsable(section, label)
 
 
 class TestResultCache:
@@ -236,4 +246,8 @@ class TestResultCache:
     def messages(self) -> Iterable[str]:
         test_results = self.test_results()
         for node, tests in test_results.items():
-            yield TestSummary(node, tests).message()
+            yield SingleSourceTestSummary(node, tests).message()
+
+    def consolidated_summary(self) -> TestSummary:
+        summary = TestSummary(self.test_results())
+        return summary

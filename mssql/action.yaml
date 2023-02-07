@@ -60,6 +60,10 @@ inputs:
     description: "An optional ODBC server connection string to use when connecting to the server. These are usually constructed as '{protocol}:{host},{port}'. This"
     required: false
     default: null
+   trust_server_certificate:
+    description: Sets the optional ODBC connection string `TrustServerCertificate`
+    required: false
+    default: True
 
 runs:
   using: "docker"
@@ -84,6 +88,7 @@ runs:
     GRAI_MSSQL_TRUSTED_CONNECTION: ${{ inputs.trusted_connection }}
     GRAI_MSSQL_PROTOCOL: ${{ inputs.protocol }}
     GRAI_MSSQL_SERVER: ${{ inputs.server_connection_string }}
+    GRAI_MSSQL_TRUST_SERVER_CERTIFICATE: ${{ inputs.trust_server_certificate }}
 
 branding:
   color: "purple"

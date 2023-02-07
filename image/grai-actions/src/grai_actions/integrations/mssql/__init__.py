@@ -9,9 +9,7 @@ from grai_actions.config import config
 
 def get_nodes_and_edges(client):
     conn = MsSQLConnector(
-
         namespace=config.grai_namespace,
-        additional_connection_strings=["TrustServerCertificate=yes"],
     )
 
     # Already adapted to client
