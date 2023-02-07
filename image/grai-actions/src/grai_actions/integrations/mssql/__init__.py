@@ -20,11 +20,28 @@ class Args(BaseSettings):
 
     @validator("grai_mssql_encrypt", pre=True)
     def verify_encrypt(cls, value):
-        return value == "true"
+        print(f"encrypt:pre: {value}")
+
+        if value == "true":
+            return True
+        elif value == "false":
+            return False
+
+        return None
 
     @validator("grai_mssql_trusted_connection", pre=True)
     def verify_trusted_connection(cls, value):
-        return value == "true"
+        print(f"trusted_connection:pre: {value}")
+        if value == "true":
+            return True
+        elif value == "false":
+            return False
+
+        return None
+
+    @validator("grai_mssql_server", pre=True)
+    def verify_server(cls, value):
+        return None if value == "" else value
 
 
 args = Args()
