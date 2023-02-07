@@ -59,6 +59,7 @@ inputs:
   server_connection_string:
     description: "An optional ODBC server connection string to use when connecting to the server. These are usually constructed as '{protocol}:{host},{port}'. This"
     required: false
+    default: null
 
 runs:
   using: "docker"

@@ -29,7 +29,7 @@ def get_nodes_and_edges(client):
         database=args.grai_mssql_database,
         server=args.grai_mssql_server,
         host=args.grai_mssql_host,
-        # port=args.grai_mssql_port,
+        port=args.grai_mssql_port,
         encrypt=args.grai_mssql_encrypt,
         namespace=config.grai_namespace,
         additional_connection_strings=["TrustServerCertificate=yes"] if args.grai_mssql_trusted_connection else None,
