@@ -1,5 +1,4 @@
 from ghapi.all import GhApi
-
 from grai_actions.config import config
 
 
