@@ -22,7 +22,7 @@ def get_nodes_and_edges(client):
         password=args.grai_db_password,
         host=args.grai_db_host,
         port=args.grai_db_port,
-        namespace=config.namespace,
+        namespace=config.grai_namespace,
     )
 
     # Already adapted to client
