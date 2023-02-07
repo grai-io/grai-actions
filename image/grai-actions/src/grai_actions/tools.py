@@ -124,7 +124,7 @@ class TestSummary:
 
     def build_table(self) -> str:
         rows = "\n".join([test.make_row() for test in self.test_results])
-        message = f"| Namespace | Changed Node | Failing Dependency | Test | Message |\n| --- | --- | --- | --- | --- |\n{rows}"
+        message = f"| Namespace | Changed Node | Failing Dependency | Test | Message |\n| :-: | :-: | :-: | :-: | :-: |\n{rows}"
         return message
 
     def test_summary(self) -> str:
