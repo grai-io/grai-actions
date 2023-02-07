@@ -29,7 +29,7 @@ class BotApi:
         )
         self.bot_user = self.api.users.get_authenticated()
         self.bot_user_id = self.bot_user["id"]
-        self.test_signal_text = '<!-- grai marker text for test comments-->'
+        self.test_signal_text = "<!-- grai marker text for test comments-->"
 
     @staticmethod
     def add_comment_identifier(message, identifier):
