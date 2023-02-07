@@ -9,7 +9,7 @@ from grai_actions.config import config
 
 class Args(BaseSettings):
     grai_mssql_host: str
-    grai_mssql_port: Optional[str]= None
+    grai_mssql_port: Optional[str] = None
     grai_mssql_database: str
     grai_mssql_user: str
     grai_mssql_password: str
@@ -42,6 +42,7 @@ class Args(BaseSettings):
     @validator("grai_mssql_server", pre=True)
     def verify_server(cls, value):
         return None if value == "" else value
+
 
 args = Args()
 
