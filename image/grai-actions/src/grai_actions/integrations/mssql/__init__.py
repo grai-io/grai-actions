@@ -7,9 +7,6 @@ from pydantic import BaseSettings, validator
 from grai_actions.config import config
 
 
-args = Args()
-
-
 def get_nodes_and_edges(client):
     conn = MsSQLConnector(
 
