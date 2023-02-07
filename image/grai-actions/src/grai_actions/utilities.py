@@ -1,7 +1,8 @@
 from typing import Optional
 
-from grai_actions.config import Config, config
 from grai_client.endpoints.v1.client import ClientV1
+
+from grai_actions.config import Config, config
 
 
 def get_client(client_config: Optional[Config] = None) -> ClientV1:

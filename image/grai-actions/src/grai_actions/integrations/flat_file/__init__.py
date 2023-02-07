@@ -1,7 +1,8 @@
-from grai_actions.config import config
 from grai_source_flat_file import base
 from grai_source_flat_file.adapters import adapt_to_client
 from pydantic import BaseSettings, FilePath
+
+from grai_actions.config import config
 
 
 class Args(BaseSettings):

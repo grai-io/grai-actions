@@ -1,9 +1,10 @@
+from grai_client.update import update
+
 from grai_actions.config import SupportedActions, config
 from grai_actions.git_messages import post_comment
 from grai_actions.integrations import get_nodes_and_edges
 from grai_actions.tools import TestResultCache
 from grai_actions.utilities import get_client
-from grai_client.update import update
 
 
 def run_update_server(client):

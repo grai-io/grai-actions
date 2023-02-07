@@ -1,7 +1,6 @@
 import unittest
 
 import validators
-from grai_actions import tools
 from grai_graph.utils import mock_v1_edge, mock_v1_node
 from grai_schemas.base import GraiMetadata
 from grai_schemas.v1 import EdgeV1, NodeV1
@@ -15,6 +14,8 @@ from grai_schemas.v1.metadata.nodes import (
     GenericNodeMetadataV1,
     NodeTypeLabels,
 )
+
+from grai_actions import tools
 
 
 def mock_node(name: str, namespace: str = "default"):

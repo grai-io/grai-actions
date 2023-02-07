@@ -4,15 +4,16 @@ from abc import ABC, abstractmethod
 from itertools import chain, pairwise
 from typing import Dict, Iterable, List, Tuple
 
-from grai_actions import integrations
-from grai_actions.config import config
-from grai_actions.git_messages import collapsable, heading
-from grai_actions.integrations import get_nodes_and_edges
 from grai_client.endpoints.v1.client import ClientV1
 from grai_graph.analysis import GraphAnalyzer
 from grai_schemas.v1 import NodeV1
 from grai_schemas.v1.metadata import GraiEdgeMetadataV1 as EdgeMetadata
 from grai_schemas.v1.metadata import GraiNodeMetadataV1 as NodeMetadata
+
+from grai_actions import integrations
+from grai_actions.config import config
+from grai_actions.git_messages import collapsable, heading
+from grai_actions.integrations import get_nodes_and_edges
 
 SEPARATOR_CHAR = "/"
 
