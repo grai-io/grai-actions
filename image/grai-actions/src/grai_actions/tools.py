@@ -229,7 +229,7 @@ class TestResultCacheBase:
         tests = chain(
             self.unique_tests().items(),
             self.null_tests().items(),
-            #self.type_tests().items(),
+            # self.type_tests().items(),
         )
 
         results: Dict[NodeV1, List[TestResult]] = {}
