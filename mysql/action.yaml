@@ -1,5 +1,5 @@
 # action.yml
-name: "dbt"
+name: "MYSQL"
 description: "Determines the impact of changing data on downstream users"
 author: Ian Eaves <ian@grai.io>
 inputs:

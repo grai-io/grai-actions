@@ -1,5 +1,5 @@
 # action.yml
-name: "postgres"
+name: "Postgres"
 description: "Determines the impact of changing data on downstream users"
 author: Edward Louth <edward@grai.io>
 inputs:
