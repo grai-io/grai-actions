@@ -13,9 +13,7 @@ def get_client(client_config: Optional[Config] = None) -> ClientV1:
         conn_kwargs["workspace"] = client_config.grai_workspace
 
     client = ClientV1(client_config.grai_host, client_config.grai_port, **conn_kwargs)
-    client.set_authentication_headers(
-        api_key=client_config.grai_api_key.get_secret_value()
-    )
+    client.set_authentication_headers(api_key=client_config.grai_api_key.get_secret_value())
 
     authentication_status = client.check_authentication()
     if authentication_status.status_code != 200:

@@ -29,9 +29,7 @@ def get_nodes_and_edges(client):
         port=args.grai_mssql_port,
         encrypt=args.grai_mssql_encrypt,
         namespace=config.namespace,
-        additional_connection_strings=["TrustServerCertificate=yes"]
-        if args.grai_mssql_trusted_connection
-        else None,
+        additional_connection_strings=["TrustServerCertificate=yes"] if args.grai_mssql_trusted_connection else None,
     )
 
     # Already adapted to client
