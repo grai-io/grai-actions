@@ -47,11 +47,11 @@ inputs:
   encrypt:
     description: "True/False the SQL Server encryption settings"
     required: false
-    default: false
+    default: null
   trusted_connection:
     description: "True/False whether the SQL Server connection is trusted"
     required: false
-    default: false
+    default: null
   protocol:
     description: "Connection protocol for the database (e.g. tcp)"
     default: "tcp"

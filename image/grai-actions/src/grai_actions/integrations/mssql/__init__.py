@@ -23,6 +23,10 @@ args = Args()
 
 
 def get_nodes_and_edges(client):
+    print(f"server: {args.grai_mssql_server}")
+    print(f"encrypt: {args.grai_mssql_encrypt}")
+    print(f"trusted_connection: {args.grai_mssql_trusted_connection}")
+
     conn = MsSQLConnector(
         user=args.grai_mssql_user,
         password=args.grai_mssql_password,
