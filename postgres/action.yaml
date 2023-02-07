@@ -1,9 +1,5 @@
 # action.yml
-<<<<<<< Updated upstream
-name: "postgres"
-=======
 name: "Postgres"
->>>>>>> Stashed changes
 description: "Determines the impact of changing data on downstream users"
 author: Edward Louth <edward@grai.io>
 inputs:
