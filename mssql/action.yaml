@@ -60,7 +60,7 @@ inputs:
     description: "An optional ODBC server connection string to use when connecting to the server. These are usually constructed as '{protocol}:{host},{port}'. This"
     required: false
     default: null
-   trust_server_certificate:
+  trust_server_certificate:
     description: Sets the optional ODBC connection string `TrustServerCertificate`
     required: false
     default: "true"
