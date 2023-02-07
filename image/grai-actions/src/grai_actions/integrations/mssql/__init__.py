@@ -28,7 +28,7 @@ class Args(BaseSettings):
 
     @validator("grai_mssql_server", pre=True)
     def verify_server(cls, value):
-        return None if value == "" else value
+        return None if value is None or value == "None" else value
 
 
 args = Args()
