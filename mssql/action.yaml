@@ -63,7 +63,7 @@ inputs:
    trust_server_certificate:
     description: Sets the optional ODBC connection string `TrustServerCertificate`
     required: false
-    default: True
+    default: "true"
 
 runs:
   using: "docker"
