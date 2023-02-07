@@ -5,8 +5,8 @@ from itertools import chain, pairwise
 from typing import Dict, Iterable, List, Tuple
 
 from grai_client.endpoints.v1.client import ClientV1
-from grai_graph.analysis import GraphAnalyzer
-from grai_schemas.v1 import NodeV1
+from grai_graph.analysis import GraphAnalyzer, Graph
+from grai_schemas.v1 import NodeV1, EdgeV1
 from grai_schemas.v1.metadata import GraiEdgeMetadataV1 as EdgeMetadata
 from grai_schemas.v1.metadata import GraiNodeMetadataV1 as NodeMetadata
 
@@ -101,6 +101,9 @@ class TestSummary:
                 raise Exception("Test paths must have more than two nodes")
 
             for a, b in path_edges:
+                for node in [a, b]:
+                    assert node.spec.namespace is not None
+                    assert node.spec.name is not None
                 a_id = (a.spec.namespace, a.spec.name)
                 b_id = (b.spec.namespace, b.spec.name)
                 edge_status.setdefault(a_id, {})
@@ -154,17 +157,10 @@ class SingleSourceTestSummary(TestSummary):
         return collapsable(section, label)
 
 
-class TestResultCache:
-    def __init__(self, client: ClientV1):
-        self.client = client
-        self.new_nodes, self.new_edges = get_nodes_and_edges(client)
-
-        try:
-            self.graph = self.client.build_graph()
-        except Exception as e:
-            raise Exception(
-                f"Failed to load data from the provided client running on host={client.host} and port={client.port}"
-            ) from e
+class TestResultCacheBase:
+    def __init__(self, new_nodes: List[NodeV1], new_edges: List[EdgeV1], graph):
+        self.new_nodes, self.new_edges = new_nodes, new_edges
+        self.graph = graph
         self.analysis = GraphAnalyzer(graph=self.graph)
 
     @property
@@ -175,7 +171,7 @@ class TestResultCache:
                 continue
             yield node
 
-    def type_tests(self) -> Dict[str, List[TypeTestResult]]:
+    def type_tests(self) -> Dict[NodeV1, List[TypeTestResult]]:
         errors = False
 
         result_map = {}
@@ -193,7 +189,7 @@ class TestResultCache:
             result_map[node] = [TypeTestResult(node, path) for path in affected_nodes]
         return result_map
 
-    def unique_tests(self) -> Dict[str, List[UniqueTestResult]]:
+    def unique_tests(self) -> Dict[NodeV1, List[UniqueTestResult]]:
         errors = False
         result_map = {}
         for node in self.new_columns:
@@ -212,7 +208,7 @@ class TestResultCache:
             result_map[node] = [UniqueTestResult(node, path) for path in affected_nodes]
         return result_map
 
-    def null_tests(self) -> Dict[str, List[NullableTestResult]]:
+    def null_tests(self) -> Dict[NodeV1, List[NullableTestResult]]:
         errors = False
         result_map = {}
         for node in self.new_columns:
@@ -229,14 +225,14 @@ class TestResultCache:
             result_map[node] = [NullableTestResult(node, path) for path in affected_nodes]
         return result_map
 
-    def test_results(self) -> Dict[str, List[TestResult]]:
+    def test_results(self) -> Dict[NodeV1, List[TestResult]]:
         tests = chain(
             self.unique_tests().items(),
             self.null_tests().items(),
             self.type_tests().items(),
         )
 
-        results: Dict[str, List[TestResult]] = {}
+        results: Dict[NodeV1, List[TestResult]] = {}
         for key, values in tests:
             results.setdefault(key, [])
             results[key].extend(values)
@@ -249,5 +245,20 @@ class TestResultCache:
             yield SingleSourceTestSummary(node, tests).message()
 
     def consolidated_summary(self) -> TestSummary:
-        summary = TestSummary(self.test_results())
+        test_failures = list(self.test_results().values())
+        summary = TestSummary(test_failures)
         return summary
+
+
+class TestResultCache(TestResultCacheBase):
+    def __init__(self, client: ClientV1):
+        self.client = client
+        new_nodes, new_edges = get_nodes_and_edges(client)
+
+        try:
+            graph = self.client.build_graph()
+        except Exception as e:
+            raise Exception(
+                f"Failed to load data from the provided client running on host={client.host} and port={client.port}"
+            ) from e
+        super().__init__(new_nodes, new_edges, graph)

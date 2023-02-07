@@ -102,7 +102,7 @@ class TestTypeTestResult(unittest.TestCase):
     @classmethod
     def test_make_row_has_correct_number_of_columns(cls):
         row_str = cls.test_obj.make_row()
-        assert row_str.count("|") == 4
+        assert row_str.count("|") == 5
 
     @classmethod
     def test_make_message_is_str(cls):
@@ -152,7 +152,7 @@ class TestNullableTestResult(unittest.TestCase):
     @classmethod
     def test_make_row_has_correct_number_of_columns(cls):
         row_str = cls.test_obj.make_row()
-        assert row_str.count("|") == 4
+        assert row_str.count("|") == 5
 
     @classmethod
     def test_make_message_is_str(cls):
@@ -202,7 +202,7 @@ class TestUniqueTestResult(unittest.TestCase):
     @classmethod
     def test_make_row_has_correct_number_of_columns(cls):
         row_str = cls.test_obj.make_row()
-        assert row_str.count("|") == 4
+        assert row_str.count("|") == 5
 
     @classmethod
     def test_make_message_is_str(cls):
@@ -242,7 +242,7 @@ def get_test_summary():
             "f",
         ),
     ]
-    return tools.TestSummary(source_node, results)
+    return tools.TestSummary(results)
 
 
 class TestTestSummary(unittest.TestCase):

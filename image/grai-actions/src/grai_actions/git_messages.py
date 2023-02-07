@@ -18,6 +18,9 @@ def heading(string, level):
     return f"<h{level}> {string} </h{level}>"
 
 
+def create_or_edit_comment(pr_number, message):
+    pass
+
 def post_comment(message):
     api = GhApi(
         owner=config.github_repository_owner,
