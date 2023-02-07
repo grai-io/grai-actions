@@ -21,6 +21,7 @@ def heading(string, level):
 def create_or_edit_comment(pr_number, message):
     pass
 
+
 def post_comment(message):
     api = GhApi(
         owner=config.github_repository_owner,
