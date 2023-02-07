@@ -5,8 +5,8 @@ from itertools import chain, pairwise
 from typing import Dict, Iterable, List, Tuple
 
 from grai_client.endpoints.v1.client import ClientV1
-from grai_graph.analysis import GraphAnalyzer, Graph
-from grai_schemas.v1 import NodeV1, EdgeV1
+from grai_graph.analysis import Graph, GraphAnalyzer
+from grai_schemas.v1 import EdgeV1, NodeV1
 from grai_schemas.v1.metadata import GraiEdgeMetadataV1 as EdgeMetadata
 from grai_schemas.v1.metadata import GraiNodeMetadataV1 as NodeMetadata
 
