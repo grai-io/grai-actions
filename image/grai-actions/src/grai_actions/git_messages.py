@@ -35,7 +35,7 @@ class BotApi:
 
     def get_marked_comment(self, identifier) -> Optional[dict]:
         current_comments = self.api.issues.list_comments(config.pr_number)
-        #user_comments = (comment for comment in current_comments if comment["user"]["id"] == self.bot_user_id)
+        # user_comments = (comment for comment in current_comments if comment["user"]["id"] == self.bot_user_id)
         for comment in current_comments:
             if identifier in comment["body"]:
                 return comment
