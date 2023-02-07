@@ -47,9 +47,11 @@ inputs:
   encrypt:
     description: "True/False the SQL Server encryption settings"
     required: false
+    default: false
   trusted_connection:
     description: "True/False whether the SQL Server connection is trusted"
     required: false
+    default: false
   protocol:
     description: "Connection protocol for the database (e.g. tcp)"
     default: "tcp"
@@ -57,7 +59,6 @@ inputs:
   server_connection_string:
     description: "An optional ODBC server connection string to use when connecting to the server. These are usually constructed as '{protocol}:{host},{port}'. This"
     required: false
-
 
 runs:
   using: "docker"
@@ -82,7 +83,6 @@ runs:
     GRAI_MSSQL_TRUSTED_CONNECTION: ${{ inputs.trusted_connection }}
     GRAI_MSSQL_PROTOCOL: ${{ inputs.protocol }}
     GRAI_MSSQL_SERVER: ${{ inputs.server_connection_string }}
-
 
 branding:
   color: "purple"
