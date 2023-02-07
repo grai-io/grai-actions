@@ -29,25 +29,27 @@ class BotApi:
         )
         self.bot_user = self.api.users.get_authenticated()
         self.bot_user_id = self.bot_user["id"]
-        self.test_signal_text = "<!-- test marker text -->"
+        self.test_signal_text = '<!-- grai marker text for test comments-->'
 
-    def add_comment_identifier(self, message):
-        return f"{self.test_signal_text}{message}"
+    @staticmethod
+    def add_comment_identifier(message, identifier):
+        return f"{identifier}{message}"
 
-    def get_marked_comment(self) -> Optional[dict]:
+    def get_marked_comment(self, identifier) -> Optional[dict]:
         current_comments = self.api.issues.list_comments(config.pr_number)
         user_comments = (comment for comment in current_comments if comment["user"]["id"] == self.bot_user_id)
         for comment in user_comments:
-            if self.test_signal_text in comment["body"]:
+            if identifier in comment["body"]:
                 return comment
         return None
 
     def create_or_edit_comment(self, message):
-        message = self.add_comment_identifier(message)
-        if (comment := self.get_marked_comment()) is None:
+        message = self.add_comment_identifier(message, self.test_signal_text)
+        marked_comment = self.get_marked_comment(self.test_signal_text)
+        if marked_comment is None:
             self.api.issues.create_comment(config.pr_number, body=message)
         else:
-            self.api.issues.update_comment(comment["id"], body=message)
+            self.api.issues.update_comment(marked_comment["id"], body=message)
 
 
 def post_comment(message):
