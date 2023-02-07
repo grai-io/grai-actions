@@ -1,0 +1,95 @@
+# action.yml
+name: "MSSQL"
+description: "Determines the impact of changing data on downstream users"
+author: Ian Eaves <ian@grai.io>
+inputs:
+  action:
+    description: Which action to take. Examples include `tests` and `update`.
+    required: false
+    default: "tests"
+  github-token:
+    description: "The GITHUB_TOKEN secret"
+    default: ${{ github.token }}
+  namespace:
+    description: "The namespace"
+    required: false
+  workspace:
+    description: "Workspace ID"
+    required: false
+  client-host:
+    description: "The host for the Grai server"
+    required: false
+  client-port:
+    description: "The port for the Grai server"
+    required: false
+  api-key:
+    description: "A user api key for server access"
+    required: true
+  grai-frontend-host:
+    description: "The url for your frontend, e.g. https://app.grai.io"
+  db-host:
+    description: "The MSSQL database host"
+    required: false
+  db-port:
+    description: "The MSSQL database port, defaults to 1433"
+    required: false
+    default: "1433"
+  db-database-name:
+    description: "The database name"
+    required: false
+  db-user:
+    description: "The database user, defaults to 'sa'"
+    required: false
+    default: "sa"
+  db-password:
+    description: "The database password"
+    required: false
+  encrypt:
+    description: "True/False the SQL Server encryption settings"
+    required: false
+    default: null
+  trusted_connection:
+    description: "True/False whether the SQL Server connection is trusted"
+    required: false
+    default: null
+  protocol:
+    description: "Connection protocol for the database (e.g. tcp)"
+    default: "tcp"
+    required: false
+  server_connection_string:
+    description: "An optional ODBC server connection string to use when connecting to the server. These are usually constructed as '{protocol}:{host},{port}'. This"
+    required: false
+    default: null
+  trust_server_certificate:
+    description: Sets the optional ODBC connection string `TrustServerCertificate`
+    required: false
+    default: "true"
+
+runs:
+  using: "docker"
+  image: "../image/Dockerfile"
+  entrypoint: /entrypoints/mssql.sh
+  env:
+    GRAI_ACTION: ${{ inputs.action }}
+    GITHUB_TOKEN: ${{ inputs.github-token }}
+    GRAI_NAMESPACE: ${{ inputs.namespace }}
+    GRAI_WORKSPACE: ${{ inputs.workspace }}
+    GRAI_HOST: ${{ inputs.client-host }}
+    GRAI_PORT: ${{ inputs.client-port }}
+    GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
+    GRAI_API_KEY: ${{ inputs.api-key }}
+    GRAI_ACCESS_MODE: "mssql"
+    GRAI_MSSQL_HOST: ${{ inputs.db-host }}
+    GRAI_MSSQL_PORT: ${{ inputs.db-port }}
+    GRAI_MSSQL_DATABASE: ${{ inputs.db-database-name }}
+    GRAI_MSSQL_USER: ${{ inputs.db-user }}
+    GRAI_MSSQL_PASSWORD: ${{ inputs.db-password }}
+    GRAI_MSSQL_ENCRYPT: ${{ inputs.encrypt }}
+    GRAI_MSSQL_TRUSTED_CONNECTION: ${{ inputs.trusted_connection }}
+    GRAI_MSSQL_PROTOCOL: ${{ inputs.protocol }}
+    GRAI_MSSQL_SERVER: ${{ inputs.server_connection_string }}
+    GRAI_MSSQL_TRUST_SERVER_CERTIFICATE: ${{ inputs.trust_server_certificate }}
+
+branding:
+  color: "purple"
+  icon: "eye"

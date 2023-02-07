@@ -1,7 +1,6 @@
 import unittest
 
 import validators
-from grai_actions import tools
 from grai_graph.utils import mock_v1_edge, mock_v1_node
 from grai_schemas.base import GraiMetadata
 from grai_schemas.v1 import EdgeV1, NodeV1
@@ -15,6 +14,8 @@ from grai_schemas.v1.metadata.nodes import (
     GenericNodeMetadataV1,
     NodeTypeLabels,
 )
+
+from grai_actions import tools
 
 
 def mock_node(name: str, namespace: str = "default"):
@@ -50,11 +51,7 @@ def mock_edge(source_node, destination_node):
                 "namespace": destination_node.namespace,
             },
             "is_active": True,
-            "metadata": {
-                "grai": ColumnToColumnMetadata(
-                    edge_type=EdgeTypeLabels.column_to_column.value
-                )
-            },
+            "metadata": {"grai": ColumnToColumnMetadata(edge_type=EdgeTypeLabels.column_to_column.value)},
         },
     }
 
@@ -105,7 +102,7 @@ class TestTypeTestResult(unittest.TestCase):
     @classmethod
     def test_make_row_has_correct_number_of_columns(cls):
         row_str = cls.test_obj.make_row()
-        assert row_str.count("|") == 4
+        assert row_str.count("|") == 5
 
     @classmethod
     def test_make_message_is_str(cls):
@@ -155,7 +152,7 @@ class TestNullableTestResult(unittest.TestCase):
     @classmethod
     def test_make_row_has_correct_number_of_columns(cls):
         row_str = cls.test_obj.make_row()
-        assert row_str.count("|") == 4
+        assert row_str.count("|") == 5
 
     @classmethod
     def test_make_message_is_str(cls):
@@ -205,7 +202,7 @@ class TestUniqueTestResult(unittest.TestCase):
     @classmethod
     def test_make_row_has_correct_number_of_columns(cls):
         row_str = cls.test_obj.make_row()
-        assert row_str.count("|") == 4
+        assert row_str.count("|") == 5
 
     @classmethod
     def test_make_message_is_str(cls):
@@ -245,7 +242,7 @@ def get_test_summary():
             "f",
         ),
     ]
-    return tools.TestSummary(source_node, results)
+    return tools.TestSummary(results)
 
 
 class TestTestSummary(unittest.TestCase):
@@ -270,9 +267,7 @@ class TestTestSummary(unittest.TestCase):
     @classmethod
     def test_graph_status_data_type(cls):
         summary_result = cls.summary.graph_status_path()
-        assert isinstance(
-            summary_result, dict
-        ), f"Root object not dict, got {type(summary_result)}"
+        assert isinstance(summary_result, dict), f"Root object not dict, got {type(summary_result)}"
         assert all(
             isinstance(value, dict) for value in summary_result.values()
         ), f"Child object not dict, got {set(type(val) for val in summary_result.values())}"
@@ -280,12 +275,10 @@ class TestTestSummary(unittest.TestCase):
             isinstance(key, tuple) for key in summary_result.keys()
         ), f"Child key not tuple, got {set(type(val) for val in summary_result.keys())}"
         assert all(
-            all(isinstance(key, tuple) for key in values.keys())
-            for values in summary_result.values()
+            all(isinstance(key, tuple) for key in values.keys()) for values in summary_result.values()
         ), f"key in child not tuple, got {set(type(v) for val in summary_result.values() for v in val.keys())}"
         assert all(
-            all(isinstance(val, bool) for val in values.values())
-            for values in summary_result.values()
+            all(isinstance(val, bool) for val in values.values()) for values in summary_result.values()
         ), f"value in child not bool, got {set(type(v) for val in summary_result.values() for v in val.values())}"
 
     @classmethod

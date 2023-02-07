@@ -1,4 +1,5 @@
 from ghapi.all import GhApi
+
 from grai_actions.config import config
 
 
@@ -15,6 +16,10 @@ def collapsable(content, label):
 
 def heading(string, level):
     return f"<h{level}> {string} </h{level}>"
+
+
+def create_or_edit_comment(pr_number, message):
+    pass
 
 
 def post_comment(message):

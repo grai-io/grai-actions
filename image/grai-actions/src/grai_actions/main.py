@@ -1,9 +1,10 @@
+from grai_client.update import update
+
 from grai_actions.config import SupportedActions, config
 from grai_actions.git_messages import post_comment
 from grai_actions.integrations import get_nodes_and_edges
 from grai_actions.tools import TestResultCache
 from grai_actions.utilities import get_client
-from grai_client.update import update
 
 
 def run_update_server(client):
@@ -14,13 +15,14 @@ def run_update_server(client):
 
 def run_tests(client):
     results = TestResultCache(client)
-
-    errors = False
+    summary = results.consolidated_summary()
+    has_errors = len(summary.test_results) > 0
     for message in results.messages():
         post_comment(message)
         errors = True
 
-    if errors:
+    if has_errors:
+        post_comment(summary.message())
         raise Exception("Test failures detected")
 
 

@@ -1,9 +1,10 @@
 from typing import Optional
 
-from grai_actions.config import config
 from grai_source_snowflake import base
 from grai_source_snowflake.loader import SnowflakeConnector
 from pydantic import BaseSettings
+
+from grai_actions.config import config
 
 
 class Args(BaseSettings):

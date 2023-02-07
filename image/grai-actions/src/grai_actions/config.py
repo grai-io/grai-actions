@@ -23,6 +23,7 @@ class AccessModes(Enum):
     FLAT_FILE = "flat_file"
     POSTGRES = "postgres"
     MYSQL = "mysql"
+    MSSQL = "mssql"
     SNOWFLAKE = "snowflake"
     TEST_MODE = "test_mode"
 
