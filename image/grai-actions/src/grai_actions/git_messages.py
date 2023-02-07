@@ -27,8 +27,6 @@ class BotApi:
             repo=config.repo_name,
             token=config.github_token.get_secret_value(),
         )
-        # self.bot_user = self.api.users.get_authenticated()
-        # self.bot_user_id = self.bot_user["id"]
         self.test_signal_text = "<!-- grai marker text for test comments-->"
 
     @staticmethod
@@ -36,10 +34,9 @@ class BotApi:
         return f"{identifier}{message}"
 
     def get_marked_comment(self, identifier) -> Optional[dict]:
-        return None
         current_comments = self.api.issues.list_comments(config.pr_number)
-        user_comments = (comment for comment in current_comments if comment["user"]["id"] == self.bot_user_id)
-        for comment in user_comments:
+        #user_comments = (comment for comment in current_comments if comment["user"]["id"] == self.bot_user_id)
+        for comment in current_comments:
             if identifier in comment["body"]:
                 return comment
         return None
