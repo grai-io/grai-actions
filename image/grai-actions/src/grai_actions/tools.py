@@ -245,7 +245,7 @@ class TestResultCacheBase:
             yield SingleSourceTestSummary(node, tests).message()
 
     def consolidated_summary(self) -> TestSummary:
-        test_failures = list(self.test_results().values())
+        test_failures = list(chain.from_iterable(self.test_results().values()))
         summary = TestSummary(test_failures)
         return summary
 
