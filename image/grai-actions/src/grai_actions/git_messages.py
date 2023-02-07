@@ -27,8 +27,8 @@ class BotApi:
             repo=config.repo_name,
             token=config.github_token.get_secret_value(),
         )
-        #self.bot_user = self.api.users.get_authenticated()
-        #self.bot_user_id = self.bot_user["id"]
+        # self.bot_user = self.api.users.get_authenticated()
+        # self.bot_user_id = self.bot_user["id"]
         self.test_signal_text = "<!-- grai marker text for test comments-->"
 
     @staticmethod
