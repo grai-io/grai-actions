@@ -2,7 +2,7 @@ from typing import Optional
 
 from grai_source_mssql import base
 from grai_source_mssql.loader import MsSQLConnector
-from pydantic import BaseSettings
+from pydantic import BaseSettings, validator
 
 from grai_actions.config import config
 
@@ -13,10 +13,18 @@ class Args(BaseSettings):
     grai_mssql_database: str
     grai_mssql_user: str
     grai_mssql_password: str
-    grai_mssql_encrypt: bool | None
-    grai_mssql_trusted_connection: bool | None
-    grai_mssql_protocol: str | None
-    grai_mssql_server: str | None
+    grai_mssql_encrypt: bool
+    grai_mssql_trusted_connection: bool
+    grai_mssql_protocol: str
+    grai_mssql_server: str
+
+    @validator("grai_mssql_encrypt", pre=True)
+    def verify_encrypt(cls, value):
+        return value == "true"
+
+    @validator("grai_mssql_trusted_connection", pre=True)
+    def verify_trusted_connection(cls, value):
+        return value == "true"
 
 
 args = Args()
