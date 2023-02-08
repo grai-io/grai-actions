@@ -102,7 +102,7 @@ class TestTypeTestResult(unittest.TestCase):
     @classmethod
     def test_make_row_has_correct_number_of_columns(cls):
         row_str = cls.test_obj.make_row()
-        assert row_str.count("|") == 5
+        assert row_str.count("|") == 6
 
     @classmethod
     def test_make_message_is_str(cls):
@@ -152,7 +152,7 @@ class TestNullableTestResult(unittest.TestCase):
     @classmethod
     def test_make_row_has_correct_number_of_columns(cls):
         row_str = cls.test_obj.make_row()
-        assert row_str.count("|") == 5
+        assert row_str.count("|") == 6
 
     @classmethod
     def test_make_message_is_str(cls):
@@ -202,7 +202,7 @@ class TestUniqueTestResult(unittest.TestCase):
     @classmethod
     def test_make_row_has_correct_number_of_columns(cls):
         row_str = cls.test_obj.make_row()
-        assert row_str.count("|") == 5
+        assert row_str.count("|") == 6
 
     @classmethod
     def test_make_message_is_str(cls):
