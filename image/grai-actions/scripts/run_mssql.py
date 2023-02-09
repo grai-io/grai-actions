@@ -7,7 +7,7 @@ env_vars = [
     "GITHUB_EVENT_NAME = pull_request",
     "GITHUB_TOKEN = abc",
     "GITHUB_REF = 'abc/123/itseasy",
-    "GRAI_API_KEY = EctPQthl.gCEe0Baizw2etVqYkNc2l3sUNBTGCFKK",
+    "GRAI_API_KEY = ",
     "GRAI_MSSQL_HOST = localhost",
     "GRAI_MSSQL_USER = sa",
     "GRAI_MSSQL_PASSWORD = GraiGraiGr4i",
@@ -31,7 +31,6 @@ def run_test():
     # breakpoint()
     client = get_client()
     results = TestResultCache(client)
-    breakpoint()
 
 
 
