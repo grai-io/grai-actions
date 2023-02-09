@@ -8,9 +8,7 @@ from grai_actions.config import config
 
 
 def get_nodes_and_edges(client):
-    conn = MsSQLConnector(
-        namespace=config.grai_namespace,
-    )
+    conn = MsSQLConnector(namespace=config.grai_namespace)
 
     # Already adapted to client
     nodes, edges = base.get_nodes_and_edges(conn, client.id)
