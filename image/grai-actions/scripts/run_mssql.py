@@ -33,7 +33,6 @@ def run_test():
     results = TestResultCache(client)
 
 
-
 def run_update():
     from grai_actions.main import run_update_server
     from grai_actions.utilities import get_client
@@ -43,5 +42,5 @@ def run_update():
     run_update_server(client)
 
 
-#run_update()
+# run_update()
 run_test()

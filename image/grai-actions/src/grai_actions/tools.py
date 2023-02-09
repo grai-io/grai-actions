@@ -204,7 +204,7 @@ class TestResultCacheBase:
                 name=node.spec.name,
                 expects_unique=result,
             )
-            test_results =  [UniqueTestResult(node, path) for path in affected_nodes]
+            test_results = [UniqueTestResult(node, path) for path in affected_nodes]
             if test_results:
                 result_map[node] = test_results
 
