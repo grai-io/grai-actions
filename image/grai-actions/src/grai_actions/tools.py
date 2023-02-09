@@ -72,8 +72,8 @@ class UniqueTestResult(TestResult):
         self.provided_value = self.node.spec.metadata.grai.node_attributes.is_unique
 
     def message(self) -> str:
-        to_be_or_not_to_be = "not " if self.expected_value else ""
-        return f"Node `{self.failing_node_name}` expected {to_be_or_not_to_be}to be unique"
+        to_be_or_not_to_be = "to be" if self.expected_value else "not to be"
+        return f"Node `{self.failing_node_name}` expected {self.failing_node_name} {to_be_or_not_to_be} unique"
 
 
 class NullableTestResult(TestResult):
@@ -85,8 +85,8 @@ class NullableTestResult(TestResult):
         self.provided_value = self.node.spec.metadata.grai.node_attributes.is_nullable
 
     def message(self) -> str:
-        to_be_or_not_to_be = "not " if self.expected_value else ""
-        return f"Node `{self.failing_node_name}` expected {to_be_or_not_to_be}to be nullable"
+        to_be_or_not_to_be = "to be" if self.expected_value else "not to be"
+        return f"Node `{self.failing_node_name}` expected {self.failing_node_name} {to_be_or_not_to_be} nullable"
 
 
 class TestSummary:
