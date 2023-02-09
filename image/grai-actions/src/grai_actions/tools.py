@@ -101,9 +101,6 @@ class TestSummary:
                 raise Exception("Test paths must have more than two nodes")
 
             for a, b in path_edges:
-                for node in [a, b]:
-                    assert node.spec.namespace is not None
-                    assert node.spec.name is not None
                 a_id = (a.spec.namespace, a.spec.name)
                 b_id = (b.spec.namespace, b.spec.name)
                 edge_status.setdefault(a_id, {})
@@ -186,7 +183,9 @@ class TestResultCacheBase:
             affected_nodes = self.analysis.test_type_change(
                 namespace=node.spec.namespace, name=node.spec.name, new_type=result
             )
-            result_map[node] = [TypeTestResult(node, path) for path in affected_nodes]
+            test_results = [TypeTestResult(node, path) for path in affected_nodes]
+            if test_results:
+                result_map[node] = test_results
         return result_map
 
     def unique_tests(self) -> Dict[NodeV1, List[UniqueTestResult]]:
@@ -205,7 +204,10 @@ class TestResultCacheBase:
                 name=node.spec.name,
                 expects_unique=result,
             )
-            result_map[node] = [UniqueTestResult(node, path) for path in affected_nodes]
+            test_results = [UniqueTestResult(node, path) for path in affected_nodes]
+            if test_results:
+                result_map[node] = test_results
+
         return result_map
 
     def null_tests(self) -> Dict[NodeV1, List[NullableTestResult]]:
@@ -222,14 +224,16 @@ class TestResultCacheBase:
             affected_nodes = self.analysis.test_nullable_violations(
                 namespace=node.spec.namespace, name=node.spec.name, is_nullable=result
             )
-            result_map[node] = [NullableTestResult(node, path) for path in affected_nodes]
+            test_results = [NullableTestResult(node, path) for path in affected_nodes]
+            if test_results:
+                result_map[node] = test_results
         return result_map
 
     def test_results(self) -> Dict[NodeV1, List[TestResult]]:
         tests = chain(
             self.unique_tests().items(),
             self.null_tests().items(),
-            self.type_tests().items(),
+            # self.type_tests().items(),
         )
 
         results: Dict[NodeV1, List[TestResult]] = {}
