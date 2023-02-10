@@ -56,7 +56,9 @@ class TypeTestResult(TestResult):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.expected_value = self.failing_node.spec.metadata.grai.node_attributes.data_type
+        self.expected_value = (
+            self.failing_node.spec.metadata.grai.node_attributes.data_type
+        )
         self.provided_value = self.node.spec.metadata.grai.node_attributes.data_type
 
     def message(self) -> str:
@@ -68,7 +70,9 @@ class UniqueTestResult(TestResult):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.expected_value = self.failing_node.spec.metadata.grai.node_attributes.is_unique
+        self.expected_value = (
+            self.failing_node.spec.metadata.grai.node_attributes.is_unique
+        )
         self.provided_value = self.node.spec.metadata.grai.node_attributes.is_unique
 
     def message(self) -> str:
@@ -81,7 +85,9 @@ class NullableTestResult(TestResult):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.expected_value = self.failing_node.spec.metadata.grai.node_attributes.is_nullable
+        self.expected_value = (
+            self.failing_node.spec.metadata.grai.node_attributes.is_nullable
+        )
         self.provided_value = self.node.spec.metadata.grai.node_attributes.is_nullable
 
     def message(self) -> str:
@@ -115,7 +121,11 @@ class TestSummary:
             return f'\t{a}-->|"{"✅" if status else "❌"}"| {b};'
 
         graph_status = self.graph_status_path()
-        edges = "\n".join(new_edge(a, b, status) for a, values in graph_status.items() for b, status in values.items())
+        edges = "\n".join(
+            new_edge(a, b, status)
+            for a, values in graph_status.items()
+            for b, status in values.items()
+        )
         message = f"```mermaid\ngraph TD;\n{edges}\n```"
         return message
 
@@ -174,7 +184,9 @@ class TestResultCacheBase:
         result_map = {}
         for node in self.new_columns:
             try:
-                original_node = self.graph.get_node(name=node.spec.name, namespace=node.spec.namespace)
+                original_node = self.graph.get_node(
+                    name=node.spec.name, namespace=node.spec.namespace
+                )
             except:
                 # This is a new node
                 continue
@@ -193,7 +205,9 @@ class TestResultCacheBase:
         result_map = {}
         for node in self.new_columns:
             try:
-                original_node = self.graph.get_node(name=node.spec.name, namespace=node.spec.namespace)
+                original_node = self.graph.get_node(
+                    name=node.spec.name, namespace=node.spec.namespace
+                )
             except:
                 # This is a new node
                 continue
@@ -215,7 +229,9 @@ class TestResultCacheBase:
         result_map = {}
         for node in self.new_columns:
             try:
-                original_node = self.graph.get_node(name=node.spec.name, namespace=node.spec.namespace)
+                original_node = self.graph.get_node(
+                    name=node.spec.name, namespace=node.spec.namespace
+                )
             except:
                 # This is a new node
                 continue

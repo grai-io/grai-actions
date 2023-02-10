@@ -51,7 +51,11 @@ def mock_edge(source_node, destination_node):
                 "namespace": destination_node.namespace,
             },
             "is_active": True,
-            "metadata": {"grai": ColumnToColumnMetadata(edge_type=EdgeTypeLabels.column_to_column.value)},
+            "metadata": {
+                "grai": ColumnToColumnMetadata(
+                    edge_type=EdgeTypeLabels.column_to_column.value
+                )
+            },
         },
     }
 
@@ -267,7 +271,9 @@ class TestTestSummary(unittest.TestCase):
     @classmethod
     def test_graph_status_data_type(cls):
         summary_result = cls.summary.graph_status_path()
-        assert isinstance(summary_result, dict), f"Root object not dict, got {type(summary_result)}"
+        assert isinstance(
+            summary_result, dict
+        ), f"Root object not dict, got {type(summary_result)}"
         assert all(
             isinstance(value, dict) for value in summary_result.values()
         ), f"Child object not dict, got {set(type(val) for val in summary_result.values())}"
@@ -275,10 +281,12 @@ class TestTestSummary(unittest.TestCase):
             isinstance(key, tuple) for key in summary_result.keys()
         ), f"Child key not tuple, got {set(type(val) for val in summary_result.keys())}"
         assert all(
-            all(isinstance(key, tuple) for key in values.keys()) for values in summary_result.values()
+            all(isinstance(key, tuple) for key in values.keys())
+            for values in summary_result.values()
         ), f"key in child not tuple, got {set(type(v) for val in summary_result.values() for v in val.keys())}"
         assert all(
-            all(isinstance(val, bool) for val in values.values()) for values in summary_result.values()
+            all(isinstance(val, bool) for val in values.values())
+            for values in summary_result.values()
         ), f"value in child not bool, got {set(type(v) for val in summary_result.values() for v in val.values())}"
 
     @classmethod
