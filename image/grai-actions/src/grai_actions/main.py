@@ -1,7 +1,7 @@
 from grai_client.update import update
 
 from grai_actions.config import SupportedActions, config
-from grai_actions.git_messages import post_comment
+from grai_actions.git_messages import create_or_update_comment
 from grai_actions.integrations import get_nodes_and_edges
 from grai_actions.tools import TestResultCache
 from grai_actions.utilities import get_client
@@ -19,8 +19,10 @@ def run_tests(client):
     has_errors = len(summary.test_results) > 0
 
     if has_errors:
-        post_comment(summary.message())
+        create_or_update_comment(summary.message())
         raise Exception("Test failures detected")
+    else:
+        create_or_update_comment(None)
 
 
 def main():
