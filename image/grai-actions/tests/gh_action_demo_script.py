@@ -20,7 +20,7 @@ def run_test():
 
     summary = get_test_summary()
     message = summary.message()
-    create_or_edit_comment(message)
+    create_or_update_comment(message)
 
 
 run_test()
