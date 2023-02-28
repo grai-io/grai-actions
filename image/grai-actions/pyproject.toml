@@ -9,7 +9,7 @@ packages = [{include = "grai_actions", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-grai-graph = "^0.1.11-alpha1"
+grai-graph = "^0.2.0"
 ghapi = "^1.0.3"
 grai-client = "^0.2.2"
 pydantic = "^1.10.4"
