@@ -27,12 +27,13 @@ class TestResult(ABC):
 
     type: str
 
-    def __init__(self, node: NodeV1, test_path: List[NodeV1]):
+    def __init__(self, node: NodeV1, test_path: List[NodeV1], test_pass: bool = False):
         self.node = node
         self.failing_node = test_path[-1]
         self.test_path = test_path
         self.node_name = build_node_name(self.node)
         self.failing_node_name = build_node_name(self.failing_node)
+        self.test_pass = test_pass
 
     @abstractmethod
     def message(self) -> str:
@@ -168,7 +169,7 @@ class TestResultCacheBase:
                 continue
             yield node
 
-    def type_tests(self) -> Dict[NodeV1, List[TypeTestResult]]:
+    def data_type_tests(self) -> Dict[NodeV1, List[TypeTestResult]]:
         errors = False
 
         result_map = {}
@@ -180,10 +181,10 @@ class TestResultCacheBase:
                 continue
 
             result = node.spec.metadata.grai.node_attributes.data_type
-            affected_nodes = self.analysis.test_type_change(
+            affected_nodes = self.analysis.test_data_type_change(
                 namespace=node.spec.namespace, name=node.spec.name, new_type=result
             )
-            test_results = [TypeTestResult(node, path) for path in affected_nodes]
+            test_results = [TypeTestResult(node, path, test_pass) for (path, test_pass) in affected_nodes]
             if test_results:
                 result_map[node] = test_results
         return result_map
@@ -204,7 +205,7 @@ class TestResultCacheBase:
                 name=node.spec.name,
                 expects_unique=result,
             )
-            test_results = [UniqueTestResult(node, path) for path in affected_nodes]
+            test_results = [UniqueTestResult(node, path, test_pass) for (path, test_pass) in affected_nodes]
             if test_results:
                 result_map[node] = test_results
 
@@ -224,7 +225,7 @@ class TestResultCacheBase:
             affected_nodes = self.analysis.test_nullable_violations(
                 namespace=node.spec.namespace, name=node.spec.name, is_nullable=result
             )
-            test_results = [NullableTestResult(node, path) for path in affected_nodes]
+            test_results = [NullableTestResult(node, path, test_pass) for (path, test_pass) in affected_nodes]
             if test_results:
                 result_map[node] = test_results
         return result_map
@@ -233,7 +234,7 @@ class TestResultCacheBase:
         tests = chain(
             self.unique_tests().items(),
             self.null_tests().items(),
-            # self.type_tests().items(),
+            # self.data_type_tests().items(),
         )
 
         results: Dict[NodeV1, List[TestResult]] = {}
