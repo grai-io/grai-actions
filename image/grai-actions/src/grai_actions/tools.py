@@ -181,7 +181,7 @@ class TestResultCacheBase:
                 continue
 
             result = node.spec.metadata.grai.node_attributes.data_type
-            affected_nodes = self.analysis.test_type_change(
+            affected_nodes = self.analysis.test_data_type_change(
                 namespace=node.spec.namespace, name=node.spec.name, new_type=result
             )
             test_results = [TypeTestResult(node, path, test_pass) for (path, test_pass) in affected_nodes]
@@ -234,7 +234,7 @@ class TestResultCacheBase:
         tests = chain(
             self.unique_tests().items(),
             self.null_tests().items(),
-            # self.type_tests().items(),
+            # self.data_type_tests().items(),
         )
 
         results: Dict[NodeV1, List[TestResult]] = {}
