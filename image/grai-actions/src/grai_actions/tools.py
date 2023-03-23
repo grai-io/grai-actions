@@ -61,7 +61,7 @@ class TypeTestResult(TestResult):
         self.provided_value = self.node.spec.metadata.grai.node_attributes.data_type
 
     def message(self) -> str:
-        return f"Node `{self.failing_node.spec.name}` expected {self.node.spec.name} to be of type {self.expected_value} not {self.provided_value}"
+        return f"Node `{self.failing_node.spec.name}` expected `{self.node.spec.name}` to be of type {self.expected_value} not {self.provided_value}"
 
 
 class UniqueTestResult(TestResult):
@@ -74,7 +74,7 @@ class UniqueTestResult(TestResult):
 
     def message(self) -> str:
         to_be_or_not_to_be = "to be" if self.expected_value else "**not** to be"
-        return f"Node `{self.failing_node.spec.name}` expected {self.node.spec.name} {to_be_or_not_to_be} unique"
+        return f"Node `{self.failing_node.spec.name}` expected `{self.node.spec.name}` {to_be_or_not_to_be} unique"
 
 
 class NullableTestResult(TestResult):
@@ -244,13 +244,15 @@ class TestResultCacheBase:
 
         return results
 
+    def test_failures(self) -> Dict[NodeV1, List[TestResult]]:
+        return {k: [test for test in v if not test.test_pass] for k, v in self.test_results().items()}
+
     def messages(self) -> Iterable[str]:
-        test_results = self.test_results()
-        for node, tests in test_results.items():
+        for node, tests in self.test_failures().items():
             yield SingleSourceTestSummary(node, tests).message()
 
     def consolidated_summary(self) -> TestSummary:
-        test_failures = list(chain.from_iterable(self.test_results().values()))
+        test_failures = list(chain.from_iterable(self.test_failures().values()))
         summary = TestSummary(test_failures)
         return summary
 
