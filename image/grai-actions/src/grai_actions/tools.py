@@ -61,7 +61,7 @@ class TypeTestResult(TestResult):
         self.provided_value = self.node.spec.metadata.grai.node_attributes.data_type
 
     def message(self) -> str:
-        return f"Node `{self.failing_node.spec.name}` expected {self.node.spec.name} to be of type {self.expected_value} not {self.provided_value}"
+        return f"Node `{self.failing_node.spec.name}` expected `{self.node.spec.name}` to be of type {self.expected_value} not {self.provided_value}"
 
 
 class UniqueTestResult(TestResult):
@@ -74,7 +74,7 @@ class UniqueTestResult(TestResult):
 
     def message(self) -> str:
         to_be_or_not_to_be = "to be" if self.expected_value else "**not** to be"
-        return f"Node `{self.failing_node.spec.name}` expected {self.node.spec.name} {to_be_or_not_to_be} unique"
+        return f"Node `{self.failing_node.spec.name}` expected `{self.node.spec.name}` {to_be_or_not_to_be} unique"
 
 
 class NullableTestResult(TestResult):
