@@ -244,13 +244,15 @@ class TestResultCacheBase:
 
         return results
 
+    def test_failures(self) -> Dict[NodeV1, List[TestResult]]:
+        return {k: [test for test in v if not test.test_pass] for k, v in self.test_results().items()}
+
     def messages(self) -> Iterable[str]:
-        test_results = self.test_results()
-        for node, tests in test_results.items():
+        for node, tests in self.test_failures().items():
             yield SingleSourceTestSummary(node, tests).message()
 
     def consolidated_summary(self) -> TestSummary:
-        test_failures = list(chain.from_iterable(self.test_results().values()))
+        test_failures = list(chain.from_iterable(self.test_failures().values()))
         summary = TestSummary(test_failures)
         return summary
 
