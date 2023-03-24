@@ -42,15 +42,15 @@ class BotApi:
         return None
 
     def create_or_update_comment(self, message: Optional[str]):
-        message = self.add_comment_identifier(message, self.test_signal_text)
+        marked_message = self.add_comment_identifier(message, self.test_signal_text)
         marked_comment = self.get_marked_comment(self.test_signal_text)
         if marked_comment is None:
-            self.api.issues.create_comment(config.pr_number, body=message)
+            self.api.issues.create_comment(config.pr_number, body=marked_message)
         else:
             if message is None:
                 self.api.issues.delete_comment(marked_comment["id"])
             else:
-                self.api.issues.update_comment(marked_comment["id"], body=message)
+                self.api.issues.update_comment(marked_comment["id"], body=marked_message)
 
 
 def create_or_update_comment(message):
