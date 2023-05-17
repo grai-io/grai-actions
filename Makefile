@@ -10,7 +10,7 @@ build_md:  ## Run migrations
 	@for dir in $(LOCAL_DIRS); do \
 		if [[ -f $$dir/README.md ]]; then \
 			echo "#$$(cat $$dir/README.md)" >> README.md; \
-			echo "\n" >> README.md; \
+			echo "  " >> README.md; \
 		fi; \
 	  done
 
