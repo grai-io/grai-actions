@@ -117,7 +117,7 @@ This endpoint is configurable if you have a non-standard implementation but shou
 
 Authentication with their services will require an API key and secret but you can find more documentation about generating these values [here](https://fivetran.com/docs/rest-api/getting-started#instructions).
 
-### Fields
+### Fivetran Fields
 
 | Field             | Value                                  | Example                      |
 | ----------------- | -------------------------------------- | ---------------------------- |
