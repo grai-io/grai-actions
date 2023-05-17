@@ -6,11 +6,11 @@ on:
 jobs:
   readme-build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ${{ env.project_dir }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+  
       - run: make build_md
-      - uses: stefanzweifel/git-auto-commit-action@v4
+
+      - name: "Commit README.md"
+        uses: stefanzweifel/git-auto-commit-action@v4
