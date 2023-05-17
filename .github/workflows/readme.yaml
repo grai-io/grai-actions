@@ -1,10 +1,9 @@
-name: ReadmePrep
+name: Readme Prep
 on:
   pull_request:
     paths:
       - "*/README.md"
-      - "base_readme.md"
-
+      - base_readme.md
 jobs:
   readme-build:
     runs-on: ubuntu-latest
@@ -14,7 +13,5 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      
       - run: make build_md
-
       - uses: stefanzweifel/git-auto-commit-action@v4
