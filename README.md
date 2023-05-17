@@ -26,7 +26,7 @@ You can find complete documentation about the library in the Snowflake docs [her
 | database  | Snowflake database                                                      |                  |
 | schema    | Snowflake schema to use (optional)                                      |                  |
 | password  | Database password                                                       |                  |
-\n
+  
 ## Redshift
 
 The Redshift action depends on Amazon's python connector library. 
@@ -42,7 +42,7 @@ You can find complete documentation about the library in the AWS docs [here](htt
 | db-database-name | Database Name                          | grai                         |
 | db-user          | Database user                          | grai                         |
 | db-password      | Database password                      | grai                         |
-\n
+  
 ## Flat File
 
 The flat file action reads a flat file like csv, parquet, or feather inside of your github project to perform tests and update your grai instance.
@@ -56,7 +56,7 @@ Make sure to include an `- uses: actions/checkout@v3` step in your workflow so t
 | Field          | Value                                                                 | Example         |
 | -------------- | --------------------------------------------------------------------- | --------------- |
 | file           | The file location in your repository of the updated flat file         | data.csv        |
-\n
+  
 ## Microsoft SQL Server
 
 The SQL Server action depends on the python pyodbc library. 
@@ -79,7 +79,7 @@ A standard connection would consist of a host, port, database name, user, and pa
 | protocol | Optional, One of "tcp", "Icp", or "NP". Defaults to "tcp"        | tcp       |
 | server_connection_string  | Server connection string for pyodbc, Sets `Server={VALUE}` | grai      |
 | trust_server_certificate | Boolean, sets the `TrustServerCertificate` value in pyodbc  | grai      |
-\n
+  
 ## BigQuery
 
 The BigQuery action depends on Google's python BigQuery library. 
@@ -93,7 +93,7 @@ More information can be found about specific connection credentials in Google's 
 | project     | BigQuery project string                                               | my-project      |
 | dataset     | BigQuery dataset string                                               | my-dataset      |
 | credentials | A JSON credential string for use with google oauth service account [connections](https://google-auth.readthedocs.io/en/master/reference/google.oauth2.service_account.html#google.oauth2.service_account.Credentials)                  |       |
-\n
+  
 ## Postgres
 
 The Postgres action depends on the python psycopg2 library. 
@@ -109,7 +109,7 @@ You can find complete documentation about the library [here](https://www.psycopg
 | db-database-name | Database Name                          | grai                         |
 | db-user          | Database user                          | grai                         |
 | db-password      | Database password                      | grai                         |
-\n
+  
 ## Fivetran
 
 The Fivetran Action relies upon access to Fivetran's API endpoint. 
@@ -151,7 +151,7 @@ The namespace map should be a JSON string with the Grai namespace for each sourc
 
 
 You can find connector id's for all of your Fivetran connections in the [API](https://fivetran.com/docs/rest-api/faq/find-connector_id)
-\n
+  
 ## MySQL 
 
 The MySQL action depends on the python mysql library. 
@@ -167,7 +167,7 @@ You can find complete documentation about the library [here](https://dev.mysql.c
 | db-database-name | Database Name                          | grai                         |
 | db-user          | Database user                          | grai                         |
 | db-password      | Database password                      | grai                         |
-\n
+  
 ## dbt
 
 The dbt action reads a manifest.json file inside of your github project to perform tests and update your grai instance.
@@ -184,4 +184,4 @@ One way to do this is to perform `dbt build` as part of your CI action but there
 | Field         | Value                                                                 | Example         |
 | --------------| --------------------------------------------------------------------- | --------------- |
 | manifest-file | The file location in your repository of the updated manifest.json     | profile-dir/manifest.json      |
-\n
+  
