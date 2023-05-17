@@ -10,8 +10,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
   
-      - run: make build_md
-        shell: bash
-        
+      - run: |
+      	  rm README.md
+	        cp base_readme.md README.md
+	        echo "\n# Integrations\n" >> README.md
+	        for dir in $(LOCAL_DIRS); do
+		        if [[ -f $$dir/README.md ]]; then
+              echo "#$$(cat $$dir/README.md)" >> README.md
+              echo "\n" >> README.md
+            fi; 
+          done
+
       - name: "Commit README.md"
         uses: stefanzweifel/git-auto-commit-action@v4
