@@ -1,0 +1,26 @@
+on:
+  pull_request:
+    paths:
+      - "*/README.md"
+      - base_readme.md
+      - .github/workflows/readme.yml
+jobs:
+  readme-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+  
+      - run: |
+          rm README.md
+          cp base_readme.md README.md
+          for dir in $(find . -maxdepth 1 -type d -not -path '*/\.*' -not -path '.' | xargs -I{} basename {}); do 
+            echo $dir
+            if [[ -f $dir/README.md ]]; then
+              echo "#$(cat $dir/README.md)" >> README.md
+              echo "  " >> README.md
+            fi
+          done
+
+      - name: "Commit README.md"
+        uses: stefanzweifel/git-auto-commit-action@v4

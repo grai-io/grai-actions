@@ -1,14 +1,14 @@
 # action.yml
-name: 'dbt'
-description: 'Determines the impact of changing data on downstream users'
-author: Grai <ian@grai.io>
+name: "Big Query"
+description: "Determines the impact of changing data on downstream users"
+author: Ian Eaves <ian@grai.io>
 inputs:
   action:
     description: Which action to take. Examples include `tests` and `update`.
     required: false
     default: "tests"
   github-token:
-    description: 'The GITHUB_TOKEN secret'
+    description: "The GITHUB_TOKEN secret"
     default: ${{ github.token }}
 
   namespace:
@@ -31,13 +31,19 @@ inputs:
     default: "https://app.grai.io"
     required: false
 
-  manifest-file:
-    description: "File location where your dbt manifest file will be generated"
+  project:
+    description: "The BigQuery project"
+    required: true
+  dataset:
+    description: "The BigQuery dataset"
+    required: true
+  credentials:
+    description: "BigQuery json credential string"
     required: true
 runs:
-  using: 'docker'
-  image: '../image/Dockerfile'
-  entrypoint: /entrypoints/dbt.sh
+  using: "docker"
+  image: "../image/Dockerfile"
+  entrypoint: /entrypoints/bigquery.sh
   env:
     GITHUB_TOKEN: ${{ inputs.github-token }}
     GRAI_NAMESPACE: ${{ inputs.namespace }}
@@ -46,10 +52,14 @@ runs:
     GRAI_PORT: ${{ inputs.client-port }}
     GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
     GRAI_API_KEY: ${{ inputs.api-key }}
-    GRAI_ACCESS_MODE: 'dbt'
-    GRAI_DBT_MANIFEST_FILE: ${{ inputs.manifest-file }}
+    GRAI_ACCESS_MODE: "bigquery"
+    GRAI_DB_USER: ${{ inputs.db-user }}
+    GRAI_DB_PASSWORD: ${{ inputs.db-password }}
+    GRAI_BIGQUERY_PROJECT: ${{ inputs.project }}
+    GRAI_BIGQUERY_DATASET: ${{ inputs.dataset }}
+    GRAI_BIGQUERY_CREDENTIALS: ${{ inputs.credentials }}
     GRAI_ACTION: ${{ inputs.action }}
 
 branding:
-    color: 'purple'
-    icon: 'eye'
+  color: "purple"
+  icon: "eye"

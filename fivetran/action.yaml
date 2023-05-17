@@ -1,5 +1,5 @@
 # action.yml
-name: 'dbt'
+name: 'Fivetran'
 description: 'Determines the impact of changing data on downstream users'
 author: Grai <ian@grai.io>
 inputs:
@@ -31,13 +31,24 @@ inputs:
     default: "https://app.grai.io"
     required: false
 
-  manifest-file:
-    description: "File location where your dbt manifest file will be generated"
+  fivetran_endpoint:
+    description: Fivetran API endpoint
+    default: "https://api.fivetran.com/v1"
+    required: false
+  api_key:
+    description: "Your Fivetran api key"
     required: true
+  api_secret:
+    description: "Your Fivetran api secret"
+    required: true
+  namespace_map:
+    description: "A JSON string containing a mapping between Fivetran connections and Grai namespaces"
+    required: false
+
 runs:
   using: 'docker'
   image: '../image/Dockerfile'
-  entrypoint: /entrypoints/dbt.sh
+  entrypoint: /entrypoints/fivetran.sh
   env:
     GITHUB_TOKEN: ${{ inputs.github-token }}
     GRAI_NAMESPACE: ${{ inputs.namespace }}
@@ -46,8 +57,10 @@ runs:
     GRAI_PORT: ${{ inputs.client-port }}
     GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
     GRAI_API_KEY: ${{ inputs.api-key }}
-    GRAI_ACCESS_MODE: 'dbt'
-    GRAI_DBT_MANIFEST_FILE: ${{ inputs.manifest-file }}
+    GRAI_ACCESS_MODE: 'fivetran'
+    GRAI_FiVETRAN_API_KEY: ${{ inputs.api_key }}
+    GRAI_FIVETRAN_API_SECRET: ${{ inputs.api_secret }}
+    GRAI_FIVETRAN_NAMESPACE_MAP: ${{ inputs.namespace_map }}
     GRAI_ACTION: ${{ inputs.action }}
 
 branding:

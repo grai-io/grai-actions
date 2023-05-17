@@ -26,6 +26,9 @@ class AccessModes(Enum):
     MSSQL = "mssql"
     SNOWFLAKE = "snowflake"
     TEST_MODE = "test_mode"
+    REDSHIFT = "redshift"
+    FIVETRAN = "fivetran"
+    BIGQUERY = "bigquery"
 
 
 class DefaultValues:

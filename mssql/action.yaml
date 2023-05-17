@@ -10,9 +10,10 @@ inputs:
   github-token:
     description: "The GITHUB_TOKEN secret"
     default: ${{ github.token }}
+
   namespace:
     description: "The namespace"
-    required: false
+    required: true
   workspace:
     description: "Workspace ID"
     required: false
@@ -27,6 +28,9 @@ inputs:
     required: true
   grai-frontend-host:
     description: "The url for your frontend, e.g. https://app.grai.io"
+    default: "https://app.grai.io"
+    required: false
+
   db-host:
     description: "The MSSQL database host"
     required: false
