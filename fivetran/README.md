@@ -35,7 +35,7 @@ The namespace map should be a JSON string with the Grai namespace for each sourc
         "destination", "<destination_namespace>"
     }
 }
-
+```
 
 
 You can find connector id's for all of your Fivetran connections in the [API](https://fivetran.com/docs/rest-api/faq/find-connector_id)
