@@ -58,7 +58,7 @@ runs:
     GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
     GRAI_API_KEY: ${{ inputs.api-key }}
     GRAI_ACCESS_MODE: 'fivetran'
-    GRAI_FiVETRAN_API_KEY: ${{ inputs.api_key }}
+    GRAI_FIVETRAN_API_KEY: ${{ inputs.api_key }}
     GRAI_FIVETRAN_API_SECRET: ${{ inputs.api_secret }}
     GRAI_FIVETRAN_NAMESPACE_MAP: ${{ inputs.namespace_map }}
     GRAI_ACTION: ${{ inputs.action }}

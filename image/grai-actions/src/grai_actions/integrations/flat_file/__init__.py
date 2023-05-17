@@ -6,7 +6,7 @@ from grai_actions.config import config
 
 
 class Args(BaseSettings):
-    grai_tracked_file: FilePath
+    grai_flat_file_file: FilePath
 
 
 args = Args()
