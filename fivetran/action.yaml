@@ -1,0 +1,55 @@
+# action.yml
+name: 'Fivetran'
+description: 'Determines the impact of changing data on downstream users'
+author: Grai <ian@grai.io>
+inputs:
+  github-token:
+    description: 'The GITHUB_TOKEN secret'
+    default: ${{ github.token }}
+  namespace:
+    description: 'A default namespace value to apply to all Fivetran connections'
+    required: false
+  namespace_map:
+    description: 'JSON string containing a mapping between Fivetran connections and Grai namespaces'
+    required: false
+  workspace:
+    description: "Workspace ID"
+    required: false
+  fivetran_endpoint:
+    description: Fivetran API endpoint
+    default: "https://api.fivetran.com/v1"
+    required: false
+  api_key:
+    description: "Your Fivetran api key"
+    required: true
+  api_secret:
+    description: "Your Fivetran api secret"
+    required: true
+  namespace_map:
+    description: "A JSON string containing a mapping between Fivetran connections and Grai namespaces"
+    required: false
+  action:
+    description: Which action to take. Examples include `tests` and `update`.
+    required: false
+    default: "tests"
+runs:
+  using: 'docker'
+  image: '../image/Dockerfile'
+  entrypoint: /entrypoints/fivetran.sh
+  env:
+    GITHUB_TOKEN: ${{ inputs.github-token }}
+    GRAI_NAMESPACE: ${{ inputs.namespace }}
+    GRAI_WORKSPACE: ${{ inputs.workspace }}
+    GRAI_HOST: ${{ inputs.client-host }}
+    GRAI_PORT: ${{ inputs.client-port }}
+    GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
+    GRAI_API_KEY: ${{ inputs.api-key }}
+    GRAI_ACCESS_MODE: 'fivetran'
+    GRAI_FiVETRAN_API_KEY: ${{ inputs.api_key }}
+    GRAI_FIVETRAN_API_SECRET: ${{ inputs.api_secret }}
+    GRAI_FIVETRAN_NAMESPACE_MAP: ${{ inputs.namespace_map }}
+    GRAI_ACTION: ${{ inputs.action }}
+
+branding:
+    color: 'purple'
+    icon: 'eye'

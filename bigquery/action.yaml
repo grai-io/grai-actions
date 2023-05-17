@@ -1,0 +1,63 @@
+# action.yml
+name: "Big Query"
+description: "Determines the impact of changing data on downstream users"
+author: Ian Eaves <ian@grai.io>
+inputs:
+  github-token:
+    description: "The GITHUB_TOKEN secret"
+    default: ${{ github.token }}
+  namespace:
+    description: "The namespace"
+    required: false
+  workspace:
+    description: "Workspace ID"
+    required: false
+  client-host:
+    description: "The host for the Grai server"
+    required: false
+  client-port:
+    description: "The port for the Grai server"
+    required: false
+  api-key:
+    description: "A user api key for server access"
+    required: true
+  grai-frontend-host:
+    description: "The url for your frontend, e.g. https://app.grai.io"
+
+  project:
+    description: "The BigQuery project"
+    required: true
+  dataset:
+    description: "The BigQuery dataset"
+    required: true
+  credentials:
+    description: "BigQuery json credential string"
+    required: true
+
+  action:
+    description: Which action to take. Examples include `tests` and `update`.
+    required: false
+    default: "tests"
+runs:
+  using: "docker"
+  image: "../image/Dockerfile"
+  entrypoint: /entrypoints/bigquery.sh
+  env:
+    GITHUB_TOKEN: ${{ inputs.github-token }}
+    GRAI_NAMESPACE: ${{ inputs.namespace }}
+    GRAI_WORKSPACE: ${{ inputs.workspace }}
+    GRAI_HOST: ${{ inputs.client-host }}
+    GRAI_PORT: ${{ inputs.client-port }}
+    GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
+    GRAI_API_KEY: ${{ inputs.api-key }}
+    GRAI_ACCESS_MODE: "bigquery"
+    GRAI_DB_USER: ${{ inputs.db-user }}
+    GRAI_DB_PASSWORD: ${{ inputs.db-password }}
+    GRAI_BIGQUERY_PROJECT: ${{ inputs.project }}
+    GRAI_BIGQUERY_DATASET: ${{ inputs.dataset }}
+    GRAI_BIGQUERY_CREDENTIALS: ${{ inputs.credentials }}
+    GRAI_ACTION: ${{ inputs.action }}
+
+branding:
+  color: "purple"
+  icon: "eye"

@@ -13,8 +13,13 @@ match config.grai_access_mode:
         from .snowflake import get_nodes_and_edges
     case AccessModes.MSSQL.value:
         from .mssql import get_nodes_and_edges
+    case AccessModes.BIGQUERY.value:
+        from .bigquery import get_nodes_and_edges
+    case AccessModes.REDSHIFT.value:
+        from .redshift import get_nodes_and_edges
+    case AccessModes.FIVETRAN.value:
+        from .fivetran import get_nodes_and_edges
     case AccessModes.TEST_MODE.value:
-
         def get_nodes_and_edges(*args, **kwargs):
             return [], []
 
