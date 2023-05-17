@@ -15,3 +15,6 @@ All actions have a set of shared fields
 | client-host | no       | api.grai.io | Hostname for the api of your Grai instance.                                                         |
 | client-port | no       |  | Port for the api of your Grai Instance.                                                             |
 | grai-frontend-host | no       | https://app.grai.io | The URL for your frontend instance of Grai. This might include a port depending on your configuration |
+
+
+
