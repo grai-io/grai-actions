@@ -14,11 +14,11 @@ jobs:
       	  rm README.md
 	        cp base_readme.md README.md
 	        echo "\n# Integrations\n" >> README.md
-	        for dir in $(LOCAL_DIRS); do
-		        if [[ -f $$dir/README.md ]]; then
-              echo "#$$(cat $$dir/README.md)" >> README.md
-              echo "\n" >> README.md
-            fi; 
+	        for dir in $(LOCAL_DIRS); do \
+		        if [[ -f $$dir/README.md ]]; then \
+              echo "#$$(cat $$dir/README.md)" >> README.md; \
+              echo "\n" >> README.md; \
+            fi; \
           done
 
       - name: "Commit README.md"
