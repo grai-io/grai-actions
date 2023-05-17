@@ -13,7 +13,7 @@ inputs:
 
   namespace:
     description: "The namespace"
-    required: true
+    required: false
   workspace:
     description: "Workspace ID"
     required: false

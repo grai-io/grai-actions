@@ -1,3 +1,5 @@
+from typing import Optional
+
 from grai_source_fivetran import base
 from grai_source_fivetran.loader import FiveTranConnector
 from pydantic import BaseSettings, Json
@@ -6,7 +8,7 @@ from grai_actions.config import config
 
 
 class NamespaceValues(BaseSettings):
-    grai_fivetran_namespace_map: Json[str, str]
+    grai_fivetran_namespace_map: Optional[Json[str, str]] = None
 
 
 def get_nodes_and_edges(client):
