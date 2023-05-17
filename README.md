@@ -17,7 +17,6 @@ All actions have a set of shared fields
 | grai-frontend-host | no       | https://app.grai.io | The URL for your frontend instance of Grai. This might include a port depending on your configuration |
 
 
-
 ## Snowflake
 
 The Snowflake action depends on Snowflake's python connector library. 
