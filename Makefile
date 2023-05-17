@@ -6,9 +6,8 @@ LOCAL_DIRS := $(shell find . -maxdepth 1 -type d -not -path '*/\.*' -not -path '
 build_md:  ## Run migrations
 	@ rm README.md
 	@ cp base_readme.md README.md
-	@ echo "\n# Integrations\n" >> README.md
 	@for dir in $(LOCAL_DIRS); do \
-		if [[ -f $$dir/README.md ]]; then \
+    	if [[ -f $$dir/README.md ]]; then \
 			echo "#$$(cat $$dir/README.md)" >> README.md; \
 			echo "  " >> README.md; \
 		fi; \

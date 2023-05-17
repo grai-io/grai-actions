@@ -3,33 +3,37 @@ name: 'dbt'
 description: 'Determines the impact of changing data on downstream users'
 author: Grai <ian@grai.io>
 inputs:
+  action:
+    description: Which action to take. Examples include `tests` and `update`.
+    required: false
+    default: "tests"
   github-token:
     description: 'The GITHUB_TOKEN secret'
     default: ${{ github.token }}
+
   namespace:
-    description: 'The namespace for this file'
+    description: "The namespace"
     required: false
   workspace:
     description: "Workspace ID"
     required: false
   client-host:
-    description: 'The host for the Grai server'
+    description: "The host for the Grai server"
     required: false
   client-port:
-    description: 'The port for the Grai server'
+    description: "The port for the Grai server"
     required: false
   api-key:
-    description: 'A user api key for server access'
+    description: "A user api key for server access"
     required: true
   grai-frontend-host:
-    description: "The url for your frontend, e.g. http://localhost:3000"
+    description: "The url for your frontend, e.g. https://app.grai.io"
+    default: "https://app.grai.io"
+    required: false
+
   manifest-file:
     description: "File location where your dbt manifest file will be generated"
     required: true
-  action:
-    description: Which action to take. Examples include `tests` and `update`.
-    required: false
-    default: "tests"
 runs:
   using: 'docker'
   image: '../image/Dockerfile'

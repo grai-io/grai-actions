@@ -6,6 +6,11 @@ inputs:
   github-token:
     description: "The GITHUB_TOKEN secret"
     default: ${{ github.token }}
+  action:
+    description: Which action to take. Examples include `tests` and `update`.
+    required: false
+    default: "tests"
+
   namespace:
     description: "The namespace"
     required: false
@@ -23,6 +28,8 @@ inputs:
     required: true
   grai-frontend-host:
     description: "The url for your frontend, e.g. https://app.grai.io"
+    default: "https://app.grai.io"
+    required: false
 
   db-user:
     description: "The database user"
@@ -45,10 +52,6 @@ inputs:
   schema:
     description: "Optional snowflake schema"
     required: false
-  action:
-    description: Which action to take. Examples include `tests` and `update`.
-    required: false
-    default: "tests"
 runs:
   using: "docker"
   image: "../image/Dockerfile"

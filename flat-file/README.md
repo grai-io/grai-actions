@@ -6,7 +6,7 @@ Because of this, it's critical your file is up to date on each pull request.
 Make sure to include an `- uses: actions/checkout@v3` step in your workflow so that your repo code is available.
 
 
-## dbt Fields
+## Flat File Fields
 
 | Field          | Value                                                                 | Example         |
 | -------------- | --------------------------------------------------------------------- | --------------- |

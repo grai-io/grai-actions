@@ -3,38 +3,37 @@ name: 'flat-file'
 description: 'Determines the impact of changing data on downstream users'
 author: Grai <ian@grai.io>
 inputs:
-  github-token:
-    description: 'The GITHUB_TOKEN secret'
-   # required: true
-    default: ${{ github.token }}
-  namespace:
-    description: 'The namespace for this file'
-    required: true
-  workspace:
-    description: "Workspace ID"
-    required: false
-    default: "default"
-  client-host:
-    description: 'The host for the Grai server'
-    required: false
-    default: api.grai.io
-  client-port:
-    description: 'The port for the Grai server'
-    required: false
-    default: "443"
-  api-key:
-    description: 'A user api key for server access'
-    required: true
-  grai-frontend-host:
-    description: "The url for your frontend, e.g. http://localhost:3000"
-    required: false
-    default: "https://app.grai.io"
-  file:
-    description: "Local file to track with Grai"
-    required: true
   action:
     description: Which action to take. Examples include `tests` and `update`.
     default: "tests"
+  github-token:
+    description: 'The GITHUB_TOKEN secret'
+    default: ${{ github.token }}
+
+  namespace:
+    description: "The namespace"
+    required: false
+  workspace:
+    description: "Workspace ID"
+    required: false
+  client-host:
+    description: "The host for the Grai server"
+    required: false
+  client-port:
+    description: "The port for the Grai server"
+    required: false
+  api-key:
+    description: "A user api key for server access"
+    required: true
+  grai-frontend-host:
+    description: "The url for your frontend, e.g. https://app.grai.io"
+    default: "https://app.grai.io"
+    required: false
+
+
+  file:
+    description: "Local file to track with Grai"
+    required: true
 runs:
   using: 'docker'
   image: '../image/Dockerfile'

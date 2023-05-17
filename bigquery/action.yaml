@@ -3,9 +3,14 @@ name: "Big Query"
 description: "Determines the impact of changing data on downstream users"
 author: Ian Eaves <ian@grai.io>
 inputs:
+  action:
+    description: Which action to take. Examples include `tests` and `update`.
+    required: false
+    default: "tests"
   github-token:
     description: "The GITHUB_TOKEN secret"
     default: ${{ github.token }}
+
   namespace:
     description: "The namespace"
     required: false
@@ -23,6 +28,8 @@ inputs:
     required: true
   grai-frontend-host:
     description: "The url for your frontend, e.g. https://app.grai.io"
+    default: "https://app.grai.io"
+    required: false
 
   project:
     description: "The BigQuery project"
@@ -33,11 +40,6 @@ inputs:
   credentials:
     description: "BigQuery json credential string"
     required: true
-
-  action:
-    description: Which action to take. Examples include `tests` and `update`.
-    required: false
-    default: "tests"
 runs:
   using: "docker"
   image: "../image/Dockerfile"

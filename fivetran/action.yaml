@@ -3,18 +3,34 @@ name: 'Fivetran'
 description: 'Determines the impact of changing data on downstream users'
 author: Grai <ian@grai.io>
 inputs:
+  action:
+    description: Which action to take. Examples include `tests` and `update`.
+    required: false
+    default: "tests"
   github-token:
     description: 'The GITHUB_TOKEN secret'
     default: ${{ github.token }}
+
   namespace:
-    description: 'A default namespace value to apply to all Fivetran connections'
-    required: false
-  namespace_map:
-    description: 'JSON string containing a mapping between Fivetran connections and Grai namespaces'
+    description: "The namespace"
     required: false
   workspace:
     description: "Workspace ID"
     required: false
+  client-host:
+    description: "The host for the Grai server"
+    required: false
+  client-port:
+    description: "The port for the Grai server"
+    required: false
+  api-key:
+    description: "A user api key for server access"
+    required: true
+  grai-frontend-host:
+    description: "The url for your frontend, e.g. https://app.grai.io"
+    default: "https://app.grai.io"
+    required: false
+
   fivetran_endpoint:
     description: Fivetran API endpoint
     default: "https://api.fivetran.com/v1"
@@ -28,10 +44,7 @@ inputs:
   namespace_map:
     description: "A JSON string containing a mapping between Fivetran connections and Grai namespaces"
     required: false
-  action:
-    description: Which action to take. Examples include `tests` and `update`.
-    required: false
-    default: "tests"
+
 runs:
   using: 'docker'
   image: '../image/Dockerfile'
