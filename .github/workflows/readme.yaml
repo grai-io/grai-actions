@@ -1,10 +1,9 @@
-name: Readme Prep
-
+name: ReadmePrep
 on:
   pull_request:
     paths:
       - "*/README.md"
-      - base_readme.md
+      - "base_readme.md"
 
 jobs:
   readme-build:

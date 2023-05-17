@@ -5,7 +5,6 @@ from pydantic import BaseSettings
 from grai_actions.config import config
 
 
-
 def get_nodes_and_edges(client):
     conn = RedshiftConnector(
         namespace=config.grai_namespace,
