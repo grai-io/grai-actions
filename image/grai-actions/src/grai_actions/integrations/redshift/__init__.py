@@ -1,6 +1,5 @@
 from grai_source_redshift import base
 from grai_source_redshift.loader import RedshiftConnector
-from pydantic import BaseSettings
 
 from grai_actions.config import config
 
