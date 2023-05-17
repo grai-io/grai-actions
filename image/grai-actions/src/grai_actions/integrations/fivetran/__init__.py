@@ -2,7 +2,6 @@ from grai_source_fivetran import base
 from grai_source_fivetran.loader import FiveTranConnector
 from pydantic import BaseSettings, Json
 
-
 from grai_actions.config import config
 
 
