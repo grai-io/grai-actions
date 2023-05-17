@@ -1,6 +1,5 @@
 from grai_source_bigquery import base
 from grai_source_bigquery.loader import BigqueryConnector
-from pydantic import BaseSettings
 
 from grai_actions.config import config
 
