@@ -14,7 +14,7 @@ jobs:
           rm README.md
           cp base_readme.md README.md
           echo "\n# Integrations\n" >> README.md
-          for dir in $(LOCAL_DIRS); do \
+          for dir in $(find . -maxdepth 1 -type d -not -path '*/\.*' -not -path '.' | xargs -I{} basename {}); do \
             if [[ -f $$dir/README.md ]]; then \
               echo "#$$(cat $$dir/README.md)" >> README.md; \
               echo "\n" >> README.md; \
