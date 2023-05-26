@@ -1,7 +1,7 @@
 on:
   pull_request:
     paths:
-      - "*/README.md"
+      - "*/action.yml"
       - base_readme.md
       - .github/workflows/readme.yml
 jobs:
