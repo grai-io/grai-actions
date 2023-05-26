@@ -1,4 +1,4 @@
-# gh-actions
+# grai-actions
 
 
 # Integrations
@@ -7,15 +7,16 @@
 
 All actions have a set of shared fields
 
-| Field     | Required | Default    | Description                                                                                         |
-|-----------| -------- | ---------- |-----------------------------------------------------------------------------------------------------|
-| namespace | yes      |  | The Grai namespace for the connection                                                               |
-| api-key | yes      |  | Your Gri API key.                                                                                   |
-| workspace | no       |  | Your Grai workspace name                                                                            |
-| client-host | no       | api.grai.io | Hostname for the api of your Grai instance.                                                         |
-| client-port | no       |  | Port for the api of your Grai Instance.                                                             |
+| Field              | Required | Default             | Description                                                                                           |
+|--------------------|----------|---------------------|-------------------------------------------------------------------------------------------------------|
+| namespace          | yes      |                     | The Grai namespace for the connection                                                                 |
+| api-key            | yes      |                     | Your Gri API key.                                                                                     |
+| workspace          | no       |                     | Your Grai workspace name                                                                              |
+| client-host        | no       | api.grai.io         | Hostname for the api of your Grai instance.                                                           |
+| client-port        | no       |                     | Port for the api of your Grai Instance.                                                               |
 | grai-frontend-host | no       | https://app.grai.io | The URL for your frontend instance of Grai. This might include a port depending on your configuration |
-
+| action             | no       | tests               | Which action to perform. Can be `tests` or `update`                                                   |
+| github-token       | no       | ${{ github.token }} | The GITHUB_TOKEN secret for your repository                                                           |
 
 ## Snowflake
 
@@ -23,17 +24,36 @@ The Snowflake action depends on Snowflake's python connector library.
 You can find complete documentation about the library in the Snowflake docs [here](https://docs.snowflake.com/en/developer-guide/python-connector/python-connector) with more detail about the connector [here](https://docs.snowflake.com/en/developer-guide/python-connector/python-connector-api).
 
 
-### Snowflake Fields
+### Fields
 
-| Field     | Value                                                                   | Example          |
-| --------- | ----------------------------------------------------------------------- |------------------|
-| account   | Snowflake account, the characters in front of `.snowflakecomputing.com` | hujwihs-hab96881 |
-| role      | Snowflake role to use                                                   | READ_ONLY        |
-| warehouse | Snowflake warehouse to use                                              | COMPUTE_WH       |
-| database  | Snowflake database                                                      |                  |
-| schema    | Snowflake schema to use (optional)                                      |                  |
-| user      | Database user                                                           | username         |
-| password  | Database password                                                       | password         |
+<!-- Fields Sentinel Section -->
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+| account | yes |  | Associated Snowflake account |
+| warehouse | yes |  | Associated Snowflake warehouse |
+| role | no |  | Optional Snowflake role |
+| database | no |  | Optional Snowflake database |
+| schema | no |  | Optional snowflake schema |
+<!-- Fields Sentinel Section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
   
 ## Redshift
 
@@ -41,15 +61,17 @@ The Redshift action depends on Amazon's python connector library.
 You can find complete documentation about the library in the AWS docs [here](https://github.com/aws/amazon-redshift-python-driver).
 
 
-### Redshift Fields
+### Fields
 
-| Field            | Value                                  | Example                      |
-| ---------------- | -------------------------------------- | ---------------------------- |
-| db-host          | Database host                          | www.your-domain.com          |
-| db-port          | Database port                          | 5439                         |
-| db-database-name | Database Name                          | grai                         |
-| db-user          | Database user                          | grai                         |
-| db-password      | Database password                      | grai                         |
+<!-- Fields Sentinel Section -->
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | yes |  | The database host |
+| db-port | no | 5439 | The database port |
+| db-database-name | yes |  | The database name |
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+<!-- Fields Sentinel Section -->
   
 ## Flat File
 
@@ -59,11 +81,13 @@ Because of this, it's critical your file is up to date on each pull request.
 Make sure to include an `- uses: actions/checkout@v3` step in your workflow so that your repo code is available.
 
 
-## Flat File Fields
+### Fields
 
-| Field          | Value                                                                 | Example         |
-| -------------- | --------------------------------------------------------------------- | --------------- |
-| file           | The file location in your repository of the updated flat file         | data.csv        |
+<!-- Fields Sentinel Section -->
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| file | yes |  | Local file to track with Grai |
+<!-- Fields Sentinel Section -->
   
 ## Microsoft SQL Server
 
@@ -75,18 +99,20 @@ A standard connection would consist of a host, port, database name, user, and pa
 
 ### Fields
 
-| Field     | Value                                               | Example              |
-| --------- | --------------------------------------------------- | -------------------- |
-| db-host      | Database host                                    | www.your-domain.com  |
-| db-port      | Database port                                    | 1433                 |
-| db-database-name  | Database name                               | jaffle_shop          |
-| db-user      | Database user                                    | grai                 |
-| db-password  | Database password                                | grai                 |
-| encrypt   | A boolean value indicating whether to use an encrypted connection to mssql | True    |
-| trusted_connection  | Boolean, sets `Trusted_Connection=yes` in pyodbc      | False     |
-| protocol | Optional, One of "tcp", "Icp", or "NP". Defaults to "tcp"        | tcp       |
-| server_connection_string  | Server connection string for pyodbc, Sets `Server={VALUE}` | grai      |
-| trust_server_certificate | Boolean, sets the `TrustServerCertificate` value in pyodbc  | grai      |
+<!-- Fields Sentinel Section -->
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | no |  | The MSSQL database host |
+| db-port | no | 1433 | The MSSQL database port. |
+| db-database-name | no |  | The database name |
+| db-user | no | sa | The database user |
+| db-password | no |  | The database password |
+| encrypt | no |  | True/False Indicates whether to use an encrypted connection to mssql |
+| trusted_connection | no |  | True/False whether the SQL Server connection is trusted. Sets `Trusted_Connection=yes` in pyodbc. |
+| protocol | no | tcp | Connection protocol for the database. One of 'tcp', 'Icp', or 'NP' |
+| server_connection_string | no |  | An optional ODBC server connection string to use when connecting to the server. These are usually constructed as '{protocol}:{host},{port}'. This |
+| trust_server_certificate | no | true | Sets the ODBC connection string `TrustServerCertificate` |
+<!-- Fields Sentinel Section -->
   
 ## BigQuery
 
@@ -94,13 +120,15 @@ The BigQuery action depends on Google's python BigQuery library.
 More information can be found about specific connection credentials in Google's documentation [here](https://cloud.google.com/python/docs/reference/bigquery/latest).
 
 
-### BigQuery Fields
+### Fields
 
-| Field       | Value                                                                 | Example         |
-| ----------- | --------------------------------------------------------------------- | --------------- |
-| project     | BigQuery project string                                               | my-project      |
-| dataset     | BigQuery dataset string                                               | my-dataset      |
-| credentials | A JSON credential string for use with google oauth service account [connections](https://google-auth.readthedocs.io/en/master/reference/google.oauth2.service_account.html#google.oauth2.service_account.Credentials)                  |       |
+<!-- Fields Sentinel Section -->
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| project | yes |  | The BigQuery project string |
+| dataset | yes |  | The BigQuery dataset string |
+| credentials | yes |  | A JSON credential string for use with google oauth service account [connections](https://google-auth.readthedocs.io/en/master/reference/google.oauth2.service_account.html#google.oauth2.service_account.Credentials) |
+<!-- Fields Sentinel Section -->
   
 ## Postgres
 
@@ -110,13 +138,15 @@ You can find complete documentation about the library [here](https://www.psycopg
 
 ### Fields
 
-| Field            | Value                                  | Example                      |
-| ---------------- | -------------------------------------- | ---------------------------- |
-| db-host          | Database host                          | www.your-domain.com          |
-| db-port          | Database port                          | 5432                         |
-| db-database-name | Database Name                          | grai                         |
-| db-user          | Database user                          | grai                         |
-| db-password      | Database password                      | grai                         |
+<!-- Fields Sentinel Section -->
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | yes |  | The database host |
+| db-port | no | 5432 | The database port |
+| db-database-name | yes |  | The database name |
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+<!-- Fields Sentinel Section -->
   
 ## Fivetran
 
@@ -125,14 +155,16 @@ This endpoint is configurable if you have a non-standard implementation but shou
 
 Authentication with their services will require an API key and secret but you can find more documentation about generating these values [here](https://fivetran.com/docs/rest-api/getting-started#instructions).
 
-### Fivetran Fields
+### Fields
 
-| Field             | Value                                  | Example                      |
-| ----------------- | -------------------------------------- | ---------------------------- |
-| fivetran_endpoint | Optional, fivetran url endpoint        | https://api.fivetran.com/v1  |
-| api_key           | Fivetran user API key                  |                              |
-| api_secret        | Fivetran user API secret               |                              |
-| namespace_map     | Optional JSON string                   | See below                    |
+<!-- Fields Sentinel Section -->
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| fivetran_endpoint | no | https://api.fivetran.com/v1 | Fivetran API endpoint |
+| api_key | yes |  | Your Fivetran user api key |
+| api_secret | yes |  | Your Fivetran user api secret |
+| namespace_map | no |  | A JSON string containing a mapping between Fivetran connections and Grai namespaces |
+<!-- Fields Sentinel Section -->
 
 
 The `namespace` field in the Fivetran Action works slightly differently than other action.
@@ -168,13 +200,15 @@ You can find complete documentation about the library [here](https://dev.mysql.c
 
 ### Fields
 
-| Field            | Value                                  | Example                      |
-| ---------------- | -------------------------------------- | ---------------------------- |
-| db-host          | Database host                          | www.your-domain.com          |
-| db-port          | Database port                          | 3306                         |
-| db-database-name | Database Name                          | grai                         |
-| db-user          | Database user                          | grai                         |
-| db-password      | Database password                      | grai                         |
+<!-- Fields Sentinel Section -->
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | yes |  | The database host |
+| db-port | no | 3306 | The database port |
+| db-database-name | yes |  | The database name |
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+<!-- Fields Sentinel Section -->
   
 ## dbt
 
@@ -187,9 +221,11 @@ One way to do this is to perform `dbt build` as part of your CI action but there
 
 
 
-### dbt Fields
+### Fields
 
-| Field         | Value                                                                 | Example         |
-| --------------| --------------------------------------------------------------------- | --------------- |
-| manifest-file | The file location in your repository of the updated manifest.json     | profile-dir/manifest.json      |
+<!-- Fields Sentinel Section -->
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| manifest-file | yes |  | The file location in your repository of the updated manifest.json file |
+<!-- Fields Sentinel Section -->
   

@@ -36,10 +36,10 @@ inputs:
     default: "https://api.fivetran.com/v1"
     required: false
   api_key:
-    description: "Your Fivetran api key"
+    description: "Your Fivetran user api key"
     required: true
   api_secret:
-    description: "Your Fivetran api secret"
+    description: "Your Fivetran user api secret"
     required: true
   namespace_map:
     description: "A JSON string containing a mapping between Fivetran connections and Grai namespaces"

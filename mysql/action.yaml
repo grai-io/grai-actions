@@ -35,7 +35,7 @@ inputs:
     description: "The database host"
     required: true
   db-port:
-    description: "The database port, defaults to 3306"
+    description: "The database port"
     required: false
     default: "3306"
   db-database-name:

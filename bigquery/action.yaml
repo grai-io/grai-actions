@@ -32,13 +32,13 @@ inputs:
     required: false
 
   project:
-    description: "The BigQuery project"
+    description: "The BigQuery project string"
     required: true
   dataset:
-    description: "The BigQuery dataset"
+    description: "The BigQuery dataset string"
     required: true
   credentials:
-    description: "BigQuery json credential string"
+    description: "A JSON credential string for use with google oauth service account [connections](https://google-auth.readthedocs.io/en/master/reference/google.oauth2.service_account.html#google.oauth2.service_account.Credentials)"
     required: true
 runs:
   using: "docker"

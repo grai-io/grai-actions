@@ -6,9 +6,13 @@ Because of this, it's critical your file is up to date on each pull request.
 Make sure to include an `- uses: actions/checkout@v3` step in your workflow so that your repo code is available.
 
 
-## Flat File Fields
+### Fields
 
-| Field          | Value                                                                 | Example         |
-| -------------- | --------------------------------------------------------------------- | --------------- |
-| file           | The file location in your repository of the updated flat file         | data.csv        |
+<!-- Fields Sentinel Section -->
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| file | yes |  | Local file to track with Grai |
+<!-- Fields Sentinel Section -->
+
+
 

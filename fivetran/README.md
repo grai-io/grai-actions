@@ -5,14 +5,16 @@ This endpoint is configurable if you have a non-standard implementation but shou
 
 Authentication with their services will require an API key and secret but you can find more documentation about generating these values [here](https://fivetran.com/docs/rest-api/getting-started#instructions).
 
-### Fivetran Fields
+### Fields
 
-| Field             | Value                                  | Example                      |
-| ----------------- | -------------------------------------- | ---------------------------- |
-| fivetran_endpoint | Optional, fivetran url endpoint        | https://api.fivetran.com/v1  |
-| api_key           | Fivetran user API key                  |                              |
-| api_secret        | Fivetran user API secret               |                              |
-| namespace_map     | Optional JSON string                   | See below                    |
+<!-- Fields Sentinel Section -->
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| fivetran_endpoint | no | https://api.fivetran.com/v1 | Fivetran API endpoint |
+| api_key | yes |  | Your Fivetran user api key |
+| api_secret | yes |  | Your Fivetran user api secret |
+| namespace_map | no |  | A JSON string containing a mapping between Fivetran connections and Grai namespaces |
+<!-- Fields Sentinel Section -->
 
 
 The `namespace` field in the Fivetran Action works slightly differently than other action.

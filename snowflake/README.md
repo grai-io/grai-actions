@@ -4,14 +4,33 @@ The Snowflake action depends on Snowflake's python connector library.
 You can find complete documentation about the library in the Snowflake docs [here](https://docs.snowflake.com/en/developer-guide/python-connector/python-connector) with more detail about the connector [here](https://docs.snowflake.com/en/developer-guide/python-connector/python-connector-api).
 
 
-### Snowflake Fields
+### Fields
 
-| Field     | Value                                                                   | Example          |
-| --------- | ----------------------------------------------------------------------- |------------------|
-| account   | Snowflake account, the characters in front of `.snowflakecomputing.com` | hujwihs-hab96881 |
-| role      | Snowflake role to use                                                   | READ_ONLY        |
-| warehouse | Snowflake warehouse to use                                              | COMPUTE_WH       |
-| database  | Snowflake database                                                      |                  |
-| schema    | Snowflake schema to use (optional)                                      |                  |
-| user      | Database user                                                           | username         |
-| password  | Database password                                                       | password         |
+<!-- Fields Sentinel Section -->
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+| account | yes |  | Associated Snowflake account |
+| warehouse | yes |  | Associated Snowflake warehouse |
+| role | no |  | Optional Snowflake role |
+| database | no |  | Optional Snowflake database |
+| schema | no |  | Optional snowflake schema |
+<!-- Fields Sentinel Section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    

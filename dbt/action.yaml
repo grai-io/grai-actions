@@ -32,7 +32,7 @@ inputs:
     required: false
 
   manifest-file:
-    description: "File location where your dbt manifest file will be generated"
+    description: "The file location in your repository of the updated manifest.json file"
     required: true
 runs:
   using: 'docker'

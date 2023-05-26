@@ -9,9 +9,14 @@ One way to do this is to perform `dbt build` as part of your CI action but there
 
 
 
-### dbt Fields
+### Fields
 
-| Field         | Value                                                                 | Example         |
-| --------------| --------------------------------------------------------------------- | --------------- |
-| manifest-file | The file location in your repository of the updated manifest.json     | profile-dir/manifest.json      |
+<!-- Fields Sentinel Section -->
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| manifest-file | yes |  | The file location in your repository of the updated manifest.json file |
+<!-- Fields Sentinel Section -->
+
+
+
 
