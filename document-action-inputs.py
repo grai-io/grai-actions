@@ -13,7 +13,6 @@ class BuildTable:
         self.ignored_fields = ignored_fields if ignored_fields is not None else SHARED_FIELDS
         self.table_data = self.process_action_yaml()
 
-
     @staticmethod
     def build_record(field_name, field_vals):
         record = {
@@ -22,7 +21,7 @@ class BuildTable:
             'Default': field_vals.get('default', ''),
             'Description': field_vals.get('description', '')
         }
-        return record
+        return {k: v if v is not None else '' for k, v in record.items()}
 
     def process_action_yaml(self):
         file = os.path.join(self.folder, "action.yaml")
