@@ -7,7 +7,15 @@ You can find complete documentation about the library in the Snowflake docs [her
 ### Fields
 
 <!-- Fields Sentinel Section -->
-
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+| account | yes |  | Associated Snowflake account |
+| warehouse | yes |  | Associated Snowflake warehouse |
+| role | no |  | Optional Snowflake role |
+| database | no |  | Optional Snowflake database |
+| schema | no |  | Optional snowflake schema |
 <!-- Fields Sentinel Section -->
 
 
