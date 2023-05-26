@@ -35,29 +35,29 @@ inputs:
     description: "The MSSQL database host"
     required: false
   db-port:
-    description: "The MSSQL database port, defaults to 1433"
+    description: "The MSSQL database port."
     required: false
     default: "1433"
   db-database-name:
     description: "The database name"
     required: false
   db-user:
-    description: "The database user, defaults to 'sa'"
+    description: "The database user"
     required: false
     default: "sa"
   db-password:
     description: "The database password"
     required: false
   encrypt:
-    description: "True/False the SQL Server encryption settings"
+    description: "True/False Indicates whether to use an encrypted connection to mssql"
     required: false
     default: null
   trusted_connection:
-    description: "True/False whether the SQL Server connection is trusted"
+    description: "True/False whether the SQL Server connection is trusted. Sets `Trusted_Connection=yes` in pyodbc."
     required: false
     default: null
   protocol:
-    description: "Connection protocol for the database (e.g. tcp)"
+    description: "Connection protocol for the database. One of 'tcp', 'Icp', or 'NP'"
     default: "tcp"
     required: false
   server_connection_string:
@@ -65,7 +65,7 @@ inputs:
     required: false
     default: null
   trust_server_certificate:
-    description: Sets the optional ODBC connection string `TrustServerCertificate`
+    description: Sets the ODBC connection string `TrustServerCertificate`
     required: false
     default: "true"
 
