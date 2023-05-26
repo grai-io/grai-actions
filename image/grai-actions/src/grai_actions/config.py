@@ -12,6 +12,17 @@ class ActionBaseSettings(BaseSettings):
         use_enum_values = True  # Populates model with the value property of enums
         validate_assignment = True  # Perform validation on assignment to attributes
 
+    @root_validator(pre=True)
+    def parse_empty_values(cls, values):
+        """Empty strings should be treated as missing"""
+        new_values = values.copy()
+        for k, v in values.items():
+            if isinstance(v, SecretStr):
+                v = v.get_secret_value()
+            if v == "":
+                new_values.pop(k)
+        return new_values
+
 
 class SupportedActions(Enum):
     TESTS = "tests"
@@ -72,15 +83,6 @@ class Config(ActionBaseSettings):
             return value
         else:
             return value.rstrip("/")
-
-    @root_validator(pre=True)
-    def parse_empty_values(cls, values):
-        """Empty strings should be treated as missing"""
-        new_values = values.copy()
-        for k, v in values.items():
-            if v == "":
-                new_values.pop(k)
-        return new_values
 
 
 config = Config()

@@ -53,8 +53,6 @@ runs:
     GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
     GRAI_API_KEY: ${{ inputs.api-key }}
     GRAI_ACCESS_MODE: "bigquery"
-    GRAI_DB_USER: ${{ inputs.db-user }}
-    GRAI_DB_PASSWORD: ${{ inputs.db-password }}
     GRAI_BIGQUERY_PROJECT: ${{ inputs.project }}
     GRAI_BIGQUERY_DATASET: ${{ inputs.dataset }}
     GRAI_BIGQUERY_CREDENTIALS: ${{ inputs.credentials }}

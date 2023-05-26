@@ -2,19 +2,18 @@ from typing import Optional
 
 from grai_source_snowflake import base
 from grai_source_snowflake.loader import SnowflakeConnector
-from pydantic import BaseSettings
 
 from grai_actions.config import config
 
 
-class Args(BaseSettings):
+class Args(config.ActionBaseSettings):
     grai_snowflake_account: str
     grai_db_user: str
     grai_db_password: str
     grai_snowflake_warehouse: str
-    grai_snowflake_role: Optional[str]
-    grai_snowflake_database: Optional[str]
-    grai_snowflake_schema: Optional[str]
+    grai_snowflake_role: Optional[str] = None
+    grai_snowflake_database: Optional[str] = None
+    grai_snowflake_schema: Optional[str] = None
 
 
 args = Args()

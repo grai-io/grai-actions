@@ -47,5 +47,5 @@ runs:
     GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
     GRAI_API_KEY: ${{ inputs.api-key }}
     GRAI_ACCESS_MODE: 'flat-file'
-    GRAI_TRACKED_FILE: ${{ inputs.file }}
+    GRAI_FLAT_FILE_FILE: ${{ inputs.file }}
     GRAI_ACTION: ${{ inputs.action }}
