@@ -3,7 +3,7 @@ from typing import Optional
 from grai_source_mysql import base
 from grai_source_mysql.loader import MySQLConnector
 
-from grai_actions.config import config, ActionBaseSettings
+from grai_actions.config import ActionBaseSettings, config
 
 
 class Args(ActionBaseSettings):

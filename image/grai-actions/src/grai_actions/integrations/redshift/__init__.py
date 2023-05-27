@@ -4,7 +4,7 @@ from grai_source_redshift import base
 from grai_source_redshift.loader import RedshiftConnector
 from pydantic import SecretStr
 
-from grai_actions.config import config, ActionBaseSettings
+from grai_actions.config import ActionBaseSettings, config
 
 
 class Args(ActionBaseSettings):

@@ -4,7 +4,7 @@ from grai_source_fivetran import base
 from grai_source_fivetran.loader import FivetranConnector
 from pydantic import Json, SecretStr
 
-from grai_actions.config import config, ActionBaseSettings
+from grai_actions.config import ActionBaseSettings, config
 
 
 class Args(ActionBaseSettings):

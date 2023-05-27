@@ -4,7 +4,7 @@ from grai_source_postgres import base
 from grai_source_postgres.loader import PostgresConnector
 from pydantic import SecretStr
 
-from grai_actions.config import config, ActionBaseSettings
+from grai_actions.config import ActionBaseSettings, config
 
 
 class Args(ActionBaseSettings):

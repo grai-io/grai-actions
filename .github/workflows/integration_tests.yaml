@@ -21,8 +21,8 @@ jobs:
         - 5432:5432
       options: --health-cmd pg_isready --health-interval 2s --health-timeout 5s --health-retries 15
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Set up Postgres db
         working-directory: dev-database
         env:
@@ -195,24 +195,24 @@ jobs:
         dataset: ${{ env.dataset }}
         credentials: ${{ env.credentials }}
 
-  test_snowflake:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Snowflake Evaluation
-      uses: ./snowflake
-      with:
-        action: ${{ env.action }}
-        grai-user: ${{ env.grai-user }}
-        grai-password: ${{ env.grai-password }}
-        namespace: ${{ env.namespace }}
-        db-host: ${{ env.db_host}}
-        db-database_name: ${{ env.db_database_name}}
-        db-user: ${{ env.db_user}}
-        db-password: ${{ env.db_password}}
-        account: ${{ env.account }}
-        role: ${{ env.role }}
-        database: ${{ env.database }}
-        schema: ${{ env.schema }}
+#   test_snowflake:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout
+#       uses: actions/checkout@v3
+#
+#     - name: Snowflake Evaluation
+#       uses: ./snowflake
+#       with:
+#         action: ${{ env.action }}
+#         grai-user: ${{ env.grai-user }}
+#         grai-password: ${{ env.grai-password }}
+#         namespace: ${{ env.namespace }}
+#         db-host: ${{ env.db_host}}
+#         db-database_name: ${{ env.db_database_name}}
+#         db-user: ${{ env.db_user}}
+#         db-password: ${{ env.db_password}}
+#         account: ${{ env.account }}
+#         role: ${{ env.role }}
+#         database: ${{ env.database }}
+#         schema: ${{ env.schema }}

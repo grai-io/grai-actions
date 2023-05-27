@@ -1,7 +1,7 @@
 from grai_source_dbt import base
 from pydantic import BaseSettings, FilePath
 
-from grai_actions.config import config, ActionBaseSettings
+from grai_actions.config import ActionBaseSettings, config
 
 
 class Args(ActionBaseSettings):

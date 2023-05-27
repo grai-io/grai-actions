@@ -1,11 +1,11 @@
 from grai_client.update import update
+from grai_schemas.v1 import EdgeV1, NodeV1
 
-from grai_actions.config import SupportedActions, config, DeveloperActions
+from grai_actions.config import DeveloperActions, SupportedActions, config
 from grai_actions.git_messages import create_or_update_comment
 from grai_actions.integrations import get_nodes_and_edges
 from grai_actions.tools import TestResultCache
 from grai_actions.utilities import get_client
-from grai_schemas.v1 import NodeV1, EdgeV1
 
 
 def run_integration_tests(client):

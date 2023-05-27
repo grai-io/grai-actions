@@ -3,7 +3,7 @@ from typing import Optional
 from grai_source_snowflake import base
 from grai_source_snowflake.loader import SnowflakeConnector
 
-from grai_actions.config import config, ActionBaseSettings
+from grai_actions.config import ActionBaseSettings, config
 
 
 class Args(ActionBaseSettings):

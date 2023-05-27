@@ -7,6 +7,7 @@ from pydantic import AnyUrl, BaseSettings, SecretStr, root_validator, validator
 class ActionBaseSettings(BaseSettings):
     class Config:
         """Extra configuration options"""
+
         anystr_strip_whitespace = True  # remove trailing whitespace
         use_enum_values = True  # Populates model with the value property of enums
         validate_assignment = True  # Perform validation on assignment to attributes

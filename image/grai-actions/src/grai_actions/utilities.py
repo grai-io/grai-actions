@@ -2,7 +2,7 @@ from typing import Optional
 
 from grai_client.endpoints.v1.client import ClientV1
 
-from grai_actions.config import Config, config, DeveloperActions
+from grai_actions.config import Config, DeveloperActions, config
 
 
 class DevMockClient(ClientV1):

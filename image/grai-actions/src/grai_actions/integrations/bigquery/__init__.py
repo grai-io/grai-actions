@@ -3,7 +3,7 @@ from typing import Optional
 from grai_source_bigquery import base
 from grai_source_bigquery.loader import BigqueryConnector
 
-from grai_actions.config import config, ActionBaseSettings
+from grai_actions.config import ActionBaseSettings, config
 
 
 class Args(ActionBaseSettings):
