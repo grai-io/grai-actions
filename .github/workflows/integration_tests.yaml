@@ -146,7 +146,7 @@ jobs:
           namespace: ${{ env.namespace }}
           db-host: ${{ env.db_host}}
           db-database-name: ${{ env.db_database_name}}
-          db-user: ${{ envdb_user}}
+          db-user: ${{ env.db_user}}
           db-password: ${{ env.db_password}}
   test_fivetran:
     runs-on: ubuntu-latest
