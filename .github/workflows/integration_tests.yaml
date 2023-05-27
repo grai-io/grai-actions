@@ -55,13 +55,16 @@ jobs:
           MYSQL_DATABASE: dbo
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s
-          --health-timeout=5s --health-retries=3
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up MySQL
         working-directory: ./tests/mysql/dev-database
+        env:
+          DB_USER: ${{ env.DB_USER }}
+          DB_PASSWORD: ${{ env.DB_PASSWORD }}
+          DB_DATABASE_NAME: dbo
         run: sh init-db.sh
       - name: MySQL Evaluation
         uses: ./mysql

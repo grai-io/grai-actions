@@ -1,9 +1,9 @@
 SCRIPT_DIR=$(dirname -- "$0")
-host="${GRAI_DB_HOST:-localhost}"
-port="${GRAI_DB_PORT:-3306}"
-user="${GRAI_DB_USER:-grai}"
-password="${GRAI_DB_PASSWORD:-grai}"
-database="${GRAI_DB_DATABASE_NAME:-grai}"
+host="${DB_HOST:-localhost}"
+port="${DB_PORT:-3306}"
+user="${DB_USER:-grai}"
+password="${DB_PASSWORD:-grai}"
+database="${DB_DATABASE_NAME:-grai}"
 
 for file in $(find $SCRIPT_DIR -type f -name '*.sql' | sort)
 do
