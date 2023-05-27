@@ -145,12 +145,13 @@ jobs:
           grai-user: ${{ env.grai-user }}
           grai-password: ${{ env.grai-password }}
           namespace: ${{ env.namespace }}
-          db-host: ${{ env.db_host}}
-          db-database-name: ${{ env.db_database_name}}
-          db-user: ${{ env.db_user}}
-          db-password: ${{ env.db_password}}
+          db-host: ${{ vars.DB_HOST}}
+          db-database-name: ${{ vars.DB_DATABASE_NAME}}
+          db-user: ${{ secrets.DB_USER}}
+          db-password: ${{ secrets.DB_PASSWORD}}
   test_fivetran:
     runs-on: ubuntu-latest
+    environment: fivetran
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -161,12 +162,11 @@ jobs:
           grai-user: ${{ env.grai-user }}
           grai-password: ${{ env.grai-password }}
           namespace: ${{ env.namespace }}
-          fivetran-api-key: ${{ env.fivetran_api_key }}
-          fivetran-api-secret: ${{ env.fivetran_api_secret }}
-          namespace-map: '{"test": "a_default","test2":{"source": "b_default",
-            "destination": "c_default"}}'
+          fivetran-api-key: ${{ secrets.fivetran_api_key }}
+          fivetran-api-secret: ${{ secrets.fivetran_api_secret }}
   test_bigquery:
     runs-on: ubuntu-latest
+    environment: bigquery
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -177,9 +177,9 @@ jobs:
           grai-user: ${{ env.grai-user }}
           grai-password: ${{ env.grai-password }}
           namespace: ${{ env.namespace }}
-          project: ${{ vars.TEST_BIGQUERY_PROJECT }}
-          dataset: ${{ vars.TEST_BIGQUERY_DATASET }}
-          credentials: ${{ env.TEST_BIGQUERY_CREDENTIALS }}
+          project: ${{ vars.PROJECT }}
+          dataset: ${{ vars.DATASET }}
+          credentials: ${{ secrets.CREDENTIALS }}
 
 
 #   test_snowflake:
