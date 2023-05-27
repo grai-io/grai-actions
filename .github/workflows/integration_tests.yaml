@@ -9,16 +9,16 @@ env:
 jobs:
   test_postgres:
     runs-on: ubuntu-latest
-    test_db:
-      image: postgres:latest
-      env:
-        POSTGRES_USER: ${{ env.DB_USER }}
-        POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
-        POSTGRES_DB: db
-      ports:
-        - 5432:5432
-      options: --health-cmd pg_isready --health-interval 2s --health-timeout 5s
-        --health-retries 15
+    services:
+      test_db:
+        image: postgres:latest
+        env:
+          POSTGRES_USER: ${{ env.DB_USER }}
+          POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
+          POSTGRES_DB: db
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 2s --health-timeout 5s --health-retries 15
     steps:
       - name: Checkout
         uses: actions/checkout@v3
