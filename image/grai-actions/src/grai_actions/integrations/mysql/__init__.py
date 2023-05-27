@@ -3,10 +3,10 @@ from typing import Optional
 from grai_source_mysql import base
 from grai_source_mysql.loader import MySQLConnector
 
-from grai_actions.config import config
+from grai_actions.config import config, ActionBaseSettings
 
 
-class Args(config.ActionBaseSettings):
+class Args(ActionBaseSettings):
     grai_db_host: str
     grai_db_port: Optional[str] = None
     grai_db_database_name: str

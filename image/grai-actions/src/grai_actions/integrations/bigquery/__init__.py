@@ -3,10 +3,10 @@ from typing import Optional
 from grai_source_bigquery import base
 from grai_source_bigquery.loader import BigqueryConnector
 
-from grai_actions.config import config
+from grai_actions.config import config, ActionBaseSettings
 
 
-class Args(config.ActionBaseSettings):
+class Args(ActionBaseSettings):
     grai_bigquery_project: str
     grai_bigquery_dataset: str
     grai_bigquery_credentials: str

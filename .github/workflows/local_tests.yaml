@@ -1,0 +1,182 @@
+on: push
+
+jobs:
+  test_postgres_local:
+    if: ${{ github.event.act }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Postgres Evaluation
+      uses: ./postgres
+      with:
+        action: "dev_tests"
+        github-token: "test"
+        grai-user: 'null@grai.io'
+        grai-password: 'super_secret'
+        namespace: "default"
+        db-host: "0.0.0.0"
+        db-port: "5432"
+        db-database-name: db
+        db-user: "grai"
+        db-password: "grai"
+
+  test_mysql_local:
+    if: ${{ github.event.act }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: MySQL Evaluation
+      uses: ./mysql
+      with:
+        action: "dev_tests"
+        github-token: "test"
+        grai-user: 'null@grai.io'
+        grai-password: 'super_secret'
+        namespace: "default"
+        db-host: "localhost"
+        db-port: "3306"
+        db-database-name: dbo
+        db-user: "grai"
+        db-password: "grai"
+
+  test_mssql_local:
+    if: ${{ github.event.act }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: SQL Server Evaluation
+      uses: ./mssql
+      with:
+        action: "dev_tests"
+        github-token: "test"
+        grai-user: 'null@grai.io'
+        grai-password: 'super_secret'
+        namespace: "default"
+        db-host: "localhost"
+        db-port: "1433"
+#         db-database-name: grai
+        db-user: "sa"
+        db-password: "GraiGraiGr4i"
+        encrypt: "false"
+
+  test_dbt_local:
+    if: ${{ github.event.act }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: dbt Evaluation
+      uses: ./dbt
+      with:
+        action: "dev_tests"
+        github-token: "test"
+        grai-user: 'null@grai.io'
+        grai-password: 'super_secret'
+        namespace: "default"
+        manifest-file: "./tests/dbt/manifest.json"
+
+  test_flat_file_local:
+    if: ${{ github.event.act }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Flat File Evaluation
+      uses: ./flat-file
+      with:
+        action: "dev_tests"
+        github-token: "test"
+        grai-user: 'null@grai.io'
+        grai-password: 'super_secret'
+        namespace: "default"
+        file: "./tests/flat-file/low_numbers.csv"
+
+  test_redshift_local:
+    if: ${{ github.event.act }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Redshift Evaluation
+      uses: ./redshift
+      with:
+        action: "dev_tests"
+        github-token: "test"
+        grai-user: 'null@grai.io'
+        grai-password: 'super_secret'
+        namespace: "default"
+        db-host: ${{ env.db_host}}
+        db-database-name: ${{ env.db_database_name}}
+        db-user: ${{ envdb_user}}
+        db-password: ${{ env.db_password}}
+
+  test_fivetran_local:
+    if: ${{ github.event.act }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Fivetran Evaluation
+      uses: ./fivetran
+      with:
+        action: "dev_tests"
+        github-token: "test"
+        grai-user: 'null@grai.io'
+        grai-password: 'super_secret'
+        namespace: "default"
+        fivetran-api-key: ${{ env.fivetran_api_key }}
+        fivetran-api-secret: ${{ env.fivetran_api_secret }}
+        namespace-map: '{"test": "a_default","test2":{"source": "b_default", "destination": "c_default"}}'
+
+  test_bigquery_local:
+    if: ${{ github.event.act }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: BigQuery Evaluation
+      uses: ./bigquery
+      with:
+        action: "dev_tests"
+        github-token: "test"
+        grai-user: 'null@grai.io'
+        grai-password: 'super_secret'
+        namespace: "default"
+        project: ${{ env.project }}
+        dataset: ${{ env.dataset }}
+        credentials: ${{ env.credentials }}
+
+  test_snowflake_local:
+    if: ${{ github.event.act }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Snowflake Evaluation
+      uses: ./snowflake
+      with:
+        action: "dev_tests"
+        github-token: "test"
+        grai-user: 'null@grai.io'
+        grai-password: 'super_secret'
+        namespace: "default"
+        db-host: ${{ env.db_host}}
+        db-database_name: ${{ env.db_database_name}}
+        db-user: ${{ env.db_user}}
+        db-password: ${{ env.db_password}}
+        account: ${{ env.account }}
+        role: ${{ env.role }}
+        database: ${{ env.database }}
+        schema: ${{ env.schema }}

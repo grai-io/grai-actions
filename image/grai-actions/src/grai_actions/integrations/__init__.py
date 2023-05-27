@@ -20,7 +20,6 @@ match config.grai_access_mode:
     case AccessModes.FIVETRAN.value:
         from .fivetran import get_nodes_and_edges
     case AccessModes.TEST_MODE.value:
-
         def get_nodes_and_edges(*args, **kwargs):
             return [], []
 

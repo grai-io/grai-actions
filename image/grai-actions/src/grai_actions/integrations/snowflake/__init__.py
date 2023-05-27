@@ -3,10 +3,10 @@ from typing import Optional
 from grai_source_snowflake import base
 from grai_source_snowflake.loader import SnowflakeConnector
 
-from grai_actions.config import config
+from grai_actions.config import config, ActionBaseSettings
 
 
-class Args(config.ActionBaseSettings):
+class Args(ActionBaseSettings):
     grai_snowflake_account: str
     grai_db_user: str
     grai_db_password: str

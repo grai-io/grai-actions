@@ -1,19 +1,28 @@
 from typing import Optional
 
 from grai_source_fivetran import base
-from grai_source_fivetran.loader import FiveTranConnector
-from pydantic import BaseSettings, Json
+from grai_source_fivetran.loader import FivetranConnector
+from pydantic import Json, SecretStr
 
-from grai_actions.config import config
+from grai_actions.config import config, ActionBaseSettings
 
 
-class NamespaceValues(BaseSettings):
-    grai_fivetran_namespace_map: Optional[Json[str, str]] = None
+class Args(ActionBaseSettings):
+    grai_fivetran_namespace_map: Optional[Json] = None
+    grai_fivetran_api_key: SecretStr
+    grai_fivetran_api_secret: SecretStr
+    grai_fivetran_endpoint: Optional[str] = None
+
+
+args = Args()
 
 
 def get_nodes_and_edges(client):
-    conn = FiveTranConnector(
-        namespaces=NamespaceValues.namespace_map,
+    conn = FivetranConnector(
+        endpoint=args.grai_fivetran_endpoint,
+        api_key=args.grai_fivetran_api_key.get_secret_value(),
+        api_secret=args.grai_fivetran_api_secret.get_secret_value(),
+        namespaces=args.grai_fivetran_namespace_map,
         default_namespace=config.grai_namespace,
     )
 

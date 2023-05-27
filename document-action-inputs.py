@@ -4,7 +4,8 @@ from tomark import Tomark
 import markdown
 
 
-SHARED_FIELDS = {'action', 'github-token', 'namespace', 'workspace', 'api-key', 'grai-frontend-host', 'client-host', 'client-port'}
+SHARED_FIELDS = {'action', 'github-token', 'namespace', 'workspace', 'api-key', 'grai-frontend-host',
+                 'client-host', 'client-port', 'grai-user', 'grai-password'}
 
 
 class BuildTable:

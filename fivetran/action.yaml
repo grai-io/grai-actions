@@ -14,6 +14,12 @@ inputs:
   namespace:
     description: "The namespace"
     required: false
+  grai-user:
+    description: "Your grai user name"
+    required: false
+  grai-password:
+    description: "Your grai password"
+    required: false
   workspace:
     description: "Workspace ID"
     required: false
@@ -25,23 +31,23 @@ inputs:
     required: false
   api-key:
     description: "A user api key for server access"
-    required: true
+    required: false
   grai-frontend-host:
     description: "The url for your frontend, e.g. https://app.grai.io"
     default: "https://app.grai.io"
     required: false
 
-  fivetran_endpoint:
+  fivetran-endpoint:
     description: Fivetran API endpoint
     default: "https://api.fivetran.com/v1"
     required: false
-  api_key:
+  fivetran-api-key:
     description: "Your Fivetran user api key"
     required: true
-  api_secret:
+  fivetran-api-secret:
     description: "Your Fivetran user api secret"
     required: true
-  namespace_map:
+  namespace-map:
     description: "A JSON string containing a mapping between Fivetran connections and Grai namespaces"
     required: false
 
@@ -52,15 +58,18 @@ runs:
   env:
     GITHUB_TOKEN: ${{ inputs.github-token }}
     GRAI_NAMESPACE: ${{ inputs.namespace }}
+    GRAI_USER: ${{ inputs.grai-user }}
+    GRAI_PASSWORD: ${{ inputs.grai-password }}
     GRAI_WORKSPACE: ${{ inputs.workspace }}
     GRAI_HOST: ${{ inputs.client-host }}
     GRAI_PORT: ${{ inputs.client-port }}
     GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
     GRAI_API_KEY: ${{ inputs.api-key }}
     GRAI_ACCESS_MODE: 'fivetran'
-    GRAI_FIVETRAN_API_KEY: ${{ inputs.api_key }}
-    GRAI_FIVETRAN_API_SECRET: ${{ inputs.api_secret }}
-    GRAI_FIVETRAN_NAMESPACE_MAP: ${{ inputs.namespace_map }}
+    GRAI_FIVETRAN_ENDPOINT: ${{ inputs.fivetran-endpoint }}
+    GRAI_FIVETRAN_API_KEY: ${{ inputs.fivetran-api-key }}
+    GRAI_FIVETRAN_API_SECRET: ${{ inputs.fivetran-api-secret }}
+    GRAI_FIVETRAN_NAMESPACE_MAP: ${{ inputs.namespace-map }}
     GRAI_ACTION: ${{ inputs.action }}
 
 branding:

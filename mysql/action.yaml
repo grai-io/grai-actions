@@ -14,6 +14,12 @@ inputs:
   namespace:
     description: "The namespace"
     required: true
+  grai-user:
+    description: "Your grai user name"
+    required: false
+  grai-password:
+    description: "Your grai password"
+    required: false
   workspace:
     description: "Workspace ID"
     required: false
@@ -25,7 +31,7 @@ inputs:
     required: false
   api-key:
     description: "A user api key for server access"
-    required: true
+    required: false
   grai-frontend-host:
     description: "The url for your frontend, e.g. https://app.grai.io"
     default: "https://app.grai.io"
@@ -54,6 +60,8 @@ runs:
   env:
     GITHUB_TOKEN: ${{ inputs.github-token }}
     GRAI_NAMESPACE: ${{ inputs.namespace }}
+    GRAI_USER: ${{ inputs.grai-user }}
+    GRAI_PASSWORD: ${{ inputs.grai-password }}
     GRAI_WORKSPACE: ${{ inputs.workspace }}
     GRAI_HOST: ${{ inputs.client-host }}
     GRAI_PORT: ${{ inputs.client-port }}
