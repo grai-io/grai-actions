@@ -23,7 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Postgres db
-        working-directory: dev-database
+        working-directory: ./tests/postgres/dev-database
         env:
           POSTGRES_USER: ${{ env.DB_USER }}
           POSTGRES_PASSWORD: ${{ env.DB_PASSWORD }}
@@ -74,6 +74,7 @@ jobs:
           db-database-name: dbo
           db-user: ${{ env.DB_USER }}
           db-password: ${{ env.DB_PASSWORD }}
+
   test_mssql:
     runs-on: ubuntu-latest
     services:
@@ -86,13 +87,13 @@ jobs:
           - 1433:1433
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up SQL db
         working-directory: ./tests/mssql/dev-database
         env:
           MSSQL_SA_PASSWORD: ${{ env.DB_PASSWORD }}
-        run: |
-          bash init-db.sh
+        run: bash init-db.sh
+
       - name: SQL Server Evaluation
         uses: ./mssql
         with:
@@ -176,9 +177,9 @@ jobs:
           grai-user: ${{ env.grai-user }}
           grai-password: ${{ env.grai-password }}
           namespace: ${{ env.namespace }}
-          project: ${{ env.project }}
-          dataset: ${{ env.dataset }}
-          credentials: ${{ env.credentials }}
+          project: ${{ vars.TEST_BIGQUERY_PROJECT }}
+          dataset: ${{ vars.TEST_BIGQUERY_DATASET }}
+          credentials: ${{ env.TEST_BIGQUERY_CREDENTIALS }}
 
 
 #   test_snowflake:
