@@ -15,6 +15,11 @@ inputs:
     required: true
   workspace:
     description: "Workspace ID"
+  grai-user:
+    description: "Your grai user name"
+    required: false
+  grai-password:
+    description: "Your grai password"
     required: false
   client-host:
     description: "The host for the Grai server"
@@ -24,7 +29,7 @@ inputs:
     required: false
   api-key:
     description: "A user api key for server access"
-    required: true
+    required: false
   grai-frontend-host:
     description: "The url for your frontend, e.g. https://app.grai.io"
     default: "https://app.grai.io"
@@ -41,11 +46,13 @@ runs:
   env:
     GITHUB_TOKEN: ${{ inputs.github-token }}
     GRAI_NAMESPACE: ${{ inputs.namespace }}
+    GRAI_USER: ${{ inputs.grai-user }}
+    GRAI_PASSWORD: ${{ inputs.grai-password }}
     GRAI_WORKSPACE: ${{ inputs.workspace }}
     GRAI_HOST: ${{ inputs.client-host }}
     GRAI_PORT: ${{ inputs.client-port }}
     GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
     GRAI_API_KEY: ${{ inputs.api-key }}
-    GRAI_ACCESS_MODE: 'flat-file'
+    GRAI_ACCESS_MODE: 'flat_file'
     GRAI_FLAT_FILE_FILE: ${{ inputs.file }}
     GRAI_ACTION: ${{ inputs.action }}

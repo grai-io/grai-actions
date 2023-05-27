@@ -3,20 +3,36 @@
 
 # Integrations
 
-### Shared Fields
+# Shared Fields
 
-All actions have a set of shared fields
+All actions share some common fields listed below.
+
+
+### Authentication
+
+| Field              | Required | Default             | Description                                                                                           |
+|--------------------|----------|---------------------|-------------------------------------------------------------------------------------------------------|
+| api-key            | no       |                     | Your Grai API key.                                                                                    |
+| grai-user          | no       |                     | Your Gri username.                                                                                    |
+| grai-password      | no       |                     | Your Gri password.                                                                                    |
+| workspace          | no       |                     | Your Grai workspace name                                                                              |
+
+You must provider either `api-key` or `grai-user` **and** `grai-password`.
+If you're account is associated with multiple workspaces and you're using username/password authentication you must 
+also provide your desired `workspace`.
+
+
+### Other parameters
 
 | Field              | Required | Default             | Description                                                                                           |
 |--------------------|----------|---------------------|-------------------------------------------------------------------------------------------------------|
 | namespace          | yes      |                     | The Grai namespace for the connection                                                                 |
-| api-key            | yes      |                     | Your Gri API key.                                                                                     |
-| workspace          | no       |                     | Your Grai workspace name                                                                              |
 | client-host        | no       | api.grai.io         | Hostname for the api of your Grai instance.                                                           |
 | client-port        | no       |                     | Port for the api of your Grai Instance.                                                               |
 | grai-frontend-host | no       | https://app.grai.io | The URL for your frontend instance of Grai. This might include a port depending on your configuration |
 | action             | no       | tests               | Which action to perform. Can be `tests` or `update`                                                   |
 | github-token       | no       | ${{ github.token }} | The GITHUB_TOKEN secret for your repository                                                           |
+
 
 ## Snowflake
 
@@ -160,10 +176,10 @@ Authentication with their services will require an API key and secret but you ca
 <!-- Fields Sentinel Section -->
 | Field | Required | Default | Description |
 |-----|-----|-----|-----|
-| fivetran_endpoint | no | https://api.fivetran.com/v1 | Fivetran API endpoint |
-| api_key | yes |  | Your Fivetran user api key |
-| api_secret | yes |  | Your Fivetran user api secret |
-| namespace_map | no |  | A JSON string containing a mapping between Fivetran connections and Grai namespaces |
+| fivetran-endpoint | no | https://api.fivetran.com/v1 | Fivetran API endpoint |
+| fivetran-api-key | yes |  | Your Fivetran user api key |
+| fivetran-api-secret | yes |  | Your Fivetran user api secret |
+| namespace-map | no |  | A JSON string containing a mapping between Fivetran connections and Grai namespaces |
 <!-- Fields Sentinel Section -->
 
 

@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  mysql:
+    image: "mysql:latest"
+    volumes:
+     - ./dev-database/:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: grai
+      MYSQL_USER: grai
+      MYSQL_PASSWORD: grai
+      MYSQL_DATABASE: dbo
+    ports:
+      - 3306:3306
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10

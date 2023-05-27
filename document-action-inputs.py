@@ -4,7 +4,8 @@ from tomark import Tomark
 import markdown
 
 
-SHARED_FIELDS = {'action', 'github-token', 'namespace', 'workspace', 'api-key', 'grai-frontend-host', 'client-host', 'client-port'}
+SHARED_FIELDS = {'action', 'github-token', 'namespace', 'workspace', 'api-key', 'grai-frontend-host',
+                 'client-host', 'client-port', 'grai-user', 'grai-password'}
 
 
 class BuildTable:
@@ -55,5 +56,6 @@ for folder in folders:
     result = file_string.split(join_string)
     result[1] = table.table_description()
     result = join_string.join(result)
-    with open(os.path.join(folder, "README.md"), "w") as f:
-        f.write(result)
+    if result != file_string:
+        with open(os.path.join(folder, "README.md"), "w") as f:
+            f.write(result)

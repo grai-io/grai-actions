@@ -24,6 +24,10 @@ class ActionBaseSettings(BaseSettings):
         return new_values
 
 
+class DeveloperActions(Enum):
+    DEV_TESTS = "dev_tests"
+
+
 class SupportedActions(Enum):
     TESTS = "tests"
     UPDATE = "update"
@@ -58,13 +62,15 @@ class Config(ActionBaseSettings):
     github_ref: str
 
     # --- Grai configuration values --- #
-    grai_api_key: SecretStr
+    grai_api_key: Optional[SecretStr] = None
     grai_namespace: str = DefaultValues.grai_namespace
+    grai_user: Optional[str] = None
+    grai_password: Optional[SecretStr] = None
     grai_workspace: Optional[str] = DefaultValues.grai_workspace
     grai_host: str = DefaultValues.grai_host
     grai_port: str = DefaultValues.grai_port
     grai_frontend_url: Optional[AnyUrl] = None
-    grai_action: SupportedActions = SupportedActions.TESTS
+    grai_action: Union[SupportedActions, DeveloperActions] = SupportedActions.TESTS
     grai_access_mode: AccessModes
 
     @property

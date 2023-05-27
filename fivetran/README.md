@@ -10,10 +10,10 @@ Authentication with their services will require an API key and secret but you ca
 <!-- Fields Sentinel Section -->
 | Field | Required | Default | Description |
 |-----|-----|-----|-----|
-| fivetran_endpoint | no | https://api.fivetran.com/v1 | Fivetran API endpoint |
-| api_key | yes |  | Your Fivetran user api key |
-| api_secret | yes |  | Your Fivetran user api secret |
-| namespace_map | no |  | A JSON string containing a mapping between Fivetran connections and Grai namespaces |
+| fivetran-endpoint | no | https://api.fivetran.com/v1 | Fivetran API endpoint |
+| fivetran-api-key | yes |  | Your Fivetran user api key |
+| fivetran-api-secret | yes |  | Your Fivetran user api secret |
+| namespace-map | no |  | A JSON string containing a mapping between Fivetran connections and Grai namespaces |
 <!-- Fields Sentinel Section -->
 
 
