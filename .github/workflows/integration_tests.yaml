@@ -123,7 +123,6 @@ jobs:
           manifest-file: ./tests/dbt/manifest.json
   test_flat_file:
     runs-on: ubuntu-latest
-    environment: flat_file
     steps:
       - name: Checkout
         uses: actions/checkout@v3
