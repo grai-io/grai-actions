@@ -1,13 +1,11 @@
 on: push
-
 env:
-    grai-user: 'null@grai.io'
-    grai-password: 'super_secret'
-    namespace: "default"
-    action: "dev_tests"
-    DB_PASSWORD: "GraiGraiGr4i"
-    DB_USER: "grai"
-
+  grai-user: null@grai.io
+  grai-password: super_secret
+  namespace: default
+  action: dev_tests
+  DB_PASSWORD: GraiGraiGr4i
+  DB_USER: grai
 jobs:
   test_postgres:
     runs-on: ubuntu-latest
@@ -19,7 +17,8 @@ jobs:
         POSTGRES_DB: db
       ports:
         - 5432:5432
-      options: --health-cmd pg_isready --health-interval 2s --health-timeout 5s --health-retries 15
+      options: --health-cmd pg_isready --health-interval 2s --health-timeout 5s
+        --health-retries 15
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -31,20 +30,18 @@ jobs:
           POSTGRES_DB: db
         run: |
           bash init-db.sh
-
-    - name: Postgres Evaluation
-      uses: ./postgres
-      with:
-        action: ${{ env.action }}
-        grai-user: ${{ env.grai-user }}
-        grai-password: ${{ env.grai-password }}
-        namespace: ${{ env.namespace }}
-        db-host: "test_db"
-        db-port: "5432"
-        db-database-name: db
-        db-user: ${{ env.DB_USER }}
-        db-password: ${{ env.DB_PASSWORD }}
-
+      - name: Postgres Evaluation
+        uses: ./postgres
+        with:
+          action: ${{ env.action }}
+          grai-user: ${{ env.grai-user }}
+          grai-password: ${{ env.grai-password }}
+          namespace: ${{ env.namespace }}
+          db-host: test_db
+          db-port: "5432"
+          db-database-name: db
+          db-user: ${{ env.DB_USER }}
+          db-password: ${{ env.DB_PASSWORD }}
   test_mysql:
     runs-on: ubuntu-latest
     services:
@@ -57,143 +54,132 @@ jobs:
           MYSQL_DATABASE: dbo
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
+        options: --health-cmd="mysqladmin ping" --health-interval=10s
+          --health-timeout=5s --health-retries=3
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Set up MySQL
-      working-directory: ./tests/mysql/dev-database
-      run: sh init-db.sh
-
-    - name: MySQL Evaluation
-      uses: ./mysql
-      with:
-        action: ${{ env.action }}
-        grai-user: ${{ env.grai-user }}
-        grai-password: ${{ env.grai-password }}
-        namespace: ${{ env.namespace }}
-        db-host: "test_db"
-        db-port: "3306"
-        db-database-name: dbo
-        db-user: ${{ env.DB_USER }}
-        db-password: ${{ env.DB_PASSWORD }}
-
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up MySQL
+        working-directory: ./tests/mysql/dev-database
+        run: sh init-db.sh
+      - name: MySQL Evaluation
+        uses: ./mysql
+        with:
+          action: ${{ env.action }}
+          grai-user: ${{ env.grai-user }}
+          grai-password: ${{ env.grai-password }}
+          namespace: ${{ env.namespace }}
+          db-host: test_db
+          db-port: "3306"
+          db-database-name: dbo
+          db-user: ${{ env.DB_USER }}
+          db-password: ${{ env.DB_PASSWORD }}
   test_mssql:
     runs-on: ubuntu-latest
     services:
       test_db:
         image: mcr.microsoft.com/mssql/server:2022-latest
         env:
-          ACCEPT_EULA: "Y"
+          ACCEPT_EULA: Y
           MSSQL_SA_PASSWORD: ${{ env.DB_PASSWORD }}
         ports:
           - 1433:1433
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Set up SQL db
-      working-directory: ./tests/mssql/dev-database
-      env:
-        MSSQL_SA_PASSWORD: ${{ env.DB_PASSWORD }}
-      run: |
-        bash init-db.sh
-    - name: SQL Server Evaluation
-      uses: ./mssql
-      with:
-        action: "dev_tests"
-        github-token: "test"
-        grai-user: 'null@grai.io'
-        grai-password: 'super_secret'
-        namespace: "default"
-        db-host: "test_db"
-        db-port: "1433"
-        db-user: "sa"
-        db-password: ${{ env.DB_PASSWORD }}
-        encrypt: "false"
-
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up SQL db
+        working-directory: ./tests/mssql/dev-database
+        env:
+          MSSQL_SA_PASSWORD: ${{ env.DB_PASSWORD }}
+        run: |
+          bash init-db.sh
+      - name: SQL Server Evaluation
+        uses: ./mssql
+        with:
+          action: dev_tests
+          github-token: test
+          grai-user: null@grai.io
+          grai-password: super_secret
+          namespace: default
+          db-host: test_db
+          db-port: "1433"
+          db-user: sa
+          db-password: ${{ env.DB_PASSWORD }}
+          encrypt: "false"
   test_dbt:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: dbt Evaluation
-      uses: ./dbt
-      with:
-        action: ${{ env.action }}
-        grai-user: ${{ env.grai-user }}
-        grai-password: ${{ env.grai-password }}
-        namespace: ${{ env.namespace }}
-        manifest-file: "./tests/dbt/manifest.json"
-
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: dbt Evaluation
+        uses: ./dbt
+        with:
+          action: ${{ env.action }}
+          grai-user: ${{ env.grai-user }}
+          grai-password: ${{ env.grai-password }}
+          namespace: ${{ env.namespace }}
+          manifest-file: ./tests/dbt/manifest.json
   test_flat_file:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Flat File Evaluation
-      uses: ./flat-file
-      with:
-        action: ${{ env.action }}
-        grai-user: ${{ env.grai-user }}
-        grai-password: ${{ env.grai-password }}
-        namespace: ${{ env.namespace }}
-        file: "./tests/flat-file/low_numbers.csv"
-
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Flat File Evaluation
+        uses: ./flat-file
+        with:
+          action: ${{ env.action }}
+          grai-user: ${{ env.grai-user }}
+          grai-password: ${{ env.grai-password }}
+          namespace: ${{ env.namespace }}
+          file: ./tests/flat-file/low_numbers.csv
   test_redshift:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Redshift Evaluation
-      uses: ./redshift
-      with:
-        action: ${{ env.action }}
-        grai-user: ${{ env.grai-user }}
-        grai-password: ${{ env.grai-password }}
-        namespace: ${{ env.namespace }}
-        db-host: ${{ env.db_host}}
-        db-database-name: ${{ env.db_database_name}}
-        db-user: ${{ envdb_user}}
-        db-password: ${{ env.db_password}}
-
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Redshift Evaluation
+        uses: ./redshift
+        with:
+          action: ${{ env.action }}
+          grai-user: ${{ env.grai-user }}
+          grai-password: ${{ env.grai-password }}
+          namespace: ${{ env.namespace }}
+          db-host: ${{ env.db_host}}
+          db-database-name: ${{ env.db_database_name}}
+          db-user: ${{ envdb_user}}
+          db-password: ${{ env.db_password}}
   test_fivetran:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    - name: Fivetran Evaluation
-      uses: ./fivetran
-      with:
-        action: ${{ env.action }}
-        grai-user: ${{ env.grai-user }}
-        grai-password: ${{ env.grai-password }}
-        namespace: ${{ env.namespace }}
-        fivetran-api-key: ${{ env.fivetran_api_key }}
-        fivetran-api-secret: ${{ env.fivetran_api_secret }}
-        namespace-map: '{"test": "a_default","test2":{"source": "b_default", "destination": "c_default"}}'
-
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Fivetran Evaluation
+        uses: ./fivetran
+        with:
+          action: ${{ env.action }}
+          grai-user: ${{ env.grai-user }}
+          grai-password: ${{ env.grai-password }}
+          namespace: ${{ env.namespace }}
+          fivetran-api-key: ${{ env.fivetran_api_key }}
+          fivetran-api-secret: ${{ env.fivetran_api_secret }}
+          namespace-map: '{"test": "a_default","test2":{"source": "b_default",
+            "destination": "c_default"}}'
   test_bigquery:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: BigQuery Evaluation
+        uses: ./bigquery
+        with:
+          action: ${{ env.action }}
+          grai-user: ${{ env.grai-user }}
+          grai-password: ${{ env.grai-password }}
+          namespace: ${{ env.namespace }}
+          project: ${{ env.project }}
+          dataset: ${{ env.dataset }}
+          credentials: ${{ env.credentials }}
 
-    - name: BigQuery Evaluation
-      uses: ./bigquery
-      with:
-        action: ${{ env.action }}
-        grai-user: ${{ env.grai-user }}
-        grai-password: ${{ env.grai-password }}
-        namespace: ${{ env.namespace }}
-        project: ${{ env.project }}
-        dataset: ${{ env.dataset }}
-        credentials: ${{ env.credentials }}
 
 #   test_snowflake:
 #     runs-on: ubuntu-latest

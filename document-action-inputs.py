@@ -56,5 +56,6 @@ for folder in folders:
     result = file_string.split(join_string)
     result[1] = table.table_description()
     result = join_string.join(result)
-    with open(os.path.join(folder, "README.md"), "w") as f:
-        f.write(result)
+    if result != file_string:
+        with open(os.path.join(folder, "README.md"), "w") as f:
+            f.write(result)

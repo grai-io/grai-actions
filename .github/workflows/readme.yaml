@@ -15,7 +15,13 @@ jobs:
           pip install -r requirements.txt
           python document-action-inputs.py
 
-      - run: |
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v36
+
+      - name: "Build README.md"
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
           rm README.md
           cp base_readme.md README.md
           for dir in $(find . -maxdepth 1 -type d -not -path '*/\.*' -not -path '.' | xargs -I{} basename {}); do 
@@ -27,4 +33,5 @@ jobs:
           done
 
       - name: "Commit README.md"
+        if: steps.changed-files.outputs.any_changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
