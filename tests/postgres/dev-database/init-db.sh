@@ -6,9 +6,6 @@ HOST=localhost
 PORT=5432
 
 
-
-echo $(PGPASSWORD=$PGPASSWORD psql -h localhost -p 5432 -U $PGUSER -d $PG_DB -c "SELECT 1")
-
 for file in $(find $SCRIPT_DIR -type f -name '*.sql' | sort)
 do
   echo "Executing init script $file"

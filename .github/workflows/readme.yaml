@@ -1,9 +1,11 @@
+name: Build READMEs
 on:
   pull_request:
     paths:
       - "*/action.yml"
       - base_readme.md
       - .github/workflows/readme.yml
+
 jobs:
   readme-build:
     runs-on: ubuntu-latest

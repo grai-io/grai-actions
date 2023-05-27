@@ -1,4 +1,5 @@
 on: push
+name: Actions Integration Tests
 env:
   grai-user: null@grai.io
   grai-password: super_secret
@@ -181,7 +182,7 @@ jobs:
           namespace: ${{ env.namespace }}
           project: ${{ vars.PROJECT }}
           dataset: ${{ vars.DATASET }}
-          credentials: ${{ secrets.CREDENTIALS }}
+          credentials: '${{ secrets.CREDENTIALS }}'
 
 
 #   test_snowflake:
