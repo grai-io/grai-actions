@@ -7,6 +7,7 @@ You can find complete documentation about the library [here](https://dev.mysql.c
 ### Fields
 
 <!-- Fields Sentinel Section -->
+
 | Field | Required | Default | Description |
 |-----|-----|-----|-----|
 | db-host | yes |  | The database host |
@@ -14,8 +15,7 @@ You can find complete documentation about the library [here](https://dev.mysql.c
 | db-database-name | yes |  | The database name |
 | db-user | yes |  | The database user |
 | db-password | yes |  | The database password |
+
+
 <!-- Fields Sentinel Section -->
-
-
-
 

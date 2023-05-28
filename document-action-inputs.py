@@ -42,20 +42,18 @@ class BuildTable:
 
 
 folders = ["snowflake", "redshift", "bigquery", "postgres", "mysql", "mssql", "fivetran", "flat-file", "dbt"]
-
 SENTINEL_STRING = "<!-- Fields Sentinel Section -->"
-join_string = f"""{SENTINEL_STRING}
-"""
-
 
 for folder in folders:
     table = BuildTable(folder)
     file_string = open(os.path.join(folder, "README.md")).read()
     if SENTINEL_STRING not in file_string:
         raise Exception(f"Sentinel string not found in {folder}")
-    result = file_string.split(join_string)
+
+    result = [obj.strip() for obj in file_string.split(SENTINEL_STRING)]
     result[1] = table.table_description()
-    result = join_string.join(result)
+
+    result = f"\n\n{SENTINEL_STRING}\n\n".join(result)
     if result != file_string:
         with open(os.path.join(folder, "README.md"), "w") as f:
             f.write(result)
