@@ -34,136 +34,6 @@ also provide your desired `workspace`.
 | github-token       | no       | ${{ github.token }} | The GITHUB_TOKEN secret for your repository                                                           |
 
 
-## Snowflake
-
-The Snowflake action depends on Snowflake's python connector library. 
-You can find complete documentation about the library in the Snowflake docs [here](https://docs.snowflake.com/en/developer-guide/python-connector/python-connector) with more detail about the connector [here](https://docs.snowflake.com/en/developer-guide/python-connector/python-connector-api).
-
-
-### Fields
-
-<!-- Fields Sentinel Section -->
-| Field | Required | Default | Description |
-|-----|-----|-----|-----|
-| db-user | yes |  | The database user |
-| db-password | yes |  | The database password |
-| account | yes |  | Associated Snowflake account |
-| warehouse | yes |  | Associated Snowflake warehouse |
-| role | no |  | Optional Snowflake role |
-| database | no |  | Optional Snowflake database |
-| schema | no |  | Optional snowflake schema |
-<!-- Fields Sentinel Section -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    
-  
-## Redshift
-
-The Redshift action depends on Amazon's python connector library. 
-You can find complete documentation about the library in the AWS docs [here](https://github.com/aws/amazon-redshift-python-driver).
-
-
-### Fields
-
-<!-- Fields Sentinel Section -->
-| Field | Required | Default | Description |
-|-----|-----|-----|-----|
-| db-host | yes |  | The database host |
-| db-port | no | 5439 | The database port |
-| db-database-name | yes |  | The database name |
-| db-user | yes |  | The database user |
-| db-password | yes |  | The database password |
-<!-- Fields Sentinel Section -->
-  
-## Flat File
-
-The flat file action reads a flat file like csv, parquet, or feather inside of your github project to perform tests and update your grai instance.
-Because of this, it's critical your file is up to date on each pull request. 
-
-Make sure to include an `- uses: actions/checkout@v3` step in your workflow so that your repo code is available.
-
-
-### Fields
-
-<!-- Fields Sentinel Section -->
-| Field | Required | Default | Description |
-|-----|-----|-----|-----|
-| file | yes |  | Local file to track with Grai |
-<!-- Fields Sentinel Section -->
-  
-## Microsoft SQL Server
-
-The SQL Server action depends on the python pyodbc library. 
-You can find complete documentation about the library [here](https://github.com/mkleehammer/pyodbc/wiki).
-
-There are a variety of ways to configure a pyodbc connection depending on your security implementation.
-A standard connection would consist of a host, port, database name, user, and password.
-
-### Fields
-
-<!-- Fields Sentinel Section -->
-| Field | Required | Default | Description |
-|-----|-----|-----|-----|
-| db-host | no |  | The MSSQL database host |
-| db-port | no | 1433 | The MSSQL database port. |
-| db-database-name | no |  | The database name |
-| db-user | no | sa | The database user |
-| db-password | no |  | The database password |
-| encrypt | no |  | True/False Indicates whether to use an encrypted connection to mssql |
-| trusted_connection | no |  | True/False whether the SQL Server connection is trusted. Sets `Trusted_Connection=yes` in pyodbc. |
-| protocol | no | tcp | Connection protocol for the database. One of 'tcp', 'Icp', or 'NP' |
-| server_connection_string | no |  | An optional ODBC server connection string to use when connecting to the server. These are usually constructed as '{protocol}:{host},{port}'. This |
-| trust_server_certificate | no | true | Sets the ODBC connection string `TrustServerCertificate` |
-<!-- Fields Sentinel Section -->
-  
-## BigQuery
-
-The BigQuery action depends on Google's python BigQuery library. 
-More information can be found about specific connection credentials in Google's documentation [here](https://cloud.google.com/python/docs/reference/bigquery/latest).
-
-
-### Fields
-
-<!-- Fields Sentinel Section -->
-| Field | Required | Default | Description |
-|-----|-----|-----|-----|
-| project | yes |  | The BigQuery project string |
-| dataset | yes |  | The BigQuery dataset string |
-| credentials | yes |  | A JSON credential string for use with google oauth service account [connections](https://google-auth.readthedocs.io/en/master/reference/google.oauth2.service_account.html#google.oauth2.service_account.Credentials) |
-<!-- Fields Sentinel Section -->
-  
-## Postgres
-
-The Postgres action depends on the python psycopg2 library. 
-You can find complete documentation about the library [here](https://www.psycopg.org/docs/).
-
-
-### Fields
-
-<!-- Fields Sentinel Section -->
-| Field | Required | Default | Description |
-|-----|-----|-----|-----|
-| db-host | yes |  | The database host |
-| db-port | no | 5432 | The database port |
-| db-database-name | yes |  | The database name |
-| db-user | yes |  | The database user |
-| db-password | yes |  | The database password |
-<!-- Fields Sentinel Section -->
-  
 ## Fivetran
 
 The Fivetran Action relies upon access to Fivetran's API endpoint. 
@@ -174,14 +44,16 @@ Authentication with their services will require an API key and secret but you ca
 ### Fields
 
 <!-- Fields Sentinel Section -->
+
 | Field | Required | Default | Description |
 |-----|-----|-----|-----|
 | fivetran-endpoint | no | https://api.fivetran.com/v1 | Fivetran API endpoint |
 | fivetran-api-key | yes |  | Your Fivetran user api key |
 | fivetran-api-secret | yes |  | Your Fivetran user api secret |
 | namespace-map | no |  | A JSON string containing a mapping between Fivetran connections and Grai namespaces |
-<!-- Fields Sentinel Section -->
 
+
+<!-- Fields Sentinel Section -->
 
 The `namespace` field in the Fivetran Action works slightly differently than other action.
 It is used as a default namespace for all connections not specified in the `namespace_map`. 
@@ -208,22 +80,23 @@ The namespace map should be a JSON string with the Grai namespace for each sourc
 
 You can find connector id's for all of your Fivetran connections in the [API](https://fivetran.com/docs/rest-api/faq/find-connector_id)
   
-## MySQL 
+## Flat File
 
-The MySQL action depends on the python mysql library. 
-You can find complete documentation about the library [here](https://dev.mysql.com/doc/connector-python).
+The flat file action reads a flat file like csv, parquet, or feather inside of your github project to perform tests and update your grai instance.
+Because of this, it's critical your file is up to date on each pull request. 
+
+Make sure to include an `- uses: actions/checkout@v3` step in your workflow so that your repo code is available.
 
 
 ### Fields
 
 <!-- Fields Sentinel Section -->
+
 | Field | Required | Default | Description |
 |-----|-----|-----|-----|
-| db-host | yes |  | The database host |
-| db-port | no | 3306 | The database port |
-| db-database-name | yes |  | The database name |
-| db-user | yes |  | The database user |
-| db-password | yes |  | The database password |
+| file | yes |  | Local file to track with Grai |
+
+
 <!-- Fields Sentinel Section -->
   
 ## dbt
@@ -240,8 +113,144 @@ One way to do this is to perform `dbt build` as part of your CI action but there
 ### Fields
 
 <!-- Fields Sentinel Section -->
+
 | Field | Required | Default | Description |
 |-----|-----|-----|-----|
 | manifest-file | yes |  | The file location in your repository of the updated manifest.json file |
+
+
+<!-- Fields Sentinel Section -->
+  
+## BigQuery
+
+The BigQuery action depends on Google's python BigQuery library. 
+More information can be found about specific connection credentials in Google's documentation [here](https://cloud.google.com/python/docs/reference/bigquery/latest).
+
+
+### Fields
+
+<!-- Fields Sentinel Section -->
+
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| project | yes |  | The BigQuery project string |
+| dataset | yes |  | The BigQuery dataset string |
+| credentials | yes |  | A JSON credential string for use with google oauth service account [connections](https://google-auth.readthedocs.io/en/master/reference/google.oauth2.service_account.html#google.oauth2.service_account.Credentials) |
+
+
+<!-- Fields Sentinel Section -->
+  
+## Snowflake
+
+The Snowflake action depends on Snowflake's python connector library. 
+You can find complete documentation about the library in the Snowflake docs [here](https://docs.snowflake.com/en/developer-guide/python-connector/python-connector) with more detail about the connector [here](https://docs.snowflake.com/en/developer-guide/python-connector/python-connector-api).
+
+
+### Fields
+
+<!-- Fields Sentinel Section -->
+
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+| account | yes |  | Associated Snowflake account |
+| warehouse | yes |  | Associated Snowflake warehouse |
+| role | no |  | Optional Snowflake role |
+| database | no |  | Optional Snowflake database |
+| schema | no |  | Optional snowflake schema |
+
+
+<!-- Fields Sentinel Section -->
+  
+## Redshift
+
+The Redshift action depends on Amazon's python connector library. 
+You can find complete documentation about the library in the AWS docs [here](https://github.com/aws/amazon-redshift-python-driver).
+
+
+### Fields
+
+<!-- Fields Sentinel Section -->
+
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | yes |  | The database host |
+| db-port | no | 5439 | The database port |
+| db-database-name | yes |  | The database name |
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+
+
+<!-- Fields Sentinel Section -->
+  
+## Postgres
+
+The Postgres action depends on the python psycopg2 library. 
+You can find complete documentation about the library [here](https://www.psycopg.org/docs/).
+
+
+### Fields
+
+<!-- Fields Sentinel Section -->
+
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | yes |  | The database host |
+| db-port | no | 5432 | The database port |
+| db-database-name | yes |  | The database name |
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+
+
+<!-- Fields Sentinel Section -->
+  
+## MySQL 
+
+The MySQL action depends on the python mysql library. 
+You can find complete documentation about the library [here](https://dev.mysql.com/doc/connector-python).
+
+
+### Fields
+
+<!-- Fields Sentinel Section -->
+
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | yes |  | The database host |
+| db-port | no | 3306 | The database port |
+| db-database-name | yes |  | The database name |
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+
+
+<!-- Fields Sentinel Section -->
+  
+## Microsoft SQL Server
+
+The SQL Server action depends on the python pyodbc library. 
+You can find complete documentation about the library [here](https://github.com/mkleehammer/pyodbc/wiki).
+
+There are a variety of ways to configure a pyodbc connection depending on your security implementation.
+A standard connection would consist of a host, port, database name, user, and password.
+
+### Fields
+
+<!-- Fields Sentinel Section -->
+
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | no |  | The MSSQL database host |
+| db-port | no | 1433 | The MSSQL database port. |
+| db-database-name | no |  | The database name |
+| db-user | no | sa | The database user |
+| db-password | no |  | The database password |
+| encrypt | no |  | True/False Indicates whether to use an encrypted connection to mssql |
+| trusted_connection | no |  | True/False whether the SQL Server connection is trusted. Sets `Trusted_Connection=yes` in pyodbc. |
+| protocol | no | tcp | Connection protocol for the database. One of 'tcp', 'Icp', or 'NP' |
+| server_connection_string | no |  | An optional ODBC server connection string to use when connecting to the server. These are usually constructed as '{protocol}:{host},{port}'. This |
+| trust_server_certificate | no | true | Sets the ODBC connection string `TrustServerCertificate` |
+
+
 <!-- Fields Sentinel Section -->
   

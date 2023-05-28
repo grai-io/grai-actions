@@ -7,6 +7,7 @@ You can find complete documentation about the library in the Snowflake docs [her
 ### Fields
 
 <!-- Fields Sentinel Section -->
+
 | Field | Required | Default | Description |
 |-----|-----|-----|-----|
 | db-user | yes |  | The database user |
@@ -16,21 +17,7 @@ You can find complete documentation about the library in the Snowflake docs [her
 | role | no |  | Optional Snowflake role |
 | database | no |  | Optional Snowflake database |
 | schema | no |  | Optional snowflake schema |
+
+
 <!-- Fields Sentinel Section -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    

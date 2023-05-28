@@ -8,14 +8,16 @@ Authentication with their services will require an API key and secret but you ca
 ### Fields
 
 <!-- Fields Sentinel Section -->
+
 | Field | Required | Default | Description |
 |-----|-----|-----|-----|
 | fivetran-endpoint | no | https://api.fivetran.com/v1 | Fivetran API endpoint |
 | fivetran-api-key | yes |  | Your Fivetran user api key |
 | fivetran-api-secret | yes |  | Your Fivetran user api secret |
 | namespace-map | no |  | A JSON string containing a mapping between Fivetran connections and Grai namespaces |
-<!-- Fields Sentinel Section -->
 
+
+<!-- Fields Sentinel Section -->
 
 The `namespace` field in the Fivetran Action works slightly differently than other action.
 It is used as a default namespace for all connections not specified in the `namespace_map`. 
@@ -41,5 +43,3 @@ The namespace map should be a JSON string with the Grai namespace for each sourc
 
 
 You can find connector id's for all of your Fivetran connections in the [API](https://fivetran.com/docs/rest-api/faq/find-connector_id)
-
-

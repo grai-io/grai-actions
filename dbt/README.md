@@ -12,11 +12,11 @@ One way to do this is to perform `dbt build` as part of your CI action but there
 ### Fields
 
 <!-- Fields Sentinel Section -->
+
 | Field | Required | Default | Description |
 |-----|-----|-----|-----|
 | manifest-file | yes |  | The file location in your repository of the updated manifest.json file |
+
+
 <!-- Fields Sentinel Section -->
-
-
-
 

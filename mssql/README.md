@@ -9,6 +9,7 @@ A standard connection would consist of a host, port, database name, user, and pa
 ### Fields
 
 <!-- Fields Sentinel Section -->
+
 | Field | Required | Default | Description |
 |-----|-----|-----|-----|
 | db-host | no |  | The MSSQL database host |
@@ -21,6 +22,7 @@ A standard connection would consist of a host, port, database name, user, and pa
 | protocol | no | tcp | Connection protocol for the database. One of 'tcp', 'Icp', or 'NP' |
 | server_connection_string | no |  | An optional ODBC server connection string to use when connecting to the server. These are usually constructed as '{protocol}:{host},{port}'. This |
 | trust_server_certificate | no | true | Sets the ODBC connection string `TrustServerCertificate` |
-<!-- Fields Sentinel Section -->
 
+
+<!-- Fields Sentinel Section -->
 

@@ -7,6 +7,7 @@ You can find complete documentation about the library in the AWS docs [here](htt
 ### Fields
 
 <!-- Fields Sentinel Section -->
+
 | Field | Required | Default | Description |
 |-----|-----|-----|-----|
 | db-host | yes |  | The database host |
@@ -14,7 +15,7 @@ You can find complete documentation about the library in the AWS docs [here](htt
 | db-database-name | yes |  | The database name |
 | db-user | yes |  | The database user |
 | db-password | yes |  | The database password |
+
+
 <!-- Fields Sentinel Section -->
-
-
 
