@@ -40,19 +40,24 @@ inputs:
   db-host:
     description: "The database host"
     required: true
+    example: "redshift-cluster-1.abc123xyz789.us-east-1.redshift.amazonaws.com"
   db-port:
     description: "The database port"
     required: false
     default: "5439"
+    example: "5439"
   db-database-name:
     description: "The database name"
     required: true
+    example: "dev"
   db-user:
     description: "The database user"
     required: true
+    example: "admin"
   db-password:
     description: "The database password"
     required: true
+    example: "password"
 runs:
   using: "docker"
   image: "../image/Dockerfile"

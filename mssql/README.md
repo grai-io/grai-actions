@@ -26,3 +26,31 @@ A standard connection would consist of a host, port, database name, user, and pa
 
 <!-- Fields Sentinel Section -->
 
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: SQL Server
+jobs:
+  test_mssql:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/mssql
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        db-user: sa
+        db-password: sa_password
+        server_connection_string: tcp:myserver,1433
+        trust_server_certificate: 'true'
+
+```
+
+<!-- Example Sentinel Section -->
+

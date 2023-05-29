@@ -79,6 +79,34 @@ The namespace map should be a JSON string with the Grai namespace for each sourc
 
 
 You can find connector id's for all of your Fivetran connections in the [API](https://fivetran.com/docs/rest-api/faq/find-connector_id)
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: Fivetran
+jobs:
+  test_fivetran:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/fivetran
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        fivetran-api-key: hHqP5c2nIY0B6fpa
+        fivetran-api-secret: 1234567890abcdef1234567890abcdef
+        namespace-map: '{"operative_combination": {"source": "source_namespace", "destination":
+          "destination_namespace"}}'
+
+```
+
+<!-- Example Sentinel Section -->
   
 ## Flat File
 
@@ -98,6 +126,31 @@ Make sure to include an `- uses: actions/checkout@v3` step in your workflow so t
 
 
 <!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: Flat File
+jobs:
+  test_flat-file:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/flat-file
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        file: ./tests/flat-file/low-numbers.csv
+
+```
+
+<!-- Example Sentinel Section -->
   
 ## dbt
 
@@ -120,6 +173,31 @@ One way to do this is to perform `dbt build` as part of your CI action but there
 
 
 <!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: dbt
+jobs:
+  test_dbt:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/dbt
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        manifest-file: ./tests/dbt/manifest.json
+
+```
+
+<!-- Example Sentinel Section -->
   
 ## BigQuery
 
@@ -139,6 +217,39 @@ More information can be found about specific connection credentials in Google's 
 
 
 <!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: BigQuery
+jobs:
+  test_bigquery:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/bigquery
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        project: my-bigquery-project
+        dataset: my-bigquery-dataset
+        credentials: '{ "type": "service_account", "project_id": "demo", "private_key_id":
+          "your_private_key_id", "private_key": "your_private_key", "client_email":
+          "your@email.iam.gserviceaccount.com", "client_id": "your_client_id", "auth_uri":
+          "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://oauth2.googleapis.com/token",
+          "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+          "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/you%40email.iam.gserviceaccount.com"
+          }'
+
+```
+
+<!-- Example Sentinel Section -->
   
 ## Snowflake
 
@@ -162,6 +273,30 @@ You can find complete documentation about the library in the Snowflake docs [her
 
 
 <!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: Snowflake
+jobs:
+  test_snowflake:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/snowflake
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+
+```
+
+<!-- Example Sentinel Section -->
   
 ## Redshift
 
@@ -183,6 +318,35 @@ You can find complete documentation about the library in the AWS docs [here](htt
 
 
 <!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: Redshift
+jobs:
+  test_redshift:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/redshift
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        db-host: redshift-cluster-1.abc123xyz789.us-east-1.redshift.amazonaws.com
+        db-port: '5439'
+        db-database-name: dev
+        db-user: admin
+        db-password: password
+
+```
+
+<!-- Example Sentinel Section -->
   
 ## Postgres
 
@@ -204,6 +368,35 @@ You can find complete documentation about the library [here](https://www.psycopg
 
 
 <!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: PostgreSQL
+jobs:
+  test_postgres:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/postgres
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        db-host: prod.db.com
+        db-port: '5432'
+        db-database-name: my_database
+        db-user: my_user
+        db-password: my_password
+
+```
+
+<!-- Example Sentinel Section -->
   
 ## MySQL 
 
@@ -225,6 +418,35 @@ You can find complete documentation about the library [here](https://dev.mysql.c
 
 
 <!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: MySQL
+jobs:
+  test_mysql:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/mysql
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        db-host: dev.mysql.com
+        db-port: '3306'
+        db-database-name: my_db
+        db-user: my_user
+        db-password: my_password
+
+```
+
+<!-- Example Sentinel Section -->
   
 ## Microsoft SQL Server
 
@@ -253,4 +475,32 @@ A standard connection would consist of a host, port, database name, user, and pa
 
 
 <!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: SQL Server
+jobs:
+  test_mssql:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/mssql
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        db-user: sa
+        db-password: sa_password
+        server_connection_string: tcp:myserver,1433
+        trust_server_certificate: 'true'
+
+```
+
+<!-- Example Sentinel Section -->
   

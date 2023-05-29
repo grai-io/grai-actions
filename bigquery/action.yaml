@@ -40,12 +40,26 @@ inputs:
   project:
     description: "The BigQuery project string"
     required: true
+    example: "my-bigquery-project"
   dataset:
     description: "The BigQuery dataset string"
     required: true
+    example: "my-bigquery-dataset"
   credentials:
     description: "A JSON credential string for use with google oauth service account [connections](https://google-auth.readthedocs.io/en/master/reference/google.oauth2.service_account.html#google.oauth2.service_account.Credentials)"
     required: true
+    example: '{
+  "type": "service_account",
+  "project_id": "demo",
+  "private_key_id": "your_private_key_id",
+  "private_key": "your_private_key",
+  "client_email": "your@email.iam.gserviceaccount.com",
+  "client_id": "your_client_id",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/you%40email.iam.gserviceaccount.com"
+}'
 runs:
   using: "docker"
   image: "../image/Dockerfile"

@@ -40,15 +40,19 @@ inputs:
   db-user:
     description: "The database user"
     required: true
+    example: "my-user"
   db-password:
     description: "The database password"
     required: true
+    example: "my-password"
   account:
     description: "Associated Snowflake account"
     required: true
+    example: "my-account"
   warehouse:
     description: "Associated Snowflake warehouse"
     required: true
+    example: "my-warehouse"
   role:
     description: "Optional Snowflake role"
     required: false

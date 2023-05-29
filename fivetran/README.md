@@ -43,3 +43,32 @@ The namespace map should be a JSON string with the Grai namespace for each sourc
 
 
 You can find connector id's for all of your Fivetran connections in the [API](https://fivetran.com/docs/rest-api/faq/find-connector_id)
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: Fivetran
+jobs:
+  test_fivetran:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/fivetran
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        fivetran-api-key: hHqP5c2nIY0B6fpa
+        fivetran-api-secret: 1234567890abcdef1234567890abcdef
+        namespace-map: '{"operative_combination": {"source": "source_namespace", "destination":
+          "destination_namespace"}}'
+
+```
+
+<!-- Example Sentinel Section -->
+

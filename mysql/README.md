@@ -19,3 +19,32 @@ You can find complete documentation about the library [here](https://dev.mysql.c
 
 <!-- Fields Sentinel Section -->
 
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: MySQL
+jobs:
+  test_mysql:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/mysql
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        db-host: dev.mysql.com
+        db-port: '3306'
+        db-database-name: my_db
+        db-user: my_user
+        db-password: my_password
+
+```
+
+<!-- Example Sentinel Section -->
+
