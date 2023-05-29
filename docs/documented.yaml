@@ -1,0 +1,18 @@
+ready:
+    - folder: bigquery
+      name: BigQuery
+    - folder: dbt
+    - folder: fivetran
+      name: Fivetran
+    - folder: flat-file
+      name: "Flat File"
+    - folder: mssql
+      name: SQL Server
+    - folder: mysql
+      name: MySQL
+    - folder: postgres
+      name: PostgreSQL
+    - folder: redshift
+      name: Redshift
+    - folder: snowflake
+      name: Snowflake

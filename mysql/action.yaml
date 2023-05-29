@@ -40,19 +40,24 @@ inputs:
   db-host:
     description: "The database host"
     required: true
+    example: dev.mysql.com
   db-port:
     description: "The database port"
     required: false
     default: "3306"
+    example: "3306"
   db-database-name:
     description: "The database name"
     required: true
+    example: "my_db"
   db-user:
     description: "The database user"
     required: true
+    example: "my_user"
   db-password:
     description: "The database password"
     required: true
+    example: "my_password"
 runs:
   using: "docker"
   image: "../image/Dockerfile"

@@ -20,3 +20,28 @@ One way to do this is to perform `dbt build` as part of your CI action but there
 
 <!-- Fields Sentinel Section -->
 
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: dbt
+jobs:
+  test_dbt:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/dbt
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        manifest-file: ./tests/dbt/manifest.json
+
+```
+
+<!-- Example Sentinel Section -->
+

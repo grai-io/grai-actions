@@ -40,19 +40,24 @@ inputs:
   db-host:
     description: "The database host"
     required: true
+    example: "prod.db.com"
   db-port:
     description: "The database port"
     required: false
     default: "5432"
+    example: "5432"
   db-database-name:
     description: "The database name"
     required: true
+    example: "my_database"
   db-user:
     description: "The database user"
     required: true
+    example: "my_user"
   db-password:
     description: "The database password"
     required: true
+    example: "my_password"
 
 runs:
   using: "docker"

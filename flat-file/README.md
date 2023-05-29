@@ -17,3 +17,28 @@ Make sure to include an `- uses: actions/checkout@v3` step in your workflow so t
 
 <!-- Fields Sentinel Section -->
 
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: Flat File
+jobs:
+  test_flat-file:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/flat-file
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        file: ./tests/flat-file/low-numbers.csv
+
+```
+
+<!-- Example Sentinel Section -->
+

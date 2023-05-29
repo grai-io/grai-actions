@@ -21,3 +21,27 @@ You can find complete documentation about the library in the Snowflake docs [her
 
 <!-- Fields Sentinel Section -->
 
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: Snowflake
+jobs:
+  test_snowflake:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-core/grai-actions/snowflake
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+
+```
+
+<!-- Example Sentinel Section -->
+

@@ -44,12 +44,15 @@ inputs:
   fivetran-api-key:
     description: "Your Fivetran user api key"
     required: true
+    example: hHqP5c2nIY0B6fpa
   fivetran-api-secret:
     description: "Your Fivetran user api secret"
     required: true
+    example: 1234567890abcdef1234567890abcdef
   namespace-map:
     description: "A JSON string containing a mapping between Fivetran connections and Grai namespaces"
     required: false
+    example: '{"operative_combination": {"source": "source_namespace", "destination": "destination_namespace"}}'
 
 runs:
   using: 'docker'

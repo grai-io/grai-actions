@@ -39,6 +39,7 @@ inputs:
   file:
     description: "Local file to track with Grai"
     required: true
+    example: "./tests/flat-file/low-numbers.csv"
 runs:
   using: 'docker'
   image: '../image/Dockerfile'
