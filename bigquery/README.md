@@ -36,6 +36,7 @@ jobs:
       with:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
+        action: tests
         project: my-bigquery-project
         dataset: my-bigquery-dataset
         credentials: '{ "type": "service_account", "project_id": "demo", "private_key_id":
