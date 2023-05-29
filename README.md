@@ -1,9 +1,7 @@
-# grai-actions
+# Grai Actions
 
 
-# Integrations
-
-# Shared Fields
+## Shared Fields
 
 All actions share some common fields listed below.
 
@@ -22,16 +20,16 @@ If you're account is associated with multiple workspaces and you're using userna
 also provide your desired `workspace`.
 
 
-### Other parameters
+### Other Parameters
 
-| Field              | Required | Default             | Description                                                                                           |
-|--------------------|----------|---------------------|-------------------------------------------------------------------------------------------------------|
-| namespace          | yes      |                     | The Grai namespace for the connection                                                                 |
-| client-host        | no       | api.grai.io         | Hostname for the api of your Grai instance.                                                           |
-| client-port        | no       |                     | Port for the api of your Grai Instance.                                                               |
+| Field              | Required | Default            | Description                                                                                           |
+|--------------------|----------|--------------------|-------------------------------------------------------------------------------------------------------|
+| namespace          | yes      |                    | The Grai namespace for the connection                                                                 |
+| client-host        | no       | api.grai.io        | Hostname for the api of your Grai instance.                                                           |
+| client-port        | no       |                    | Port for the api of your Grai Instance.                                                               |
 | grai-frontend-host | no       | https://app.grai.io | The URL for your frontend instance of Grai. This might include a port depending on your configuration |
-| action             | no       | tests               | Which action to perform. Can be `tests` or `update`                                                   |
-| github-token       | no       | ${{ github.token }} | The GITHUB_TOKEN secret for your repository                                                           |
+| action             | no       | tests              | Which action to perform. Can be `tests` or `update`                                                   |
+| github-token       | no       | `${{github.token}}` | The GITHUB_TOKEN secret for your repository                                                           |
 
 
 ## Fivetran
@@ -99,6 +97,7 @@ jobs:
       with:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
+        action: tests
         fivetran-api-key: hHqP5c2nIY0B6fpa
         fivetran-api-secret: 1234567890abcdef1234567890abcdef
         namespace-map: '{"operative_combination": {"source": "source_namespace", "destination":
@@ -146,6 +145,7 @@ jobs:
       with:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
+        action: tests
         file: ./tests/flat-file/low-numbers.csv
 
 ```
@@ -193,6 +193,7 @@ jobs:
       with:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
+        action: tests
         manifest-file: ./tests/dbt/manifest.json
 
 ```
@@ -237,6 +238,7 @@ jobs:
       with:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
+        action: tests
         project: my-bigquery-project
         dataset: my-bigquery-dataset
         credentials: '{ "type": "service_account", "project_id": "demo", "private_key_id":
@@ -293,6 +295,11 @@ jobs:
       with:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
+        action: tests
+        db-user: my-user
+        db-password: my-password
+        account: my-account
+        warehouse: my-warehouse
 
 ```
 
@@ -338,6 +345,7 @@ jobs:
       with:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
+        action: tests
         db-host: redshift-cluster-1.abc123xyz789.us-east-1.redshift.amazonaws.com
         db-port: '5439'
         db-database-name: dev
@@ -388,6 +396,7 @@ jobs:
       with:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
+        action: tests
         db-host: prod.db.com
         db-port: '5432'
         db-database-name: my_database
@@ -438,6 +447,7 @@ jobs:
       with:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
+        action: tests
         db-host: dev.mysql.com
         db-port: '3306'
         db-database-name: my_db
@@ -470,7 +480,7 @@ A standard connection would consist of a host, port, database name, user, and pa
 | encrypt | no |  | True/False Indicates whether to use an encrypted connection to mssql |
 | trusted_connection | no |  | True/False whether the SQL Server connection is trusted. Sets `Trusted_Connection=yes` in pyodbc. |
 | protocol | no | tcp | Connection protocol for the database. One of 'tcp', 'Icp', or 'NP' |
-| server_connection_string | no |  | An optional ODBC server connection string to use when connecting to the server. These are usually constructed as '{protocol}:{host},{port}'. This |
+| server_connection_string | no |  | An optional ODBC server connection string to use when connecting to the server. These are usually constructed as `{protocol}:{host},{port}`. This |
 | trust_server_certificate | no | true | Sets the ODBC connection string `TrustServerCertificate` |
 
 
@@ -495,6 +505,7 @@ jobs:
       with:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
+        action: tests
         db-user: sa
         db-password: sa_password
         server_connection_string: tcp:myserver,1433
