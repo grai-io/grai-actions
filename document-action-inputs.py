@@ -10,6 +10,7 @@ SHARED_FIELDS = {'action', 'github-token', 'namespace', 'workspace', 'api-key', 
 SHARED_EXAMPLE_DEFAULTS = {
     'namespace': 'my_apps_grai_namespace',
     'api-key': 'my_grai_api_key',
+    'action': 'tests',
 }
 
 
