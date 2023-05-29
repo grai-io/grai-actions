@@ -1,9 +1,7 @@
-# grai-actions
+# Grai Actions
 
 
-# Integrations
-
-# Shared Fields
+## Shared Fields
 
 All actions share some common fields listed below.
 
@@ -22,15 +20,15 @@ If you're account is associated with multiple workspaces and you're using userna
 also provide your desired `workspace`.
 
 
-### Other parameters
+### Other Parameters
 
-| Field              | Required | Default             | Description                                                                                           |
-|--------------------|----------|---------------------|-------------------------------------------------------------------------------------------------------|
-| namespace          | yes      |                     | The Grai namespace for the connection                                                                 |
-| client-host        | no       | api.grai.io         | Hostname for the api of your Grai instance.                                                           |
-| client-port        | no       |                     | Port for the api of your Grai Instance.                                                               |
+| Field              | Required | Default            | Description                                                                                           |
+|--------------------|----------|--------------------|-------------------------------------------------------------------------------------------------------|
+| namespace          | yes      |                    | The Grai namespace for the connection                                                                 |
+| client-host        | no       | api.grai.io        | Hostname for the api of your Grai instance.                                                           |
+| client-port        | no       |                    | Port for the api of your Grai Instance.                                                               |
 | grai-frontend-host | no       | https://app.grai.io | The URL for your frontend instance of Grai. This might include a port depending on your configuration |
-| action             | no       | tests               | Which action to perform. Can be `tests` or `update`                                                   |
-| github-token       | no       | ${{ github.token }} | The GITHUB_TOKEN secret for your repository                                                           |
+| action             | no       | tests              | Which action to perform. Can be `tests` or `update`                                                   |
+| github-token       | no       | `${{github.token}}` | The GITHUB_TOKEN secret for your repository                                                           |
 
 
