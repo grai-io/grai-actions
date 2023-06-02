@@ -3,7 +3,7 @@ name: Local Tests
 
 env:
     grai-api-url: "http://localhost:8000"
-    action: "dev_tests"
+    action: "update"
     github-token: "test"
     grai-user: 'null@grai.io'
     grai-password: 'super_secret'

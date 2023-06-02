@@ -4,7 +4,7 @@ env:
   grai-user: null@grai.io
   grai-password: super_secret
   namespace: default
-  action: update
+  action: dev_tests
   DB_PASSWORD: GraiGraiGr4i
   DB_USER: grai
 jobs:
@@ -101,10 +101,10 @@ jobs:
       - name: SQL Server Evaluation
         uses: ./mssql
         with:
-          action: dev_tests
-          github-token: test
-          grai-user: null@grai.io
-          grai-password: super_secret
+          action: ${{ env.action }}
+          grai-user: ${{ env.grai-user }}
+          grai-password: ${{ env.grai-password }}
+          namespace: ${{ env.namespace }}
           namespace: default
           db-host: test_db
           db-port: "1433"
