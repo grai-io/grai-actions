@@ -105,7 +105,6 @@ jobs:
           grai-user: ${{ env.grai-user }}
           grai-password: ${{ env.grai-password }}
           namespace: ${{ env.namespace }}
-          namespace: default
           db-host: test_db
           db-port: "1433"
           db-user: sa
