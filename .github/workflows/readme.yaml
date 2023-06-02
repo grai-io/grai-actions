@@ -18,7 +18,6 @@ jobs:
           python document-action-inputs.py
 
       - name: "Build README.md"
-        if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           rm README.md
           cp base_readme.md README.md
