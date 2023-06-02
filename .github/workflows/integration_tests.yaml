@@ -101,11 +101,10 @@ jobs:
       - name: SQL Server Evaluation
         uses: ./mssql
         with:
-          action: dev_tests
-          github-token: test
-          grai-user: null@grai.io
-          grai-password: super_secret
-          namespace: default
+          action: ${{ env.action }}
+          grai-user: ${{ env.grai-user }}
+          grai-password: ${{ env.grai-password }}
+          namespace: ${{ env.namespace }}
           db-host: test_db
           db-port: "1433"
           db-user: sa

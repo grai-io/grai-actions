@@ -1,6 +1,5 @@
 from grai_actions.utilities import get_client
 
-
 # def test_get_client(local_config):
 #     client = get_client(local_config)
 
