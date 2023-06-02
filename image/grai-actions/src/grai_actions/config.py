@@ -49,8 +49,7 @@ class AccessModes(Enum):
 class DefaultValues:
     grai_namespace = "default"
     grai_workspace = None
-    grai_host = "api.grai.io"
-    grai_port = "443"
+    grai_url = "https://api.grai.io"
 
 
 class Config(ActionBaseSettings):
@@ -67,8 +66,7 @@ class Config(ActionBaseSettings):
     grai_user: Optional[str] = None
     grai_password: Optional[SecretStr] = None
     grai_workspace: Optional[str] = DefaultValues.grai_workspace
-    grai_host: str = DefaultValues.grai_host
-    grai_port: str = DefaultValues.grai_port
+    grai_url: str = DefaultValues.grai_url
     grai_frontend_url: Optional[AnyUrl] = None
     grai_action: Union[SupportedActions, DeveloperActions] = SupportedActions.TESTS
     grai_access_mode: AccessModes
@@ -84,7 +82,7 @@ class Config(ActionBaseSettings):
     @validator("grai_frontend_url")
     def validate_grai_frontend_url(cls, value, values):
         if value is None:
-            if values["grai_host"] == "api.grai.io":
+            if values["grai_url"] == "https://api.grai.io":
                 return "https://app.grai.io"
             return value
         else:

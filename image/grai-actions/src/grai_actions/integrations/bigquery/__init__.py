@@ -12,10 +12,9 @@ class Args(ActionBaseSettings):
     grai_bigquery_credentials: str
 
 
-args = Args()
-
-
-def get_nodes_and_edges(client):
+def get_nodes_and_edges(client, args=None):
+    if args is None:
+        args = Args()
     conn = BigqueryConnector(
         namespace=config.grai_namespace,
         project=args.grai_bigquery_project,

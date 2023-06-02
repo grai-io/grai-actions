@@ -1,4 +1,5 @@
 from typing import Optional
+import time
 
 from grai_client.endpoints.v1.client import ClientV1
 
@@ -32,6 +33,13 @@ def get_client(client_config: Optional[Config] = None) -> ClientV1:
     if client_config.grai_workspace is not None:
         conn_kwargs["workspace"] = client_config.grai_workspace
 
-    client = ClientV1(client_config.grai_host, client_config.grai_port, **conn_kwargs)
 
-    return client
+    for i in range(2):
+        try:
+            client = ClientV1(url=client_config.grai_url, **conn_kwargs)
+            return client
+        except :
+            time.sleep(3)
+
+        client = ClientV1(url=client_config.grai_url, **conn_kwargs)
+        return client

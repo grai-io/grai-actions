@@ -27,7 +27,7 @@ also provide your desired `workspace`.
 | namespace          | yes      |                    | The Grai namespace for the connection                                                                 |
 | client-host        | no       | api.grai.io        | Hostname for the api of your Grai instance.                                                           |
 | client-port        | no       |                    | Port for the api of your Grai Instance.                                                               |
-| grai-frontend-host | no       | https://app.grai.io | The URL for your frontend instance of Grai. This might include a port depending on your configuration |
+| grai-app-url | no       | https://app.grai.io | The URL for your frontend instance of Grai. This might include a port depending on your configuration |
 | action             | no       | tests              | Which action to perform. Can be `tests` or `update`                                                   |
 | github-token       | no       | `${{github.token}}` | The GITHUB_TOKEN secret for your repository                                                           |
 
