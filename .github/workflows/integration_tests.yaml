@@ -4,7 +4,7 @@ env:
   grai-user: null@grai.io
   grai-password: super_secret
   namespace: default
-  action: dev_tests
+  action: update
   DB_PASSWORD: GraiGraiGr4i
   DB_USER: grai
 jobs:

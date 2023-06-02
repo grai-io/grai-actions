@@ -21,7 +21,7 @@ jobs:
       with:
         grai-api-url: ${{ env.grai-api-url }}
         action: ${{ env.action }}
-        github-token: ${{ env.github-token }}
+        github-token: $git re{{ env.github-token }}
         grai-user: ${{ env.grai-user }}
         grai-password: ${{ env.grai-password }}
         namespace: ${{ env.namespace }}
