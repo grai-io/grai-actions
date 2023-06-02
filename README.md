@@ -97,7 +97,7 @@ jobs:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
         action: tests
-        grai-api-url: https://api.grai.io, http://www.your-domain.com:8000
+        grai-api-url: https://api.grai.io
         fivetran-api-key: hHqP5c2nIY0B6fpa
         fivetran-api-secret: 1234567890abcdef1234567890abcdef
         namespace-map: '{"operative_combination": {"source": "source_namespace", "destination":
@@ -146,7 +146,7 @@ jobs:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
         action: tests
-        grai-api-url: https://api.grai.io, http://www.your-domain.com:8000
+        grai-api-url: https://api.grai.io
         file: ./tests/flat-file/low-numbers.csv
 
 ```
@@ -196,7 +196,7 @@ jobs:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
         action: tests
-        grai-api-url: https://api.grai.io, http://www.your-domain.com:8000
+        grai-api-url: https://api.grai.io
         db-user: my-user
         db-password: my-password
         account: my-account
@@ -247,7 +247,7 @@ jobs:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
         action: tests
-        grai-api-url: https://api.grai.io, http://www.your-domain.com:8000
+        grai-api-url: https://api.grai.io
         db-host: prod.db.com
         db-port: '5432'
         db-database-name: my_database
@@ -297,7 +297,7 @@ jobs:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
         action: tests
-        grai-api-url: https://api.grai.io, http://www.your-domain.com:8000
+        grai-api-url: https://api.grai.io
         project: my-bigquery-project
         dataset: my-bigquery-dataset
         credentials: '{ "type": "service_account", "project_id": "demo", "private_key_id":
@@ -354,7 +354,7 @@ jobs:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
         action: tests
-        grai-api-url: https://api.grai.io, http://www.your-domain.com:8000
+        grai-api-url: https://api.grai.io
         manifest-file: ./tests/dbt/manifest.json
 
 ```
@@ -409,7 +409,7 @@ jobs:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
         action: tests
-        grai-api-url: https://api.grai.io, http://www.your-domain.com:8000
+        grai-api-url: https://api.grai.io
         db-user: sa
         db-password: sa_password
         server_connection_string: tcp:myserver,1433
@@ -460,7 +460,7 @@ jobs:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
         action: tests
-        grai-api-url: https://api.grai.io, http://www.your-domain.com:8000
+        grai-api-url: https://api.grai.io
         db-host: redshift-cluster-1.abc123xyz789.us-east-1.redshift.amazonaws.com
         db-port: '5439'
         db-database-name: dev
@@ -512,7 +512,7 @@ jobs:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
         action: tests
-        grai-api-url: https://api.grai.io, http://www.your-domain.com:8000
+        grai-api-url: https://api.grai.io
         db-host: dev.mysql.com
         db-port: '3306'
         db-database-name: my_db

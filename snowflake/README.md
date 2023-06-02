@@ -41,7 +41,7 @@ jobs:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
         action: tests
-        grai-api-url: https://api.grai.io, http://www.your-domain.com:8000
+        grai-api-url: https://api.grai.io
         db-user: my-user
         db-password: my-password
         account: my-account

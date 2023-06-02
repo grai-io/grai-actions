@@ -37,7 +37,7 @@ jobs:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
         action: tests
-        grai-api-url: https://api.grai.io, http://www.your-domain.com:8000
+        grai-api-url: https://api.grai.io
         project: my-bigquery-project
         dataset: my-bigquery-dataset
         credentials: '{ "type": "service_account", "project_id": "demo", "private_key_id":
