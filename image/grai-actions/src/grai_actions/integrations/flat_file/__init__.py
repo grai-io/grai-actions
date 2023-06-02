@@ -9,7 +9,6 @@ class Args(ActionBaseSettings):
     grai_flat_file_file: FilePath
 
 
-
 def get_nodes_and_edges(client, args=None):
     if args is None:
         args = Args()

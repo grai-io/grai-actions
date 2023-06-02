@@ -8,7 +8,6 @@ class Args(ActionBaseSettings):
     grai_dbt_manifest_file: FilePath
 
 
-
 def get_nodes_and_edges(client, args=None):
     if args is None:
         args = Args()

@@ -11,7 +11,7 @@ env_vars = [
     "GRAI_DBT_MANIFEST_FILE = /Users/ian/repos/grai/grai-actions/image/grai-actions/tests/manifest.json",
     "GRAI_ACTION = update",
     "GRAI_WORKSPACE = default",  # e92d10a1-72b7-45ed-bc88-642465426f04",
-    "GRAI_URL = http://localhost:8000"
+    "GRAI_URL = http://localhost:8000",
 ]
 
 for env_var in env_vars:

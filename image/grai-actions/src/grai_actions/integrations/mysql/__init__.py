@@ -14,7 +14,6 @@ class Args(ActionBaseSettings):
     grai_db_password: str
 
 
-
 def get_nodes_and_edges(client, args=None):
     if args is None:
         args = Args()

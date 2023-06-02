@@ -14,9 +14,6 @@ class Args(ActionBaseSettings):
     grai_fivetran_endpoint: Optional[str] = None
 
 
-
-
-
 def get_nodes_and_edges(client, args=None):
     if args is None:
         args = Args()
