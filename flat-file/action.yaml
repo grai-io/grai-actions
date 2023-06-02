@@ -25,7 +25,7 @@ inputs:
     description: "The url of your grai instance. This is constructed as {scheme}://{host}:{port} where the port is optional"
     default: "https://api.grai.io"
     required: false
-    example: "https://api.grai.io, http://www.your-domain.com:8000"
+    example: "https://api.grai.io"
   api-key:
     description: "A user api key for server access"
     required: false
