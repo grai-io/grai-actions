@@ -7,7 +7,7 @@ from pydantic import SecretStr
 from grai_actions.config import ActionBaseSettings, config
 
 
-def get_nodes_and_edges(client):
+def get_nodes_and_edges(client, args=None):
     conn = MsSQLConnector(
         namespace=config.grai_namespace,
     )

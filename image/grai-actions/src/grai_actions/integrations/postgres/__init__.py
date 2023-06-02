@@ -15,10 +15,9 @@ class Args(ActionBaseSettings):
     grai_db_password: SecretStr
 
 
-args = Args()
-
-
-def get_nodes_and_edges(client):
+def get_nodes_and_edges(client, args=None):
+    if args is None:
+        args = Args()
     conn = PostgresConnector(
         dbname=args.grai_db_database_name,
         user=args.grai_db_user,

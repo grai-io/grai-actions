@@ -16,10 +16,10 @@ class Args(ActionBaseSettings):
     grai_snowflake_schema: Optional[str] = None
 
 
-args = Args()
+def get_nodes_and_edges(client, args=None):
+    if args is None:
+        args = Args()
 
-
-def get_nodes_and_edges(client):
     conn = SnowflakeConnector(
         account=args.grai_snowflake_account,
         user=args.grai_db_user,

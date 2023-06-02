@@ -14,10 +14,9 @@ class Args(ActionBaseSettings):
     grai_fivetran_endpoint: Optional[str] = None
 
 
-args = Args()
-
-
-def get_nodes_and_edges(client):
+def get_nodes_and_edges(client, args=None):
+    if args is None:
+        args = Args()
     conn = FivetranConnector(
         endpoint=args.grai_fivetran_endpoint,
         api_key=args.grai_fivetran_api_key.get_secret_value(),

@@ -4,7 +4,7 @@ from tomark import Tomark
 import markdown
 
 
-SHARED_FIELDS = {'action', 'github-token', 'namespace', 'workspace', 'api-key', 'grai-frontend-host',
+SHARED_FIELDS = {'action', 'github-token', 'namespace', 'workspace', 'api-key', 'grai-app-url',
                  'client-host', 'client-port', 'grai-user', 'grai-password'}
 
 SHARED_EXAMPLE_DEFAULTS = {

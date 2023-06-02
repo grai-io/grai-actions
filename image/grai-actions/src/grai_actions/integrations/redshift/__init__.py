@@ -15,10 +15,10 @@ class Args(ActionBaseSettings):
     grai_db_password: SecretStr
 
 
-args = Args()
+def get_nodes_and_edges(client, args=None):
+    if args is None:
+        args = Args()
 
-
-def get_nodes_and_edges(client):
     conn = RedshiftConnector(
         namespace=config.grai_namespace,
         user=args.grai_db_user,

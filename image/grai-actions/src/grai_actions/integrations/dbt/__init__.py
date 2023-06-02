@@ -8,10 +8,9 @@ class Args(ActionBaseSettings):
     grai_dbt_manifest_file: FilePath
 
 
-args = Args()
-
-
-def get_nodes_and_edges(client):
+def get_nodes_and_edges(client, args=None):
+    if args is None:
+        args = Args()
     # Already adapted to client
     nodes, edges = base.get_nodes_and_edges(str(args.grai_dbt_manifest_file), config.grai_namespace, client.id)
     return nodes, edges

@@ -23,16 +23,15 @@ inputs:
   workspace:
     description: "Workspace ID"
     required: false
-  client-host:
-    description: "The host for the Grai server"
+  grai-api-url:
+    description: "The url of your grai instance. This is constructed as {scheme}://{host}:{port} where the port is optional"
+    default: "https://api.grai.io"
     required: false
-  client-port:
-    description: "The port for the Grai server"
-    required: false
+    example: "https://api.grai.io"
   api-key:
     description: "A user api key for server access"
     required: false
-  grai-frontend-host:
+  grai-app-url:
     description: "The url for your frontend, e.g. https://app.grai.io"
     default: "https://app.grai.io"
     required: false
@@ -72,9 +71,8 @@ runs:
     GRAI_USER: ${{ inputs.grai-user }}
     GRAI_PASSWORD: ${{ inputs.grai-password }}
     GRAI_WORKSPACE: ${{ inputs.workspace }}
-    GRAI_HOST: ${{ inputs.client-host }}
-    GRAI_PORT: ${{ inputs.client-port }}
-    GRAI_FRONTEND_HOST: ${{ inputs.grai-frontend-host }}
+    GRAI_URL: ${{ inputs.grai-api-url }}
+    GRAI_FRONTEND_HOST: ${{ inputs.grai-app-url }}
     GRAI_API_KEY: ${{ inputs.api-key }}
     GRAI_ACCESS_MODE: "snowflake"
     GRAI_DB_USER: ${{ inputs.db-user }}
