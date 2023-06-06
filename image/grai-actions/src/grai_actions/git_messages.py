@@ -20,6 +20,11 @@ def heading(string, level):
     return f"<h{level}> {string} </h{level}>"
 
 
+DEFAULT_MESSAGE = """
+No Grai data lineage issues detected.
+"""
+
+
 class BotApi:
     def __init__(self):
         self.api = GhApi(
@@ -42,8 +47,11 @@ class BotApi:
         return None
 
     def create_or_update_comment(self, message: Optional[str]):
-        marked_message = self.add_comment_identifier(message, self.test_signal_text)
+        marked_message = self.add_comment_identifier(
+            DEFAULT_MESSAGE if message is None else message, self.test_signal_text
+        )
         marked_comment = self.get_marked_comment(self.test_signal_text)
+
         if marked_comment is None:
             self.api.issues.create_comment(config.pr_number, body=marked_message)
         else:
