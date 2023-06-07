@@ -53,7 +53,7 @@ class BuildDocResults:
         with_args = {**SHARED_EXAMPLE_DEFAULTS, **with_args}
         steps = [
             {"name": "Checkout", "uses": "actions/checkout@v3"},
-            {"name": "Run Grai Action", "uses": f"grai-core/grai-actions/{self.folder}", "with": with_args},
+            {"name": "Run Grai Action", "uses": f"grai-io/grai-actions/{self.folder}@master", "with": with_args},
         ]
         base = {
             "on": ["push"],
