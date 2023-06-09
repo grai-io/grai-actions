@@ -138,7 +138,7 @@ You can find connector id's for all of your Fivetran connections in the [API](ht
 
 ```yaml copy
 'on':
-- push
+- pull_request
 name: Fivetran
 jobs:
   test_fivetran:
@@ -187,7 +187,7 @@ Make sure to include an `- uses: actions/checkout@v3` step in your workflow so t
 
 ```yaml copy
 'on':
-- push
+- pull_request
 name: Flat File
 jobs:
   test_flat-file:
@@ -237,7 +237,7 @@ You can find complete documentation about the library in the Snowflake docs [her
 
 ```yaml copy
 'on':
-- push
+- pull_request
 name: Snowflake
 jobs:
   test_snowflake:
@@ -288,7 +288,7 @@ You can find complete documentation about the library [here](https://www.psycopg
 
 ```yaml copy
 'on':
-- push
+- pull_request
 name: PostgreSQL
 jobs:
   test_postgres:
@@ -338,7 +338,7 @@ More information can be found about specific connection credentials in Google's 
 
 ```yaml copy
 'on':
-- push
+- pull_request
 name: BigQuery
 jobs:
   test_bigquery:
@@ -395,7 +395,7 @@ One way to do this is to perform `dbt build` as part of your CI action but there
 
 ```yaml copy
 'on':
-- push
+- pull_request
 name: dbt
 jobs:
   test_dbt:
@@ -450,7 +450,7 @@ A standard connection would consist of a host, port, database name, user, and pa
 
 ```yaml copy
 'on':
-- push
+- pull_request
 name: SQL Server
 jobs:
   test_mssql:
@@ -501,7 +501,7 @@ You can find complete documentation about the library in the AWS docs [here](htt
 
 ```yaml copy
 'on':
-- push
+- pull_request
 name: Redshift
 jobs:
   test_redshift:
@@ -553,7 +553,7 @@ You can find complete documentation about the library [here](https://dev.mysql.c
 
 ```yaml copy
 'on':
-- push
+- pull_request
 name: MySQL
 jobs:
   test_mysql:
