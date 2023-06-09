@@ -56,7 +56,7 @@ class BuildDocResults:
             {"name": "Run Grai Action", "uses": f"grai-io/grai-actions/{self.folder}@master", "with": with_args},
         ]
         base = {
-            "on": ["push"],
+            "on": ["pull_request"],
             "name": self.doc_settings.get('name', self.doc_settings['folder']),
             "jobs": {
                 f"test_{self.doc_settings['folder']}": {

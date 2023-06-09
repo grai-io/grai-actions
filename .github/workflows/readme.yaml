@@ -2,9 +2,10 @@ name: Build READMEs
 on:
   pull_request:
     paths:
-      - "*/action.yml"
-      - base_readme.md
-      - .github/workflows/readme.yml
+      - ./**/action.yml
+      - ./**/action.yaml
+      - ./base_readme.md
+      - .github/workflows/readme.yaml
       - ./document-action-inputs.py
 
 jobs:
@@ -18,16 +19,24 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v36
         with:
-            files: |
-                *.yaml
-                *.md
+          files: |
+            document-action-inputs.py
+            **.yml
+            **.yaml
 
-      - if: steps.changed-files.outputs.any_changed == 'true'
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.added_files }}; do
+            echo "$file was added"
+          done
+
+      - name: Build integration README
+        if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           pip install -r requirements.txt
           python document-action-inputs.py
 
-      - name: "Build README.md"
+      - name: Build root README
         if: steps.changed-files.outputs.any_changed == 'true'
         run: |
           rm README.md
@@ -40,6 +49,6 @@ jobs:
             fi
           done
 
-      - name: "Commit README.md"
+      - name: Commit changed files
         if: steps.changed-files.outputs.any_changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4

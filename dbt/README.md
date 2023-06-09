@@ -26,7 +26,7 @@ One way to do this is to perform `dbt build` as part of your CI action but there
 
 ```yaml copy
 'on':
-- push
+- pull_request
 name: dbt
 jobs:
   test_dbt:
