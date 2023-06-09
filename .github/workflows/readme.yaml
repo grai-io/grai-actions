@@ -1,12 +1,6 @@
 name: Build READMEs
 on:
   pull_request:
-    paths:
-      - ./**/action.yml
-      - ./**/action.yaml
-      - ./base_readme.md
-      - .github/workflows/readme.yaml
-      - ./document-action-inputs.py
 
 jobs:
   readme-build:
