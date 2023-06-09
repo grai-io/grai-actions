@@ -36,8 +36,7 @@ jobs:
         uses: tj-actions/changed-files@v36
         with:
             files: |
-                base_readme.md
-                ./**/README.md
+                **.md
 
       - name: "Commit README.md"
         if: steps.changed-files.outputs.any_changed == 'true'
