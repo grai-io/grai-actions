@@ -5,6 +5,7 @@ on:
       - "*/action.yml"
       - base_readme.md
       - .github/workflows/readme.yml
+      - ./document-action-inputs.py
 
 jobs:
   readme-build:
