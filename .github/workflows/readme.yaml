@@ -15,11 +15,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - run: |
+      - name: Build integration README
+        run: |
           pip install -r requirements.txt
           python document-action-inputs.py
 
-      - name: "Build README.md"
+      - name: Build root README
         run: |
           rm README.md
           cp base_readme.md README.md
@@ -35,9 +36,8 @@ jobs:
         id: changed-files
         uses: tj-actions/changed-files@v36
         with:
-            files: |
-                **.md
+          files: **.md
 
-      - name: "Commit README.md"
+      - name: Commit changed files
         if: steps.changed-files.outputs.any_changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
