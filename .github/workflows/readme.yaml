@@ -38,11 +38,11 @@ jobs:
         with:
           files: '**.md'
 
-    - name: List all changed files
-      run: |
-        for file in ${{ steps.changed-files.outputs.added_files }}; do
-          echo "$file was added"
-        done
+      - name: List all changed files
+        run: |
+          for file in ${{ steps.changed-files.outputs.added_files }}; do
+            echo "$file was added"
+          done
 
       - name: Commit changed files
         if: steps.changed-files.outputs.any_changed == 'true'
