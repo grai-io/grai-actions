@@ -14,6 +14,14 @@ SHARED_EXAMPLE_DEFAULTS = {
 }
 
 
+class IndentDumper(yaml.Dumper):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def increase_indent(self, flow=False, indentless=False):
+        return super(IndentDumper, self).increase_indent(flow, False)
+
+
 class BuildDocResults:
     def __init__(self, doc_settings, ignored_fields=None):
         self.doc_settings = doc_settings
@@ -56,7 +64,7 @@ class BuildDocResults:
             {"name": "Run Grai Action", "uses": f"grai-io/grai-actions/{self.folder}@master", "with": with_args},
         ]
         base = {
-            "on": ["pull_request"],
+            f"on": ["pull_request"],
             "name": self.doc_settings.get('name', self.doc_settings['folder']),
             "jobs": {
                 f"test_{self.doc_settings['folder']}": {
@@ -89,7 +97,12 @@ for documentation in documented:
     result = f"\n\n{SENTINEL_STRING}\n\n".join(result)
 
     result = [obj.strip() for obj in file_string.split(EXAMPLE_SENTINEL_STRING)]
-    yaml_output = yaml.dump(docs.action_example, sort_keys=False)
+    yaml_output = yaml.dump(docs.action_example, sort_keys=False, allow_unicode=True,
+                                 Dumper=IndentDumper)
+
+    # For some reason pyyaml is inserting quote literals into the output of on...
+    yaml_output = yaml_output.replace("\'on\'", 'on')
+
     result[1] = f"```yaml copy\n{yaml_output}\n```"
     result = f"\n\n{EXAMPLE_SENTINEL_STRING}\n\n".join(result)
 
