@@ -31,6 +31,61 @@ also provide your desired `workspace`.
 | github-token   | no       | `${{github.token}}` | The GITHUB_TOKEN secret for your repository                                                                 |
 
 
+## Notes and Caveats
+
+### Github Authentication
+
+By default we use a `github-token` provided by your repository to write comments back to your PR with test results. 
+In some cases, such as when the pull request is coming from a forked repository, the default token will not have write 
+permissions.
+If this is the case, you'll receive an error message in the workflow indicating such.
+There are a few ways you can resolve the issue but you should first check your repository action settings under
+`Settings -> Actions -> General` aren't blocking workflows from running.
+
+
+Some alternatives include.
+
+#### Explicit Workflow Permissions
+
+GitHub has provided helpful [documentation](https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs)
+to provide explicit permissions for your workflows. 
+Make sure the Grai Action has, at minimum, write permissions for `pull-request` and `issues`. 
+You can set this at the job level by adding a `permission` key in your workflow. e.g.
+
+```yaml copy
+jobs:
+  my-grai-action:
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+      pull-requests: write
+
+```
+
+#### Personal Access Tokens
+
+You can also use personal access tokens or [PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)'s
+in place of the default github-token.
+You'll need to create a token following the linked instructions but make sure to store it in your repository secrets
+`Settings -> Secrets and variables -> Actions -> New Repository Secret`.
+If you were to create a secret called `MY_PAT` you would pass it into your grai action job as
+
+````yaml copy
+jobs:
+  my-grai-action:
+    runs-on: ubuntu-latest
+  
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    - name: Run Grai Action
+      uses: grai-io/grai-actions/redshift@master
+      with:
+        github-token: ${{ secrets.MY_PAT }}
+````
+
 ## Fivetran
 
 The Fivetran Action relies upon access to Fivetran's API endpoint. 
@@ -153,15 +208,10 @@ jobs:
 
 <!-- Example Sentinel Section -->
   
-## dbt
+## Snowflake
 
-The dbt action reads a manifest.json file inside of your github project to perform tests and update your grai instance.
-Because of this, it's critical your manifest.json file is up to date on each pull request. 
-One way to do this is to perform `dbt build` as part of your CI action but there are multiple ways to generate an up-to-date manifest file.
-
-* More information about manifest.json files can be found [here](https://docs.getdbt.com/reference/artifacts/manifest-json).
-* Make sure to include an `- uses: actions/checkout@v3` step in your workflow so that your repo code is available.
-
+The Snowflake action depends on Snowflake's python connector library. 
+You can find complete documentation about the library in the Snowflake docs [here](https://docs.snowflake.com/en/developer-guide/python-connector/python-connector) with more detail about the connector [here](https://docs.snowflake.com/en/developer-guide/python-connector/python-connector-api).
 
 
 ### Fields
@@ -170,7 +220,13 @@ One way to do this is to perform `dbt build` as part of your CI action but there
 
 | Field | Required | Default | Description |
 |-----|-----|-----|-----|
-| manifest-file | yes |  | The file location in your repository of the updated manifest.json file |
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+| account | yes |  | Associated Snowflake account |
+| warehouse | yes |  | Associated Snowflake warehouse |
+| role | no |  | Optional Snowflake role |
+| database | no |  | Optional Snowflake database |
+| schema | no |  | Optional snowflake schema |
 
 
 <!-- Fields Sentinel Section -->
@@ -182,21 +238,76 @@ One way to do this is to perform `dbt build` as part of your CI action but there
 ```yaml copy
 'on':
 - push
-name: dbt
+name: Snowflake
 jobs:
-  test_dbt:
+  test_snowflake:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Run Grai Action
-      uses: grai-io/grai-actions/dbt@master
+      uses: grai-io/grai-actions/snowflake@master
       with:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
         action: tests
         grai-api-url: https://api.grai.io
-        manifest-file: ./tests/dbt/manifest.json
+        db-user: my-user
+        db-password: my-password
+        account: my-account
+        warehouse: my-warehouse
+
+```
+
+<!-- Example Sentinel Section -->
+  
+## Postgres
+
+The Postgres action depends on the python psycopg2 library. 
+You can find complete documentation about the library [here](https://www.psycopg.org/docs/).
+
+
+### Fields
+
+<!-- Fields Sentinel Section -->
+
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | yes |  | The database host |
+| db-port | no | 5432 | The database port |
+| db-database-name | yes |  | The database name |
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+
+
+<!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: PostgreSQL
+jobs:
+  test_postgres:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-io/grai-actions/postgres@master
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        action: tests
+        grai-api-url: https://api.grai.io
+        db-host: prod.db.com
+        db-port: '5432'
+        db-database-name: my_database
+        db-user: my_user
+        db-password: my_password
 
 ```
 
@@ -256,10 +367,15 @@ jobs:
 
 <!-- Example Sentinel Section -->
   
-## Snowflake
+## dbt
 
-The Snowflake action depends on Snowflake's python connector library. 
-You can find complete documentation about the library in the Snowflake docs [here](https://docs.snowflake.com/en/developer-guide/python-connector/python-connector) with more detail about the connector [here](https://docs.snowflake.com/en/developer-guide/python-connector/python-connector-api).
+The dbt action reads a manifest.json file inside of your github project to perform tests and update your grai instance.
+Because of this, it's critical your manifest.json file is up to date on each pull request. 
+One way to do this is to perform `dbt build` as part of your CI action but there are multiple ways to generate an up-to-date manifest file.
+
+* More information about manifest.json files can be found [here](https://docs.getdbt.com/reference/artifacts/manifest-json).
+* Make sure to include an `- uses: actions/checkout@v3` step in your workflow so that your repo code is available.
+
 
 
 ### Fields
@@ -268,13 +384,7 @@ You can find complete documentation about the library in the Snowflake docs [her
 
 | Field | Required | Default | Description |
 |-----|-----|-----|-----|
-| db-user | yes |  | The database user |
-| db-password | yes |  | The database password |
-| account | yes |  | Associated Snowflake account |
-| warehouse | yes |  | Associated Snowflake warehouse |
-| role | no |  | Optional Snowflake role |
-| database | no |  | Optional Snowflake database |
-| schema | no |  | Optional snowflake schema |
+| manifest-file | yes |  | The file location in your repository of the updated manifest.json file |
 
 
 <!-- Fields Sentinel Section -->
@@ -286,180 +396,21 @@ You can find complete documentation about the library in the Snowflake docs [her
 ```yaml copy
 'on':
 - push
-name: Snowflake
+name: dbt
 jobs:
-  test_snowflake:
+  test_dbt:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
     - name: Run Grai Action
-      uses: grai-io/grai-actions/snowflake@master
+      uses: grai-io/grai-actions/dbt@master
       with:
         namespace: my_apps_grai_namespace
         api-key: my_grai_api_key
         action: tests
         grai-api-url: https://api.grai.io
-        db-user: my-user
-        db-password: my-password
-        account: my-account
-        warehouse: my-warehouse
-
-```
-
-<!-- Example Sentinel Section -->
-  
-## Redshift
-
-The Redshift action depends on Amazon's python connector library. 
-You can find complete documentation about the library in the AWS docs [here](https://github.com/aws/amazon-redshift-python-driver).
-
-
-### Fields
-
-<!-- Fields Sentinel Section -->
-
-| Field | Required | Default | Description |
-|-----|-----|-----|-----|
-| db-host | yes |  | The database host |
-| db-port | no | 5439 | The database port |
-| db-database-name | yes |  | The database name |
-| db-user | yes |  | The database user |
-| db-password | yes |  | The database password |
-
-
-<!-- Fields Sentinel Section -->
-
-### Example
-
-<!-- Example Sentinel Section -->
-
-```yaml copy
-'on':
-- push
-name: Redshift
-jobs:
-  test_redshift:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Run Grai Action
-      uses: grai-io/grai-actions/redshift@master
-      with:
-        namespace: my_apps_grai_namespace
-        api-key: my_grai_api_key
-        action: tests
-        grai-api-url: https://api.grai.io
-        db-host: redshift-cluster-1.abc123xyz789.us-east-1.redshift.amazonaws.com
-        db-port: '5439'
-        db-database-name: dev
-        db-user: admin
-        db-password: password
-
-```
-
-<!-- Example Sentinel Section -->
-  
-## Postgres
-
-The Postgres action depends on the python psycopg2 library. 
-You can find complete documentation about the library [here](https://www.psycopg.org/docs/).
-
-
-### Fields
-
-<!-- Fields Sentinel Section -->
-
-| Field | Required | Default | Description |
-|-----|-----|-----|-----|
-| db-host | yes |  | The database host |
-| db-port | no | 5432 | The database port |
-| db-database-name | yes |  | The database name |
-| db-user | yes |  | The database user |
-| db-password | yes |  | The database password |
-
-
-<!-- Fields Sentinel Section -->
-
-### Example
-
-<!-- Example Sentinel Section -->
-
-```yaml copy
-'on':
-- push
-name: PostgreSQL
-jobs:
-  test_postgres:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Run Grai Action
-      uses: grai-io/grai-actions/postgres@master
-      with:
-        namespace: my_apps_grai_namespace
-        api-key: my_grai_api_key
-        action: tests
-        grai-api-url: https://api.grai.io
-        db-host: prod.db.com
-        db-port: '5432'
-        db-database-name: my_database
-        db-user: my_user
-        db-password: my_password
-
-```
-
-<!-- Example Sentinel Section -->
-  
-## MySQL 
-
-The MySQL action depends on the python mysql library. 
-You can find complete documentation about the library [here](https://dev.mysql.com/doc/connector-python).
-
-
-### Fields
-
-<!-- Fields Sentinel Section -->
-
-| Field | Required | Default | Description |
-|-----|-----|-----|-----|
-| db-host | yes |  | The database host |
-| db-port | no | 3306 | The database port |
-| db-database-name | yes |  | The database name |
-| db-user | yes |  | The database user |
-| db-password | yes |  | The database password |
-
-
-<!-- Fields Sentinel Section -->
-
-### Example
-
-<!-- Example Sentinel Section -->
-
-```yaml copy
-'on':
-- push
-name: MySQL
-jobs:
-  test_mysql:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Run Grai Action
-      uses: grai-io/grai-actions/mysql@master
-      with:
-        namespace: my_apps_grai_namespace
-        api-key: my_grai_api_key
-        action: tests
-        grai-api-url: https://api.grai.io
-        db-host: dev.mysql.com
-        db-port: '3306'
-        db-database-name: my_db
-        db-user: my_user
-        db-password: my_password
+        manifest-file: ./tests/dbt/manifest.json
 
 ```
 
@@ -518,6 +469,110 @@ jobs:
         db-password: sa_password
         server_connection_string: tcp:myserver,1433
         trust_server_certificate: 'true'
+
+```
+
+<!-- Example Sentinel Section -->
+  
+## Redshift
+
+The Redshift action depends on Amazon's python connector library. 
+You can find complete documentation about the library in the AWS docs [here](https://github.com/aws/amazon-redshift-python-driver).
+
+
+### Fields
+
+<!-- Fields Sentinel Section -->
+
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | yes |  | The database host |
+| db-port | no | 5439 | The database port |
+| db-database-name | yes |  | The database name |
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+
+
+<!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: Redshift
+jobs:
+  test_redshift:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-io/grai-actions/redshift@master
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        action: tests
+        grai-api-url: https://api.grai.io
+        db-host: redshift-cluster-1.abc123xyz789.us-east-1.redshift.amazonaws.com
+        db-port: '5439'
+        db-database-name: dev
+        db-user: admin
+        db-password: password
+
+```
+
+<!-- Example Sentinel Section -->
+  
+## MySQL 
+
+The MySQL action depends on the python mysql library. 
+You can find complete documentation about the library [here](https://dev.mysql.com/doc/connector-python).
+
+
+### Fields
+
+<!-- Fields Sentinel Section -->
+
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | yes |  | The database host |
+| db-port | no | 3306 | The database port |
+| db-database-name | yes |  | The database name |
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+
+
+<!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+'on':
+- push
+name: MySQL
+jobs:
+  test_mysql:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Grai Action
+      uses: grai-io/grai-actions/mysql@master
+      with:
+        namespace: my_apps_grai_namespace
+        api-key: my_grai_api_key
+        action: tests
+        grai-api-url: https://api.grai.io
+        db-host: dev.mysql.com
+        db-port: '3306'
+        db-database-name: my_db
+        db-user: my_user
+        db-password: my_password
 
 ```
 
