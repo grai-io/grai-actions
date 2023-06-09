@@ -27,7 +27,7 @@ No Grai data lineage issues detected.
 
 
 def github_try_catch(func):
-    @wraps
+    @wraps(func)
     def inner(*args, **kwargs):
         try:
             return func(*args, **kwargs)
