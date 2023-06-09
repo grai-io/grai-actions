@@ -36,8 +36,9 @@ jobs:
         uses: tj-actions/changed-files@v36
         with:
             files: |
-                *.md
-                **/*.md
+                base_readme.md
+                ./**/README.md
+
       - name: "Commit README.md"
         if: steps.changed-files.outputs.any_changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
