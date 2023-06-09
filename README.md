@@ -137,26 +137,26 @@ You can find connector id's for all of your Fivetran connections in the [API](ht
 <!-- Example Sentinel Section -->
 
 ```yaml copy
-'on':
-- pull_request
+on:
+  - pull_request
 name: Fivetran
 jobs:
   test_fivetran:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Run Grai Action
-      uses: grai-io/grai-actions/fivetran@master
-      with:
-        namespace: my_apps_grai_namespace
-        api-key: my_grai_api_key
-        action: tests
-        grai-api-url: https://api.grai.io
-        fivetran-api-key: hHqP5c2nIY0B6fpa
-        fivetran-api-secret: 1234567890abcdef1234567890abcdef
-        namespace-map: '{"operative_combination": {"source": "source_namespace", "destination":
-          "destination_namespace"}}'
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Grai Action
+        uses: grai-io/grai-actions/fivetran@master
+        with:
+          namespace: my_apps_grai_namespace
+          api-key: my_grai_api_key
+          action: tests
+          grai-api-url: https://api.grai.io
+          fivetran-api-key: hHqP5c2nIY0B6fpa
+          fivetran-api-secret: 1234567890abcdef1234567890abcdef
+          namespace-map: '{"operative_combination": {"source": "source_namespace",
+            "destination": "destination_namespace"}}'
 
 ```
 
@@ -186,23 +186,23 @@ Make sure to include an `- uses: actions/checkout@v3` step in your workflow so t
 <!-- Example Sentinel Section -->
 
 ```yaml copy
-'on':
-- pull_request
+on:
+  - pull_request
 name: Flat File
 jobs:
   test_flat-file:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Run Grai Action
-      uses: grai-io/grai-actions/flat-file@master
-      with:
-        namespace: my_apps_grai_namespace
-        api-key: my_grai_api_key
-        action: tests
-        grai-api-url: https://api.grai.io
-        file: ./tests/flat-file/low-numbers.csv
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Grai Action
+        uses: grai-io/grai-actions/flat-file@master
+        with:
+          namespace: my_apps_grai_namespace
+          api-key: my_grai_api_key
+          action: tests
+          grai-api-url: https://api.grai.io
+          file: ./tests/flat-file/low-numbers.csv
 
 ```
 
@@ -236,26 +236,26 @@ You can find complete documentation about the library in the Snowflake docs [her
 <!-- Example Sentinel Section -->
 
 ```yaml copy
-'on':
-- pull_request
+on:
+  - pull_request
 name: Snowflake
 jobs:
   test_snowflake:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Run Grai Action
-      uses: grai-io/grai-actions/snowflake@master
-      with:
-        namespace: my_apps_grai_namespace
-        api-key: my_grai_api_key
-        action: tests
-        grai-api-url: https://api.grai.io
-        db-user: my-user
-        db-password: my-password
-        account: my-account
-        warehouse: my-warehouse
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Grai Action
+        uses: grai-io/grai-actions/snowflake@master
+        with:
+          namespace: my_apps_grai_namespace
+          api-key: my_grai_api_key
+          action: tests
+          grai-api-url: https://api.grai.io
+          db-user: my-user
+          db-password: my-password
+          account: my-account
+          warehouse: my-warehouse
 
 ```
 
@@ -287,27 +287,27 @@ You can find complete documentation about the library [here](https://www.psycopg
 <!-- Example Sentinel Section -->
 
 ```yaml copy
-'on':
-- pull_request
+on:
+  - pull_request
 name: PostgreSQL
 jobs:
   test_postgres:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Run Grai Action
-      uses: grai-io/grai-actions/postgres@master
-      with:
-        namespace: my_apps_grai_namespace
-        api-key: my_grai_api_key
-        action: tests
-        grai-api-url: https://api.grai.io
-        db-host: prod.db.com
-        db-port: '5432'
-        db-database-name: my_database
-        db-user: my_user
-        db-password: my_password
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Grai Action
+        uses: grai-io/grai-actions/postgres@master
+        with:
+          namespace: my_apps_grai_namespace
+          api-key: my_grai_api_key
+          action: tests
+          grai-api-url: https://api.grai.io
+          db-host: prod.db.com
+          db-port: '5432'
+          db-database-name: my_database
+          db-user: my_user
+          db-password: my_password
 
 ```
 
@@ -337,31 +337,31 @@ More information can be found about specific connection credentials in Google's 
 <!-- Example Sentinel Section -->
 
 ```yaml copy
-'on':
-- pull_request
+on:
+  - pull_request
 name: BigQuery
 jobs:
   test_bigquery:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Run Grai Action
-      uses: grai-io/grai-actions/bigquery@master
-      with:
-        namespace: my_apps_grai_namespace
-        api-key: my_grai_api_key
-        action: tests
-        grai-api-url: https://api.grai.io
-        project: my-bigquery-project
-        dataset: my-bigquery-dataset
-        credentials: '{ "type": "service_account", "project_id": "demo", "private_key_id":
-          "your_private_key_id", "private_key": "your_private_key", "client_email":
-          "your@email.iam.gserviceaccount.com", "client_id": "your_client_id", "auth_uri":
-          "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://oauth2.googleapis.com/token",
-          "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-          "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/you%40email.iam.gserviceaccount.com"
-          }'
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Grai Action
+        uses: grai-io/grai-actions/bigquery@master
+        with:
+          namespace: my_apps_grai_namespace
+          api-key: my_grai_api_key
+          action: tests
+          grai-api-url: https://api.grai.io
+          project: my-bigquery-project
+          dataset: my-bigquery-dataset
+          credentials: '{ "type": "service_account", "project_id": "demo", "private_key_id":
+            "your_private_key_id", "private_key": "your_private_key", "client_email":
+            "your@email.iam.gserviceaccount.com", "client_id": "your_client_id", "auth_uri":
+            "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/you%40email.iam.gserviceaccount.com"
+            }'
 
 ```
 
@@ -394,23 +394,23 @@ One way to do this is to perform `dbt build` as part of your CI action but there
 <!-- Example Sentinel Section -->
 
 ```yaml copy
-'on':
-- pull_request
+on:
+  - pull_request
 name: dbt
 jobs:
   test_dbt:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Run Grai Action
-      uses: grai-io/grai-actions/dbt@master
-      with:
-        namespace: my_apps_grai_namespace
-        api-key: my_grai_api_key
-        action: tests
-        grai-api-url: https://api.grai.io
-        manifest-file: ./tests/dbt/manifest.json
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Grai Action
+        uses: grai-io/grai-actions/dbt@master
+        with:
+          namespace: my_apps_grai_namespace
+          api-key: my_grai_api_key
+          action: tests
+          grai-api-url: https://api.grai.io
+          manifest-file: ./tests/dbt/manifest.json
 
 ```
 
@@ -449,26 +449,26 @@ A standard connection would consist of a host, port, database name, user, and pa
 <!-- Example Sentinel Section -->
 
 ```yaml copy
-'on':
-- pull_request
+on:
+  - pull_request
 name: SQL Server
 jobs:
   test_mssql:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Run Grai Action
-      uses: grai-io/grai-actions/mssql@master
-      with:
-        namespace: my_apps_grai_namespace
-        api-key: my_grai_api_key
-        action: tests
-        grai-api-url: https://api.grai.io
-        db-user: sa
-        db-password: sa_password
-        server_connection_string: tcp:myserver,1433
-        trust_server_certificate: 'true'
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Grai Action
+        uses: grai-io/grai-actions/mssql@master
+        with:
+          namespace: my_apps_grai_namespace
+          api-key: my_grai_api_key
+          action: tests
+          grai-api-url: https://api.grai.io
+          db-user: sa
+          db-password: sa_password
+          server_connection_string: tcp:myserver,1433
+          trust_server_certificate: 'true'
 
 ```
 
@@ -500,27 +500,27 @@ You can find complete documentation about the library in the AWS docs [here](htt
 <!-- Example Sentinel Section -->
 
 ```yaml copy
-'on':
-- pull_request
+on:
+  - pull_request
 name: Redshift
 jobs:
   test_redshift:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Run Grai Action
-      uses: grai-io/grai-actions/redshift@master
-      with:
-        namespace: my_apps_grai_namespace
-        api-key: my_grai_api_key
-        action: tests
-        grai-api-url: https://api.grai.io
-        db-host: redshift-cluster-1.abc123xyz789.us-east-1.redshift.amazonaws.com
-        db-port: '5439'
-        db-database-name: dev
-        db-user: admin
-        db-password: password
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Grai Action
+        uses: grai-io/grai-actions/redshift@master
+        with:
+          namespace: my_apps_grai_namespace
+          api-key: my_grai_api_key
+          action: tests
+          grai-api-url: https://api.grai.io
+          db-host: redshift-cluster-1.abc123xyz789.us-east-1.redshift.amazonaws.com
+          db-port: '5439'
+          db-database-name: dev
+          db-user: admin
+          db-password: password
 
 ```
 
@@ -552,27 +552,27 @@ You can find complete documentation about the library [here](https://dev.mysql.c
 <!-- Example Sentinel Section -->
 
 ```yaml copy
-'on':
-- pull_request
+on:
+  - pull_request
 name: MySQL
 jobs:
   test_mysql:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-    - name: Run Grai Action
-      uses: grai-io/grai-actions/mysql@master
-      with:
-        namespace: my_apps_grai_namespace
-        api-key: my_grai_api_key
-        action: tests
-        grai-api-url: https://api.grai.io
-        db-host: dev.mysql.com
-        db-port: '3306'
-        db-database-name: my_db
-        db-user: my_user
-        db-password: my_password
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Grai Action
+        uses: grai-io/grai-actions/mysql@master
+        with:
+          namespace: my_apps_grai_namespace
+          api-key: my_grai_api_key
+          action: tests
+          grai-api-url: https://api.grai.io
+          db-host: dev.mysql.com
+          db-port: '3306'
+          db-database-name: my_db
+          db-user: my_user
+          db-password: my_password
 
 ```
 
