@@ -6,13 +6,13 @@ from grai_schemas.base import GraiMetadata
 from grai_schemas.v1 import EdgeV1, NodeV1
 from grai_schemas.v1.metadata.edges import (
     ColumnToColumnMetadata,
-    EdgeTypeLabels,
+    EdgeMetadataTypeLabels,
     GenericEdgeMetadataV1,
 )
 from grai_schemas.v1.metadata.nodes import (
     ColumnMetadata,
     GenericNodeMetadataV1,
-    NodeTypeLabels,
+    NodeMetadataTypeLabels,
 )
 
 from grai_actions import tools
@@ -29,7 +29,7 @@ def mock_node(name: str, namespace: str = "default"):
             "data_source": "test_source",
             "display_name": name,
             "is_active": True,
-            "metadata": {"grai": ColumnMetadata(node_type=NodeTypeLabels.column.value)},
+            "metadata": {"grai": ColumnMetadata(node_type=NodeMetadataTypeLabels.column.value)},
         },
     }
     node = NodeV1(**node_dict)
@@ -51,7 +51,7 @@ def mock_edge(source_node, destination_node):
                 "namespace": destination_node.namespace,
             },
             "is_active": True,
-            "metadata": {"grai": ColumnToColumnMetadata(edge_type=EdgeTypeLabels.column_to_column.value)},
+            "metadata": {"grai": ColumnToColumnMetadata(edge_type=EdgeMetadataTypeLabels.column_to_column.value)},
         },
     }
 
@@ -80,7 +80,7 @@ def test_mock_node_extra_metadata():
             "display_name": "Tommy B",
             "is_active": True,
             "metadata": {
-                "grai": ColumnMetadata(node_type=NodeTypeLabels.column.value),
+                "grai": ColumnMetadata(node_type=NodeMetadataTypeLabels.column.value),
                 "extra": {},
             },
         },
