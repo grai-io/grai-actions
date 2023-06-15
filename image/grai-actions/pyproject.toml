@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "grai_actions"
-version = "0.2.1"
+version = "0.2.2"
 description = ""
 authors = ["Grai <ian@grai.io>"]
 license = "Elastic-2.0"
