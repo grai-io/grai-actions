@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "grai_actions"
-version = "0.2.1"
+version = "0.2.3"
 description = ""
 authors = ["Grai <ian@grai.io>"]
 license = "Elastic-2.0"
@@ -11,9 +11,9 @@ packages = [{include = "grai_actions", from = "src"}]
 python = "^3.10"
 grai-graph = "^0.2.2"
 ghapi = "^1.0.3"
-grai-client = "^0.2.13"
+grai-client = "^0.2.18"
 pydantic = "^1.10.8"
-grai-schemas = "^0.1.12"
+grai-schemas = "^0.1.15"
 
 [tool.poetry.scripts]
 grai-actions = "grai_actions.main:main"
@@ -53,3 +53,5 @@ env = [
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry_bumpversion.file."src/grai_actions/__init__.py"]
