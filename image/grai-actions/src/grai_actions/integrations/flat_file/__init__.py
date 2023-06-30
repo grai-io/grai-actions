@@ -9,8 +9,14 @@ class Args(ActionBaseSettings):
     grai_flat_file_file: FilePath
 
 
-def get_nodes_and_edges(client, args=None):
+def get_integration(client, args=None):
     if args is None:
         args = Args()
-    nodes, edges = base.get_nodes_and_edges(str(args.grai_flat_file_file), config.grai_namespace, client.id)
-    return nodes, edges
+
+    integration = base.FlatFileIntegration(
+        client=client,
+        source_name=config.source_name,
+        file_name=str(args.grai_flat_file_file),
+        namespace=config.grai_namespace,
+    )
+    return integration

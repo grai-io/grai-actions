@@ -16,11 +16,14 @@ class Args(ActionBaseSettings):
     grai_snowflake_schema: Optional[str] = None
 
 
-def get_nodes_and_edges(client, args=None):
+def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    conn = SnowflakeConnector(
+    integration = base.SnowflakeIntegration(
+        client=client,
+        source_name=config.source_name,
+        namespace=config.grai_namespace,
         account=args.grai_snowflake_account,
         user=args.grai_db_user,
         password=args.grai_db_password,
@@ -28,9 +31,5 @@ def get_nodes_and_edges(client, args=None):
         role=args.grai_snowflake_role,
         database=args.grai_snowflake_database,
         schema=args.grai_snowflake_schema,
-        namespace=config.grai_namespace,
     )
-
-    # Already adapted to client
-    nodes, edges = base.get_nodes_and_edges(conn, client.id)
-    return nodes, edges
+    return integration

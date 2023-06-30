@@ -63,6 +63,7 @@ class Config(ActionBaseSettings):
     # --- Grai configuration values --- #
     grai_api_key: Optional[SecretStr] = None
     grai_namespace: str = DefaultValues.grai_namespace
+    grai_source_name: str
     grai_user: Optional[str] = None
     grai_password: Optional[SecretStr] = None
     grai_workspace: Optional[str] = DefaultValues.grai_workspace

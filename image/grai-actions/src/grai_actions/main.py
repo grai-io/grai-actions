@@ -1,15 +1,15 @@
-from grai_client.update import update
 from grai_schemas.v1 import EdgeV1, NodeV1
 
 from grai_actions.config import DeveloperActions, SupportedActions, config
 from grai_actions.git_messages import create_or_update_comment
-from grai_actions.integrations import get_nodes_and_edges
+from grai_actions.integrations import get_integration
 from grai_actions.tools import TestResultCache
 from grai_actions.utilities import get_client
 
 
 def run_integration_tests(client):
-    nodes, edges = get_nodes_and_edges(client)
+    integration = get_integration(client)
+    nodes, edges = integration.get_nodes_and_edges()
     assert len(nodes) > 0, "No nodes were found"
     assert len(edges) > 0, "No edges were found"
     assert all(isinstance(node, NodeV1) for node in nodes), "All nodes must be of type NodeV1"
@@ -17,9 +17,8 @@ def run_integration_tests(client):
 
 
 def run_update_server(client):
-    nodes, edges = get_nodes_and_edges(client)
-    update(client, nodes)
-    update(client, edges)
+    integration = get_integration(client)
+    integration.update()
 
 
 def run_tests(client):

@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pip3 install grai-source-fivetran
+pip3 install 'grai-source-fivetran>=0.1.0-alpha1
 
 source /entrypoints/entrypoint.sh

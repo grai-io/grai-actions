@@ -1,28 +1,29 @@
 from grai_actions.config import AccessModes, config
+from grai_actions.utilities import DevMockIntegration
 
 match config.grai_access_mode:
     case AccessModes.DBT.value:
-        from .dbt import get_nodes_and_edges
+        from .dbt import get_integration
     case AccessModes.FLAT_FILE.value:
-        from .flat_file import get_nodes_and_edges
+        from .flat_file import get_integration
     case AccessModes.POSTGRES.value:
-        from .postgres import get_nodes_and_edges
+        from .postgres import get_integration
     case AccessModes.MYSQL.value:
-        from .mysql import get_nodes_and_edges
+        from .mysql import get_integration
     case AccessModes.SNOWFLAKE.value:
-        from .snowflake import get_nodes_and_edges
+        from .snowflake import get_integration
     case AccessModes.MSSQL.value:
-        from .mssql import get_nodes_and_edges
+        from .mssql import get_integration
     case AccessModes.BIGQUERY.value:
-        from .bigquery import get_nodes_and_edges
+        from .bigquery import get_integration
     case AccessModes.REDSHIFT.value:
-        from .redshift import get_nodes_and_edges
+        from .redshift import get_integration
     case AccessModes.FIVETRAN.value:
-        from .fivetran import get_nodes_and_edges
+        from .fivetran import get_integration
     case AccessModes.TEST_MODE.value:
 
-        def get_nodes_and_edges(*args, **kwargs):
-            return [], []
+        def get_integration(*args, **kwargs):
+            return DevMockIntegration()
 
     case _:
         # try importing access_mode?

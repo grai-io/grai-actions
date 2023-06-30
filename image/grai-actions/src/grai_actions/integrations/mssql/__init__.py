@@ -7,11 +7,13 @@ from pydantic import SecretStr
 from grai_actions.config import ActionBaseSettings, config
 
 
-def get_nodes_and_edges(client, args=None):
+def get_integration(client, args=None):
     conn = MsSQLConnector(
         namespace=config.grai_namespace,
     )
-
-    # Already adapted to client
-    nodes, edges = base.get_nodes_and_edges(conn, client.id)
-    return nodes, edges
+    integration = base.MsSQLIntegration(
+        client=client,
+        source_name=config.source_name,
+        namespace=config.grai_namespace,
+    )
+    return integration
