@@ -11,9 +11,9 @@ def get_integration(client, args=None):
     conn = MsSQLConnector(
         namespace=config.grai_namespace,
     )
-    integration = base.MsSQLIntegration(
+    integration = base.MsSQLIntegration.from_client(
         client=client,
-        source_name=config.source_name,
+        source=config.grai_source_name,
         namespace=config.grai_namespace,
     )
     return integration

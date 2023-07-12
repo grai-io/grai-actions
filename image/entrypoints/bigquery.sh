@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pip3 install 'grai-source-bigquery>=0.1.2-alpha1'
+pip3 install '/grai-actions[bigquery]'
 
 source /entrypoints/entrypoint.sh

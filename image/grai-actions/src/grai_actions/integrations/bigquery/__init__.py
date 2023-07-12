@@ -16,9 +16,9 @@ def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    integration = base.BigQueryIntegration(
+    integration = base.BigQueryIntegration.from_client(
         client=client,
-        source_name=config.source_name,
+        source=config.source_name,
         namespace=config.grai_namespace,
         project=args.grai_bigquery_project,
         dataset=args.grai_bigquery_dataset,

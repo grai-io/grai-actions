@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pip3 install 'grai-source-snowflake>=0.1.0-alpha1'
+pip3 install '/grai-actions[snowflake]'
 
 source /entrypoints/entrypoint.sh

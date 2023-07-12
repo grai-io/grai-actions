@@ -19,9 +19,9 @@ def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    integration = base.PostgresIntegration(
+    integration = base.PostgresIntegration.from_client(
         client=client,
-        source_name=config.source_name,
+        source=config.grai_source_name,
         namespace=config.grai_namespace,
         host=args.grai_db_host,
         port=args.grai_db_port,

@@ -5,7 +5,7 @@ from itertools import chain, pairwise
 from typing import Dict, Iterable, List, Tuple
 
 from grai_client.endpoints.v1.client import ClientV1
-from grai_client.integrations import GraiIntegrationImplementationV1
+from grai_client.integrations.base import GraiIntegrationImplementation
 from grai_graph.analysis import Graph, GraphAnalyzer
 from grai_schemas.v1 import EdgeV1, NodeV1
 
@@ -255,7 +255,7 @@ class TestResultCacheBase:
 
 
 class TestResultCache(TestResultCacheBase):
-    def __init__(self, client: ClientV1, integration: GraiIntegrationImplementationV1):
+    def __init__(self, client: ClientV1, integration: GraiIntegrationImplementation):
         self.client = client
         new_nodes, new_edges = integration.get_nodes_and_edges()
 

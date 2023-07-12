@@ -13,9 +13,9 @@ def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    integration = base.FlatFileIntegration(
+    integration = base.FlatFileIntegration.from_client(
         client=client,
-        source_name=config.source_name,
+        source=config.grai_source_name,
         file_name=str(args.grai_flat_file_file),
         namespace=config.grai_namespace,
     )

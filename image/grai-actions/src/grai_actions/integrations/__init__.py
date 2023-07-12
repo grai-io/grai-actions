@@ -21,7 +21,6 @@ match config.grai_access_mode:
     case AccessModes.FIVETRAN.value:
         from .fivetran import get_integration
     case AccessModes.TEST_MODE.value:
-
         def get_integration(*args, **kwargs):
             return DevMockIntegration()
 

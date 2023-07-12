@@ -20,9 +20,9 @@ def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    integration = base.SnowflakeIntegration(
+    integration = base.SnowflakeIntegration.from_client(
         client=client,
-        source_name=config.source_name,
+        source=config.source_name,
         namespace=config.grai_namespace,
         account=args.grai_snowflake_account,
         user=args.grai_db_user,

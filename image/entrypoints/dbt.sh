@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pip3 install 'grai-source-dbt>=0.3.0-alpha1'
+pip3 install '/grai-actions[dbt]'
 
 source /entrypoints/entrypoint.sh

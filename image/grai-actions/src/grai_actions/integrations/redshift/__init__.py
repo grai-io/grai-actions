@@ -19,9 +19,9 @@ def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    integration = base.RedshiftIntegration(
+    integration = base.RedshiftIntegration.from_client(
         client=client,
-        source_name=config.source_name,
+        source=config.source_name,
         namespace=config.grai_namespace,
         host=args.grai_db_host,
         port=args.grai_db_port,

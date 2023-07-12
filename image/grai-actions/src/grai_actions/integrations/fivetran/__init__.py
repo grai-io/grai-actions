@@ -18,9 +18,9 @@ def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    integration = FivetranIntegration(
+    integration = FivetranIntegration.from_client(
         client=client,
-        source_name=config.source_name,
+        source=config.grai_source_name,
         namespaces=args.grai_fivetran_namespace_map,
         default_namespace=config.grai_namespace,
         api_key=args.grai_fivetran_api_key.get_secret_value(),

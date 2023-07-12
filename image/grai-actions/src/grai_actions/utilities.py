@@ -2,7 +2,7 @@ import time
 from typing import Optional
 
 from grai_client.endpoints.v1.client import ClientV1
-from grai_client.integrations import GraiIntegrationImplementationV1
+from grai_client.integrations.base import GraiIntegrationImplementation
 
 from grai_actions.config import Config, DeveloperActions, config
 
@@ -10,12 +10,13 @@ from grai_actions.config import Config, DeveloperActions, config
 class DevMockClient(ClientV1):
     def __init__(self):
         self.id = "v1"
+        self.is_authenticated = True
 
     def authenticate(self, *args, **kwargs):
         pass
 
 
-class DevMockIntegration(GraiIntegrationImplementationV1):
+class DevMockIntegration(GraiIntegrationImplementation):
     def __init__(self):
         self.client = DevMockClient()
         self.data_source = "dev_mock"
