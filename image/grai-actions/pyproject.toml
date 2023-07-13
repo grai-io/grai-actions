@@ -12,7 +12,7 @@ python = "^3.10"
 ghapi = "^1.0.3"
 pydantic = "^1.10.8"
 grai-graph = "^0.2.4-alpha2"
-grai-client = "^0.3.0-alpha20"
+grai-client = "^0.3.0-alpha24"
 
 [tool.poetry.scripts]
 grai-actions = "grai_actions.main:main"

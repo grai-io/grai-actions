@@ -13,6 +13,9 @@ def get_integration(client, args=None):
         args = Args()
 
     integration = DbtIntegration.from_client(
-        client=client, source=config.grai_source_name, manifest_file=str(args.grai_dbt_manifest_file), namespace=config.grai_namespace
+        client=client,
+        source=config.grai_source_name,
+        manifest_file=str(args.grai_dbt_manifest_file),
+        namespace=config.grai_namespace,
     )
     return integration

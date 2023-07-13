@@ -21,10 +21,13 @@ match config.grai_access_mode:
     case AccessModes.FIVETRAN.value:
         from .fivetran import get_integration
     case AccessModes.TEST_MODE.value:
+
         def get_integration(*args, **kwargs):
             return DevMockIntegration()
 
     case _:
         # try importing access_mode?
-        message = f"Unrecognized access mode {config.grai_access_mode}. This is a defensive error indicating the `GRAI_ACCESS_MODE` environment variable has been incorrectly set by an action or overridden by the user."
-        raise NotImplementedError(message)
+        raise NotImplementedError(
+            f"Unrecognized access mode {config.grai_access_mode}. This is a defensive error indicating the "
+            f"`GRAI_ACCESS_MODE` environment variable has been incorrectly set by an action or overridden by the user."
+        )
