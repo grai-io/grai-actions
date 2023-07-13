@@ -79,61 +79,6 @@ jobs:
       with:
         github-token: ${{ secrets.MY_PAT }}
 ```
-## BigQuery
-
-The BigQuery action depends on Google's python BigQuery library. 
-More information can be found about specific connection credentials in Google's documentation [here](https://cloud.google.com/python/docs/reference/bigquery/latest).
-
-
-### Fields
-
-<!-- Fields Sentinel Section -->
-
-| Field | Required | Default | Description |
-|-----|-----|-----|-----|
-| project | yes |  | The BigQuery project string |
-| dataset | yes |  | The BigQuery dataset string |
-| credentials | yes |  | A JSON credential string for use with google oauth service account [connections](https://google-auth.readthedocs.io/en/master/reference/google.oauth2.service_account.html#google.oauth2.service_account.Credentials) |
-
-
-<!-- Fields Sentinel Section -->
-
-### Example
-
-<!-- Example Sentinel Section -->
-
-```yaml copy
-on:
-  - pull_request
-name: BigQuery
-jobs:
-  test_bigquery:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Run Grai Action
-        uses: grai-io/grai-actions/bigquery@master
-        with:
-          namespace: my_apps_grai_namespace
-          api-key: my_grai_api_key
-          action: tests
-          source_name: prod-db
-          grai-api-url: https://api.grai.io
-          project: my-bigquery-project
-          dataset: my-bigquery-dataset
-          credentials: '{ "type": "service_account", "project_id": "demo", "private_key_id":
-            "your_private_key_id", "private_key": "your_private_key", "client_email":
-            "your@email.iam.gserviceaccount.com", "client_id": "your_client_id", "auth_uri":
-            "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://oauth2.googleapis.com/token",
-            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/you%40email.iam.gserviceaccount.com"
-            }'
-
-```
-
-<!-- Example Sentinel Section -->
-  
 ## Snowflake
 
 The Snowflake action depends on Snowflake's python connector library. 
@@ -177,12 +122,118 @@ jobs:
           namespace: my_apps_grai_namespace
           api-key: my_grai_api_key
           action: tests
-          source_name: prod-db
+          source-name: prod-db
           grai-api-url: https://api.grai.io
           db-user: my-user
           db-password: my-password
           account: my-account
           warehouse: my-warehouse
+
+```
+
+<!-- Example Sentinel Section -->
+  
+## Redshift
+
+The Redshift action depends on Amazon's python connector library. 
+You can find complete documentation about the library in the AWS docs [here](https://github.com/aws/amazon-redshift-python-driver).
+
+
+### Fields
+
+<!-- Fields Sentinel Section -->
+
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | yes |  | The database host |
+| db-port | no | 5439 | The database port |
+| db-database-name | yes |  | The database name |
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+
+
+<!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+on:
+  - pull_request
+name: Redshift
+jobs:
+  test_redshift:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Grai Action
+        uses: grai-io/grai-actions/redshift@master
+        with:
+          namespace: my_apps_grai_namespace
+          api-key: my_grai_api_key
+          action: tests
+          source-name: prod-db
+          grai-api-url: https://api.grai.io
+          db-host: redshift-cluster-1.abc123xyz789.us-east-1.redshift.amazonaws.com
+          db-port: '5439'
+          db-database-name: dev
+          db-user: admin
+          db-password: password
+
+```
+
+<!-- Example Sentinel Section -->
+  
+## MySQL 
+
+The MySQL action depends on the python mysql library. 
+You can find complete documentation about the library [here](https://dev.mysql.com/doc/connector-python).
+
+
+### Fields
+
+<!-- Fields Sentinel Section -->
+
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | yes |  | The database host |
+| db-port | no | 3306 | The database port |
+| db-database-name | yes |  | The database name |
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+
+
+<!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+on:
+  - pull_request
+name: MySQL
+jobs:
+  test_mysql:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Grai Action
+        uses: grai-io/grai-actions/mysql@master
+        with:
+          namespace: my_apps_grai_namespace
+          api-key: my_grai_api_key
+          action: tests
+          source-name: prod-db
+          grai-api-url: https://api.grai.io
+          db-host: dev.mysql.com
+          db-port: '3306'
+          db-database-name: my_db
+          db-user: my_user
+          db-password: my_password
 
 ```
 
@@ -227,9 +278,117 @@ jobs:
           namespace: my_apps_grai_namespace
           api-key: my_grai_api_key
           action: tests
-          source_name: prod-db
+          source-name: prod-db
           grai-api-url: https://api.grai.io
           file: ./tests/flat-file/low-numbers.csv
+
+```
+
+<!-- Example Sentinel Section -->
+  
+## BigQuery
+
+The BigQuery action depends on Google's python BigQuery library. 
+More information can be found about specific connection credentials in Google's documentation [here](https://cloud.google.com/python/docs/reference/bigquery/latest).
+
+
+### Fields
+
+<!-- Fields Sentinel Section -->
+
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| project | yes |  | The BigQuery project string |
+| dataset | yes |  | The BigQuery dataset string |
+| credentials | yes |  | A JSON credential string for use with google oauth service account [connections](https://google-auth.readthedocs.io/en/master/reference/google.oauth2.service_account.html#google.oauth2.service_account.Credentials) |
+
+
+<!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+on:
+  - pull_request
+name: BigQuery
+jobs:
+  test_bigquery:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Grai Action
+        uses: grai-io/grai-actions/bigquery@master
+        with:
+          namespace: my_apps_grai_namespace
+          api-key: my_grai_api_key
+          action: tests
+          source-name: prod-db
+          grai-api-url: https://api.grai.io
+          project: my-bigquery-project
+          dataset: my-bigquery-dataset
+          credentials: '{ "type": "service_account", "project_id": "demo", "private_key_id":
+            "your_private_key_id", "private_key": "your_private_key", "client_email":
+            "your@email.iam.gserviceaccount.com", "client_id": "your_client_id", "auth_uri":
+            "https://accounts.google.com/o/oauth2/auth", "token_uri": "https://oauth2.googleapis.com/token",
+            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+            "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/you%40email.iam.gserviceaccount.com"
+            }'
+
+```
+
+<!-- Example Sentinel Section -->
+  
+## Postgres
+
+The Postgres action depends on the python psycopg2 library. 
+You can find complete documentation about the library [here](https://www.psycopg.org/docs/).
+
+
+### Fields
+
+<!-- Fields Sentinel Section -->
+
+| Field | Required | Default | Description |
+|-----|-----|-----|-----|
+| db-host | yes |  | The database host |
+| db-port | no | 5432 | The database port |
+| db-database-name | yes |  | The database name |
+| db-user | yes |  | The database user |
+| db-password | yes |  | The database password |
+
+
+<!-- Fields Sentinel Section -->
+
+### Example
+
+<!-- Example Sentinel Section -->
+
+```yaml copy
+on:
+  - pull_request
+name: PostgreSQL
+jobs:
+  test_postgres:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run Grai Action
+        uses: grai-io/grai-actions/postgres@master
+        with:
+          namespace: my_apps_grai_namespace
+          api-key: my_grai_api_key
+          action: tests
+          source-name: prod-db
+          grai-api-url: https://api.grai.io
+          db-host: prod.db.com
+          db-port: '5432'
+          db-database-name: my_database
+          db-user: my_user
+          db-password: my_password
 
 ```
 
@@ -277,62 +436,9 @@ jobs:
           namespace: my_apps_grai_namespace
           api-key: my_grai_api_key
           action: tests
-          source_name: prod-db
+          source-name: prod-db
           grai-api-url: https://api.grai.io
           manifest-file: ./tests/dbt/manifest.json
-
-```
-
-<!-- Example Sentinel Section -->
-  
-## MySQL 
-
-The MySQL action depends on the python mysql library. 
-You can find complete documentation about the library [here](https://dev.mysql.com/doc/connector-python).
-
-
-### Fields
-
-<!-- Fields Sentinel Section -->
-
-| Field | Required | Default | Description |
-|-----|-----|-----|-----|
-| db-host | yes |  | The database host |
-| db-port | no | 3306 | The database port |
-| db-database-name | yes |  | The database name |
-| db-user | yes |  | The database user |
-| db-password | yes |  | The database password |
-
-
-<!-- Fields Sentinel Section -->
-
-### Example
-
-<!-- Example Sentinel Section -->
-
-```yaml copy
-on:
-  - pull_request
-name: MySQL
-jobs:
-  test_mysql:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Run Grai Action
-        uses: grai-io/grai-actions/mysql@master
-        with:
-          namespace: my_apps_grai_namespace
-          api-key: my_grai_api_key
-          action: tests
-          source_name: prod-db
-          grai-api-url: https://api.grai.io
-          db-host: dev.mysql.com
-          db-port: '3306'
-          db-database-name: my_db
-          db-user: my_user
-          db-password: my_password
 
 ```
 
@@ -404,118 +510,12 @@ jobs:
           namespace: my_apps_grai_namespace
           api-key: my_grai_api_key
           action: tests
-          source_name: prod-db
+          source-name: prod-db
           grai-api-url: https://api.grai.io
           fivetran-api-key: hHqP5c2nIY0B6fpa
           fivetran-api-secret: 1234567890abcdef1234567890abcdef
           namespace-map: '{"operative_combination": {"source": "source_namespace",
             "destination": "destination_namespace"}}'
-
-```
-
-<!-- Example Sentinel Section -->
-  
-## Redshift
-
-The Redshift action depends on Amazon's python connector library. 
-You can find complete documentation about the library in the AWS docs [here](https://github.com/aws/amazon-redshift-python-driver).
-
-
-### Fields
-
-<!-- Fields Sentinel Section -->
-
-| Field | Required | Default | Description |
-|-----|-----|-----|-----|
-| db-host | yes |  | The database host |
-| db-port | no | 5439 | The database port |
-| db-database-name | yes |  | The database name |
-| db-user | yes |  | The database user |
-| db-password | yes |  | The database password |
-
-
-<!-- Fields Sentinel Section -->
-
-### Example
-
-<!-- Example Sentinel Section -->
-
-```yaml copy
-on:
-  - pull_request
-name: Redshift
-jobs:
-  test_redshift:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Run Grai Action
-        uses: grai-io/grai-actions/redshift@master
-        with:
-          namespace: my_apps_grai_namespace
-          api-key: my_grai_api_key
-          action: tests
-          source_name: prod-db
-          grai-api-url: https://api.grai.io
-          db-host: redshift-cluster-1.abc123xyz789.us-east-1.redshift.amazonaws.com
-          db-port: '5439'
-          db-database-name: dev
-          db-user: admin
-          db-password: password
-
-```
-
-<!-- Example Sentinel Section -->
-  
-## Postgres
-
-The Postgres action depends on the python psycopg2 library. 
-You can find complete documentation about the library [here](https://www.psycopg.org/docs/).
-
-
-### Fields
-
-<!-- Fields Sentinel Section -->
-
-| Field | Required | Default | Description |
-|-----|-----|-----|-----|
-| db-host | yes |  | The database host |
-| db-port | no | 5432 | The database port |
-| db-database-name | yes |  | The database name |
-| db-user | yes |  | The database user |
-| db-password | yes |  | The database password |
-
-
-<!-- Fields Sentinel Section -->
-
-### Example
-
-<!-- Example Sentinel Section -->
-
-```yaml copy
-on:
-  - pull_request
-name: PostgreSQL
-jobs:
-  test_postgres:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Run Grai Action
-        uses: grai-io/grai-actions/postgres@master
-        with:
-          namespace: my_apps_grai_namespace
-          api-key: my_grai_api_key
-          action: tests
-          source_name: prod-db
-          grai-api-url: https://api.grai.io
-          db-host: prod.db.com
-          db-port: '5432'
-          db-database-name: my_database
-          db-user: my_user
-          db-password: my_password
 
 ```
 
@@ -569,7 +569,7 @@ jobs:
           namespace: my_apps_grai_namespace
           api-key: my_grai_api_key
           action: tests
-          source_name: prod-db
+          source-name: prod-db
           grai-api-url: https://api.grai.io
           db-user: sa
           db-password: sa_password
