@@ -26,7 +26,7 @@ def mock_node(name: str, namespace: str = "default"):
             "id": None,
             "name": name,
             "namespace": namespace,
-            "data_source": "test_source",
+            "data_sources": [],
             "display_name": name,
             "is_active": True,
             "metadata": {"grai": ColumnMetadata(node_type=NodeMetadataTypeLabels.column.value)},
@@ -44,7 +44,7 @@ def mock_edge(source_node, destination_node):
             "id": None,
             "name": f"{source_node.namespace}.{source_node.name} -> {destination_node.namespace}.{destination_node.name}",
             "namespace": source_node.namespace,
-            "data_source": "test_source",
+            "data_sources": [],
             "source": {"name": source_node.name, "namespace": source_node.namespace},
             "destination": {
                 "name": destination_node.name,
@@ -76,7 +76,7 @@ def test_mock_node_extra_metadata():
             "id": None,
             "name": "tom",
             "namespace": "bombadil",
-            "data_source": "test_source",
+            "data_sources": [],
             "display_name": "Tommy B",
             "is_active": True,
             "metadata": {

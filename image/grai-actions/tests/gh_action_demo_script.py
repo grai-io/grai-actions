@@ -5,6 +5,7 @@ env_vars = [
     "GITHUB_REPOSITORY_OWNER = Grai",
     "GITHUB_REPOSITORY = grai-actions",
     "GITHUB_EVENT_NAME = pull_request",
+    "GRAI_SOURCE_NAME = a_cool_source",
     "GRAI_API_KEY = abc",
 ]
 

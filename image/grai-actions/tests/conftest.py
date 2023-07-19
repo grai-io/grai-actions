@@ -11,6 +11,7 @@ def local_config():
         github_repository="temp",
         github_event_name="temp",
         github_ref="temp",
+        grai_source_name="a_cool_place",
         grai_password="super_secret",
         grai_user="null@grai.io",
         grai_url="http://localhost:8000",

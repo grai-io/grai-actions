@@ -2,16 +2,24 @@ import time
 from typing import Optional
 
 from grai_client.endpoints.v1.client import ClientV1
+from grai_client.endpoints.v1.utils import MockClientV1
+from grai_client.integrations.base import GraiIntegrationImplementation
 
 from grai_actions.config import Config, DeveloperActions, config
 
+DevMockClient = MockClientV1
 
-class DevMockClient(ClientV1):
+
+class DevMockIntegration(GraiIntegrationImplementation):
     def __init__(self):
-        self.id = "v1"
+        self.client = DevMockClient()
+        self.data_source = "dev_mock"
 
-    def authenticate(self, *args, **kwargs):
-        pass
+    def nodes(self):
+        return []
+
+    def edges(self):
+        return []
 
 
 def get_client(client_config: Optional[Config] = None) -> ClientV1:

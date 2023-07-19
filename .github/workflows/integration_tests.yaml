@@ -1,13 +1,15 @@
 on: push
+
 name: Actions Integration Tests
-env:
-  grai-user: null@grai.io
-  grai-password: super_secret
-  namespace: default
-  action: dev_tests
-  DB_PASSWORD: GraiGraiGr4i
-  DB_USER: grai
+
 jobs:
+  env:
+    grai-user: null@grai.io
+    grai-password: super_secret
+    namespace: default
+    action: dev_tests
+    DB_PASSWORD: GraiGraiGr4i
+    DB_USER: grai
   test_postgres:
     runs-on: ubuntu-latest
     services:

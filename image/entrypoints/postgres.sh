@@ -1,5 +1,6 @@
 #!/bin/bash
 
-pip3 install grai-source-postgres
+pip3 install '/grai-actions[postgres]'
 
 source /entrypoints/entrypoint.sh
+

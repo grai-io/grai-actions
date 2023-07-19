@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "grai_actions"
-version = "0.2.3"
+version = "0.2.4-alpha1"
 description = ""
 authors = ["Grai <ian@grai.io>"]
 license = "Elastic-2.0"
@@ -9,11 +9,10 @@ packages = [{include = "grai_actions", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-grai-graph = "^0.2.2"
 ghapi = "^1.0.3"
-grai-client = "^0.2.18"
 pydantic = "^1.10.8"
-grai-schemas = "^0.1.15"
+grai-graph = "^0.2.4"
+grai-client = "^0.3.0"
 
 [tool.poetry.scripts]
 grai-actions = "grai_actions.main:main"
@@ -22,15 +21,57 @@ grai-actions = "grai_actions.main:main"
 pre-commit = "^2.21.0"
 black = "^22.12.0"
 isort = "^5.11.4"
+mypy = "^1.4.1"
 pytest = "^7.2.1"
 pytest-env = "^0.8.1"
-grai-source-postgres = "^0.1.11"
-grai-source-dbt = "^0.1.14"
-grai-source-flat-file = "^0.0.6"
-grai-source-mysql = "^0.0.4"
-mypy = "^0.991"
-grai-source-mssql = "^0.0.4"
 #validators = "^0.21.1"
+
+[tool.poetry.dependencies.grai-source-dbt]
+version = "^0.3.0"
+optional = true
+
+[tool.poetry.dependencies.grai-source-flat-file]
+version = "^0.1.0"
+optional = true
+
+[tool.poetry.dependencies.grai-source-postgres]
+version = "^0.2.0"
+optional = true
+
+[tool.poetry.dependencies.grai-source-mysql]
+version = "^0.1.0"
+optional = true
+
+[tool.poetry.dependencies.grai-source-mssql]
+version = "^0.1.0"
+optional = true
+
+[tool.poetry.dependencies.grai-source-redshift]
+version = "^0.1.0"
+optional = true
+
+[tool.poetry.dependencies.grai-source-snowflake]
+version = "^0.1.0"
+optional = true
+
+[tool.poetry.dependencies.grai-source-bigquery]
+version = "^0.2.0"
+optional = true
+
+[tool.poetry.dependencies.grai-source-fivetran]
+version = "^0.1.0"
+optional = true
+
+[tool.poetry.extras]
+dbt = ["grai-source-dbt"]
+flat_file = ["grai-source-flat-file"]
+postgres = ["grai-source-postgres"]
+mysql = ["grai-source-mysql"]
+mssql = ["grai-source-mssql"]
+redshift = ["grai-source-redshift"]
+snowflake = ["grai-source-snowflake"]
+bigquery = ["grai-source-bigquery"]
+fivetran = ["grai-source-fivetran"]
 
 [tool.isort]
 profile = "black"
@@ -47,7 +88,8 @@ env = [
     'GITHUB_EVENT_NAME=pull_request',
     'GITHUB_REPOSITORY=grai.io/grai-actions',
     'GITHUB_REPOSITORY_OWNER=Grai',
-    'GRAI_ACCESS_MODE=test_mode'
+    'GRAI_ACCESS_MODE=test_mode',
+    'GRAI_SOURCE_NAME=a_cool_source'
 ]
 
 [build-system]

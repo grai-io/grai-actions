@@ -13,6 +13,10 @@ inputs:
   namespace:
     description: "The namespace"
     required: true
+  source-name:
+    description: "The name in Grai of the source this Action will evaluate."
+    required: true
+    example: "prod-db"
   workspace:
     description: "Workspace ID"
   grai-user:
@@ -46,6 +50,7 @@ runs:
   env:
     GITHUB_TOKEN: ${{ inputs.github-token }}
     GRAI_NAMESPACE: ${{ inputs.namespace }}
+    GRAI_SOURCE_NAME: ${{ inputs.source-name }}
     GRAI_USER: ${{ inputs.grai-user }}
     GRAI_PASSWORD: ${{ inputs.grai-password }}
     GRAI_WORKSPACE: ${{ inputs.workspace }}

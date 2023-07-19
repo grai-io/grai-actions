@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pip3 install grai-source-redshift
+pip3 install '/grai-actions[redshift]'
 
 source /entrypoints/entrypoint.sh

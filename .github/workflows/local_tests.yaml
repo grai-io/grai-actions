@@ -2,12 +2,13 @@ on: push
 name: Local Tests
 
 env:
-    grai-api-url: "http://localhost:8000"
-    action: "update"
-    github-token: "test"
-    grai-user: 'null@grai.io'
-    grai-password: 'super_secret'
-    namespace: "default"
+  grai-api-url: 'http://localhost:8000'
+  action: 'dev_tests'
+  github-token: 'test'
+  grai-user: 'null@grai.io'
+  grai-password: 'super_secret'
+  source-name: test
+  namespace: default
 jobs:
   test_postgres_local:
     if: ${{ github.event.act }}
@@ -19,12 +20,12 @@ jobs:
     - name: Postgres Evaluation
       uses: ./postgres
       with:
-        grai-api-url: ${{ env.grai-api-url }}
-        action: ${{ env.action }}
-        github-token: ${{ env.github-token }}
-        grai-user: ${{ env.grai-user }}
-        grai-password: ${{ env.grai-password }}
-        namespace: ${{ env.namespace }}
+        action: '${{ env.action }}'
+        github-token: '${{ env.github-token }}'
+        grai-user: '${{ env.grai-user }}'
+        grai-password: '${{ env.grai-password }}'
+        namespace: '${{ env.namespace }}'
+        source-name: ${{ env.source-name }}
         db-host: "0.0.0.0"
         db-port: "5433"
         db-database-name: db
@@ -41,6 +42,12 @@ jobs:
     - name: MySQL Evaluation
       uses: ./mysql
       with:
+        action: '${{ env.action }}'
+        github-token: '${{ env.github-token }}'
+        grai-user: '${{ env.grai-user }}'
+        grai-password: '${{ env.grai-password }}'
+        namespace: '${{ env.namespace }}'
+        source-name: ${{ env.source-name }}
         db-host: "localhost"
         db-port: "3306"
         db-database-name: dbo
@@ -63,6 +70,7 @@ jobs:
         grai-user: ${{ env.grai-user }}
         grai-password: ${{ env.grai-password }}
         namespace: ${{ env.namespace }}
+        source-name: ${{ env.source-name }}
         db-host: "localhost"
         db-port: "1433"
         db-user: "sa"
@@ -85,6 +93,7 @@ jobs:
         grai-user: ${{ env.grai-user }}
         grai-password: ${{ env.grai-password }}
         namespace: ${{ env.namespace }}
+        source-name: ${{ env.source-name }}
         manifest-file: "./tests/dbt/manifest.json"
 
   test_flat_file_local:
@@ -103,6 +112,7 @@ jobs:
         grai-user: ${{ env.grai-user }}
         grai-password: ${{ env.grai-password }}
         namespace: ${{ env.namespace }}
+        source-name: ${{ env.source-name }}
         file: "./tests/flat-file/low_numbers.csv"
 
   test_redshift_local:
@@ -121,6 +131,7 @@ jobs:
         grai-user: ${{ env.grai-user }}
         grai-password: ${{ env.grai-password }}
         namespace: ${{ env.namespace }}
+        source-name: ${{ env.source-name }}
         db-host: ${{ env.db_host}}
         db-database-name: ${{ env.db_database_name}}
         db-user: ${{ env.db_user}}
@@ -142,6 +153,7 @@ jobs:
         grai-user: ${{ env.grai-user }}
         grai-password: ${{ env.grai-password }}
         namespace: ${{ env.namespace }}
+        source-name: ${{ env.source-name }}
         fivetran-api-key: ${{ env.fivetran_api_key }}
         fivetran-api-secret: ${{ env.fivetran_api_secret }}
         namespace-map: '{"test": "a_default","test2":{"source": "b_default", "destination": "c_default"}}'
@@ -162,6 +174,7 @@ jobs:
         grai-user: ${{ env.grai-user }}
         grai-password: ${{ env.grai-password }}
         namespace: ${{ env.namespace }}
+        source-name: ${{ env.source-name }}
         project: ${{ env.project }}
         dataset: ${{ env.dataset }}
         credentials: ${{ env.credentials }}
@@ -182,6 +195,7 @@ jobs:
         grai-user: ${{ env.grai-user }}
         grai-password: ${{ env.grai-password }}
         namespace: ${{ env.namespace }}
+        source-name: ${{ env.source-name }}
         db-host: ${{ env.db_host}}
         db-database_name: ${{ env.db_database_name}}
         db-user: ${{ env.db_user}}

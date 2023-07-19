@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pip3 install grai-source-mssql
+pip3 install '/grai-actions[mssql]'
 
 apt update && apt install -y unixodbc gnupg2 curl
 curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - \

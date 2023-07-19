@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pip3 install grai-source-mysql
+pip3 install '/grai-actions[mysql]'
 
 source /entrypoints/entrypoint.sh

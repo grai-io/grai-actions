@@ -1,7 +1,4 @@
-from typing import Optional
-
-from grai_source_bigquery import base
-from grai_source_bigquery.loader import BigqueryConnector
+from grai_source_bigquery.base import BigQueryIntegration
 
 from grai_actions.config import ActionBaseSettings, config
 
@@ -12,16 +9,17 @@ class Args(ActionBaseSettings):
     grai_bigquery_credentials: str
 
 
-def get_nodes_and_edges(client, args=None):
+def get_integration(client, args=None):
     if args is None:
         args = Args()
-    conn = BigqueryConnector(
+
+    integration = BigQueryIntegration.from_client(
+        client=client,
+        source=config.source_name,
         namespace=config.grai_namespace,
         project=args.grai_bigquery_project,
         dataset=args.grai_bigquery_dataset,
         credentials=args.grai_bigquery_credentials,
     )
 
-    # Already adapted to client
-    nodes, edges = base.get_nodes_and_edges(conn, client.id)
-    return nodes, edges
+    return integration

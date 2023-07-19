@@ -1,7 +1,6 @@
 from typing import Optional
 
-from grai_source_redshift import base
-from grai_source_redshift.loader import RedshiftConnector
+from grai_source_redshift.base import RedshiftIntegration
 from pydantic import SecretStr
 
 from grai_actions.config import ActionBaseSettings, config
@@ -15,19 +14,18 @@ class Args(ActionBaseSettings):
     grai_db_password: SecretStr
 
 
-def get_nodes_and_edges(client, args=None):
+def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    conn = RedshiftConnector(
+    integration = RedshiftIntegration.from_client(
+        client=client,
+        source=config.grai_source_name,
         namespace=config.grai_namespace,
-        user=args.grai_db_user,
-        password=args.grai_db_password.get_secret_value(),
-        database=args.grai_db_database_name,
         host=args.grai_db_host,
         port=args.grai_db_port,
+        database=args.grai_db_database_name,
+        user=args.grai_db_user,
+        password=args.grai_db_password.get_secret_value(),
     )
-
-    # Already adapted to client
-    nodes, edges = base.get_nodes_and_edges(conn, client.id)
-    return nodes, edges
+    return integration

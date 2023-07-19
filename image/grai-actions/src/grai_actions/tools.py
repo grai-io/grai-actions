@@ -5,15 +5,12 @@ from itertools import chain, pairwise
 from typing import Dict, Iterable, List, Tuple
 
 from grai_client.endpoints.v1.client import ClientV1
+from grai_client.integrations.base import GraiIntegrationImplementation
 from grai_graph.analysis import Graph, GraphAnalyzer
 from grai_schemas.v1 import EdgeV1, NodeV1
-from grai_schemas.v1.metadata import GraiEdgeMetadataV1 as EdgeMetadata
-from grai_schemas.v1.metadata import GraiNodeMetadataV1 as NodeMetadata
 
-from grai_actions import integrations
 from grai_actions.config import config
 from grai_actions.git_messages import collapsable, heading
-from grai_actions.integrations import get_nodes_and_edges
 
 SEPARATOR_CHAR = "/"
 
@@ -258,9 +255,9 @@ class TestResultCacheBase:
 
 
 class TestResultCache(TestResultCacheBase):
-    def __init__(self, client: ClientV1):
+    def __init__(self, client: ClientV1, integration: GraiIntegrationImplementation):
         self.client = client
-        new_nodes, new_edges = get_nodes_and_edges(client)
+        new_nodes, new_edges = integration.get_nodes_and_edges()
 
         try:
             graph = self.client.build_graph()
