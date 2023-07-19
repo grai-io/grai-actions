@@ -46,7 +46,7 @@ jobs:
           namespace: my_apps_grai_namespace
           api-key: my_grai_api_key
           action: tests
-          source_name: prod-db
+          source-name: prod-db
           grai-api-url: https://api.grai.io
           db-user: sa
           db-password: sa_password
