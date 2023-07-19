@@ -1,7 +1,6 @@
 from typing import Optional
 
-from grai_source_snowflake import base
-from grai_source_snowflake.loader import SnowflakeConnector
+from grai_source_snowflake.base import SnowflakeIntegration
 
 from grai_actions.config import ActionBaseSettings, config
 
@@ -20,7 +19,7 @@ def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    integration = base.SnowflakeIntegration.from_client(
+    integration = SnowflakeIntegration.from_client(
         client=client,
         source=config.source_name,
         namespace=config.grai_namespace,

@@ -1,7 +1,4 @@
-from typing import Optional
-
-from grai_source_bigquery import base
-from grai_source_bigquery.loader import BigQueryIntegration
+from grai_source_bigquery.base import BigQueryIntegration
 
 from grai_actions.config import ActionBaseSettings, config
 
@@ -16,7 +13,7 @@ def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    integration = base.BigQueryIntegration.from_client(
+    integration = BigQueryIntegration.from_client(
         client=client,
         source=config.source_name,
         namespace=config.grai_namespace,

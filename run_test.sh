@@ -1,3 +1,5 @@
+set -e
+
 docker compose -f tests/postgres/docker-compose.yml up -d
 docker compose -f tests/mysql/docker-compose.yml up -d
 docker compose -f tests/mssql/docker-compose.yml up -d

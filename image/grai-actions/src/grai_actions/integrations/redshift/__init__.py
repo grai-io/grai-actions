@@ -1,7 +1,6 @@
 from typing import Optional
 
-from grai_source_redshift import base
-from grai_source_redshift.loader import RedshiftConnector
+from grai_source_redshift.base import RedshiftIntegration
 from pydantic import SecretStr
 
 from grai_actions.config import ActionBaseSettings, config
@@ -19,9 +18,9 @@ def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    integration = base.RedshiftIntegration.from_client(
+    integration = RedshiftIntegration.from_client(
         client=client,
-        source=config.source_name,
+        source=config.grai_source_name,
         namespace=config.grai_namespace,
         host=args.grai_db_host,
         port=args.grai_db_port,

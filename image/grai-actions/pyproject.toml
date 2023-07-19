@@ -11,8 +11,8 @@ packages = [{include = "grai_actions", from = "src"}]
 python = "^3.10"
 ghapi = "^1.0.3"
 pydantic = "^1.10.8"
-grai-graph = "^0.2.4-alpha2"
-grai-client = "^0.3.0-alpha24"
+grai-graph = "^0.2.4"
+grai-client = "^0.3.0"
 
 [tool.poetry.scripts]
 grai-actions = "grai_actions.main:main"
@@ -27,39 +27,39 @@ pytest-env = "^0.8.1"
 #validators = "^0.21.1"
 
 [tool.poetry.dependencies.grai-source-dbt]
-version = "^0.3.0a8"
+version = "^0.3.0"
 optional = true
 
 [tool.poetry.dependencies.grai-source-flat-file]
-version = "^0.1.0a1"
+version = "^0.1.0"
 optional = true
 
 [tool.poetry.dependencies.grai-source-postgres]
-version = "^0.2.0a3"
+version = "^0.2.0"
 optional = true
 
 [tool.poetry.dependencies.grai-source-mysql]
-version = "^0.1.0a3"
+version = "^0.1.0"
 optional = true
 
 [tool.poetry.dependencies.grai-source-mssql]
-version = "^0.1.0a2"
+version = "^0.1.0"
 optional = true
 
 [tool.poetry.dependencies.grai-source-redshift]
-version = "^0.1.0a2"
+version = "^0.1.0"
 optional = true
 
 [tool.poetry.dependencies.grai-source-snowflake]
-version = "^0.1.0a2"
+version = "^0.1.0"
 optional = true
 
 [tool.poetry.dependencies.grai-source-bigquery]
-version = "^0.2.0a5"
+version = "^0.2.0"
 optional = true
 
 [tool.poetry.dependencies.grai-source-fivetran]
-version = "^0.1.0a5"
+version = "^0.1.0"
 optional = true
 
 [tool.poetry.extras]

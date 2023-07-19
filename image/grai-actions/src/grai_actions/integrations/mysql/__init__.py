@@ -1,7 +1,6 @@
 from typing import Optional
 
-from grai_source_mysql import base
-from grai_source_mysql.loader import MySQLConnector
+from grai_source_mysql.base import MySQLIntegration
 
 from grai_actions.config import ActionBaseSettings, config
 
@@ -18,7 +17,7 @@ def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    integration = base.MySQLIntegration.from_client(
+    integration = MySQLIntegration.from_client(
         client=client,
         source=config.grai_source_name,
         namespace=config.grai_namespace,

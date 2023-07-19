@@ -1,7 +1,7 @@
 from typing import Optional
 
-from grai_source_postgres import base
-from grai_source_postgres.loader import PostgresConnector
+
+from grai_source_postgres.base import PostgresIntegration
 from pydantic import SecretStr
 
 from grai_actions.config import ActionBaseSettings, config
@@ -19,7 +19,7 @@ def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    integration = base.PostgresIntegration.from_client(
+    integration = PostgresIntegration.from_client(
         client=client,
         source=config.grai_source_name,
         namespace=config.grai_namespace,

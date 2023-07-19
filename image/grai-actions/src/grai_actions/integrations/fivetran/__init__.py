@@ -1,7 +1,6 @@
 from typing import Optional
 
-from grai_source_fivetran import base
-from grai_source_fivetran.loader import FivetranIntegration
+from grai_source_fivetran.base import FivetranIntegration
 from pydantic import Json, SecretStr
 
 from grai_actions.config import ActionBaseSettings, config

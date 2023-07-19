@@ -1,5 +1,5 @@
-from grai_source_flat_file import base
-from grai_source_flat_file.adapters import adapt_to_client
+from grai_source_flat_file.base import FlatFileIntegration
+
 from pydantic import BaseSettings, FilePath
 
 from grai_actions.config import ActionBaseSettings, config
@@ -13,7 +13,7 @@ def get_integration(client, args=None):
     if args is None:
         args = Args()
 
-    integration = base.FlatFileIntegration.from_client(
+    integration = FlatFileIntegration.from_client(
         client=client,
         source=config.grai_source_name,
         file_name=str(args.grai_flat_file_file),
