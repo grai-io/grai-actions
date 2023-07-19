@@ -1,5 +1,4 @@
 from grai_source_flat_file.base import FlatFileIntegration
-
 from pydantic import BaseSettings, FilePath
 
 from grai_actions.config import ActionBaseSettings, config

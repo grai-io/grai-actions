@@ -1,6 +1,5 @@
 from typing import Optional
 
-
 from grai_source_postgres.base import PostgresIntegration
 from pydantic import SecretStr
 
