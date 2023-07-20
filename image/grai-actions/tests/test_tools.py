@@ -1,19 +1,11 @@
 import unittest
 
-# import validators
-from grai_graph.utils import mock_v1_edge, mock_v1_node
-from grai_schemas.base import GraiMetadata
 from grai_schemas.v1 import EdgeV1, NodeV1
 from grai_schemas.v1.metadata.edges import (
     ColumnToColumnMetadata,
     EdgeMetadataTypeLabels,
-    GenericEdgeMetadataV1,
 )
-from grai_schemas.v1.metadata.nodes import (
-    ColumnMetadata,
-    GenericNodeMetadataV1,
-    NodeMetadataTypeLabels,
-)
+from grai_schemas.v1.metadata.nodes import ColumnMetadata, NodeMetadataTypeLabels
 
 from grai_actions import tools
 
@@ -232,15 +224,61 @@ class TestUniqueTestResult(unittest.TestCase):
         assert meta["type"] == "Uniqueness"
 
 
+def build_mock_delete_test_result(a, b, *args):
+    args = [a, b, *args]
+    nodes = [mock_node(arg) for arg in args]
+
+    return tools.DeletedTestResult(nodes[0], nodes)
+
+
+class TestDeletedTestResult(unittest.TestCase):
+    test_obj = build_mock_delete_test_result("a", "b", "c")
+
+    @classmethod
+    def test_make_row_is_str(cls):
+        row_str = cls.test_obj.make_row()
+        assert isinstance(row_str, str)
+
+    @classmethod
+    def test_make_row_has_correct_number_of_columns(cls):
+        row_str = cls.test_obj.make_row()
+        assert row_str.count("|") == 6
+
+    @classmethod
+    def test_make_message_is_str(cls):
+        message = cls.test_obj.message()
+        assert isinstance(message, str)
+
+    @classmethod
+    def test_make_message_doesnt_contain_column_breaks(cls):
+        message = cls.test_obj.message()
+        assert "|" not in message
+
+    @classmethod
+    def test_error_metadata_has_all_keys(cls):
+        meta = cls.test_obj.error_metadata()
+        for key in ["source", "destination", "type", "message"]:
+            assert key in meta, f"Missing {key} in metadata result"
+
+    @classmethod
+    def test_error_metadata_keys_are_strings(cls):
+        meta = cls.test_obj.error_metadata()
+        for key in ["source", "destination", "type", "message"]:
+            assert isinstance(meta[key], str)
+
+    @classmethod
+    def test_error_metadata_type(cls):
+        meta = cls.test_obj.error_metadata()
+        assert meta["type"] == "Deleted"
+
+
 def get_test_summary():
     source_node = mock_node("a")
     results = [
         build_mock_type_test_result("a", "b", "c"),
         build_mock_unique_test_result("a", "c", "d", "e"),
-        build_mock_nullable_test_result(
-            "a",
-            "f",
-        ),
+        build_mock_nullable_test_result("a", "f"),
+        build_mock_delete_test_result("g", "b"),
     ]
     return tools.TestSummary(results)
 
@@ -257,6 +295,7 @@ class TestTestSummary(unittest.TestCase):
             },
             cls.id("c"): {cls.id("d"): True},
             cls.id("d"): {cls.id("e"): False},
+            cls.id("g"): {cls.id("b"): False},
         }
         return result
 
