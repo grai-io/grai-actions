@@ -1,15 +1,11 @@
 import unittest
 
-
 from grai_schemas.v1 import EdgeV1, NodeV1
 from grai_schemas.v1.metadata.edges import (
     ColumnToColumnMetadata,
     EdgeMetadataTypeLabels,
 )
-from grai_schemas.v1.metadata.nodes import (
-    ColumnMetadata,
-    NodeMetadataTypeLabels,
-)
+from grai_schemas.v1.metadata.nodes import ColumnMetadata, NodeMetadataTypeLabels
 
 from grai_actions import tools
 
@@ -282,7 +278,7 @@ def get_test_summary():
         build_mock_type_test_result("a", "b", "c"),
         build_mock_unique_test_result("a", "c", "d", "e"),
         build_mock_nullable_test_result("a", "f"),
-        build_mock_delete_test_result("g", "b")
+        build_mock_delete_test_result("g", "b"),
     ]
     return tools.TestSummary(results)
 

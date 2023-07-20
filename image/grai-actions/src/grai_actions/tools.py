@@ -4,9 +4,9 @@ from abc import ABC, abstractmethod
 from itertools import chain, pairwise
 from typing import Dict, Iterable, List, Tuple
 
-from grai_client.update import compute_graph_changes
 from grai_client.endpoints.v1.client import ClientV1
 from grai_client.integrations.base import GraiIntegrationImplementation
+from grai_client.update import compute_graph_changes
 from grai_graph.analysis import GraphAnalyzer
 from grai_graph.graph import Graph
 from grai_schemas.v1 import EdgeV1, NodeV1
