@@ -57,7 +57,7 @@ class DeletedTestResult(TestResult):
     def message(self) -> str:
         return (
             f"Node `{self.failing_node.spec.name}` was deleted. It had {len(self.test_path)} downstream dependencies "
-            f"ending in {self.test_path[-1]}"
+            f"ending in {self.test_path[-1].spec.name}"
         )
 
 
