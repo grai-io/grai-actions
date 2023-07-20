@@ -4,9 +4,11 @@ from abc import ABC, abstractmethod
 from itertools import chain, pairwise
 from typing import Dict, Iterable, List, Tuple
 
+from grai_client.update import compute_graph_changes
 from grai_client.endpoints.v1.client import ClientV1
 from grai_client.integrations.base import GraiIntegrationImplementation
-from grai_graph.analysis import Graph, GraphAnalyzer
+from grai_graph.analysis import GraphAnalyzer
+from grai_graph.graph import Graph
 from grai_schemas.v1 import EdgeV1, NodeV1
 
 from grai_actions.config import config
@@ -47,6 +49,16 @@ class TestResult(ABC):
             "type": self.type,
             "message": self.message(),
         }
+
+
+class DeletedTestResult(TestResult):
+    type = "Deleted"
+
+    def message(self) -> str:
+        return (
+            f"Node `{self.failing_node.spec.name}` was deleted. It had {len(self.test_path)} downstream dependencies "
+            f"ending in {self.test_path[-1]}"
+        )
 
 
 class TypeTestResult(TestResult):
@@ -153,8 +165,10 @@ class SingleSourceTestSummary(TestSummary):
 
 
 class TestResultCacheBase:
-    def __init__(self, new_nodes: List[NodeV1], new_edges: List[EdgeV1], graph):
+    def __init__(self, new_nodes: List[NodeV1], new_edges: List[EdgeV1], graph: Graph):
         self.new_nodes, self.new_edges = new_nodes, new_edges
+        _, _, self.deleted_nodes = compute_graph_changes(new_nodes, graph.manifest.nodes)
+
         self.graph = graph
         self.analysis = GraphAnalyzer(graph=self.graph)
 
@@ -227,10 +241,20 @@ class TestResultCacheBase:
                 result_map[node] = test_results
         return result_map
 
+    def deleted_tests(self) -> Dict[NodeV1, List[DeletedTestResult]]:
+        errors = False
+        result_map = {}
+        for node in self.deleted_nodes:
+            downstream = self.analysis.test_delete_node(node.spec.namespace, node.spec.name)
+            failed = len(downstream) > 0
+            result_map[node] = [DeletedTestResult(node, downstream, failed)]
+        return result_map
+
     def test_results(self) -> Dict[NodeV1, List[TestResult]]:
         tests = chain(
             self.unique_tests().items(),
             self.null_tests().items(),
+            self.deleted_tests().items(),
             # self.data_type_tests().items(),
         )
 
